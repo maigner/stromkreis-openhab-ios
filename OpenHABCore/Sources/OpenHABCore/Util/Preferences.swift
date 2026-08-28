@@ -13,7 +13,7 @@
 import os.log
 
 @MainActor
-private let sharedDefaults = UserDefaults(suiteName: "group.org.openhab.app")!
+private let sharedDefaults = UserDefaults(suiteName: "group.net.stromkreis.app")!
 
 @MainActor
 @propertyWrapper

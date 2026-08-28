@@ -20,7 +20,7 @@ struct SetpointRow: View {
     let stateToken: String
     @EnvironmentObject var settings: AppSettings
     private let setpointService = SetPointService()
-    private let logger = Logger(subsystem: "org.openhab.watch", category: "SetpointRow")
+    private let logger = Logger(subsystem: "net.stromkreis.watch", category: "SetpointRow")
     @State private var viewModel: WidgetRowViewModel
     @State private var localValue: Double?
     @State private var commandSender = WidgetCommandDispatcher()

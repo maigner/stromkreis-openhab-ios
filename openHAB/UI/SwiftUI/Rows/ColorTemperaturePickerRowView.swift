@@ -168,7 +168,7 @@ private struct ColorTemperaturePickerRowContent: View {
     @State private var isDraggingSlider = false
     @State private var suppressNextServerSync = false
 
-    private let logger = Logger(subsystem: "org.openhab", category: "ColorTemperaturePickerRowView")
+    private let logger = Logger(subsystem: "net.stromkreis", category: "ColorTemperaturePickerRowView")
 
     private var temperatureRange: ClosedRange<Double> {
         ColorTemperatureRowMath.normalizedRange(minValue: input.minValue, maxValue: input.maxValue)

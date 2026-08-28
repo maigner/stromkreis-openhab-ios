@@ -33,7 +33,7 @@ private struct SwitchRowContent: View {
     @State private var localIsOn: Bool?
     @State private var revertTask: Task<Void, Never>?
 
-    private let logger = Logger(subsystem: "org.openhab", category: "WidgetSwitchView")
+    private let logger = Logger(subsystem: "net.stromkreis", category: "WidgetSwitchView")
 
     var body: some View {
         let displayState = input.displayState

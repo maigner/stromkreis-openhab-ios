@@ -89,9 +89,9 @@ public struct OpenHABImageProcessor: ImageProcessor {
             if normalizedColor.uppercased() == "808080", trimmedLowercased != "gray", !trimmedLowercased.contains("808080") {
                 normalizedColor = trimmedLowercased
             }
-            identifier = "org.openhab.svgprocessor.\(normalizedColor)\(sizeIdentifier)"
+            identifier = "net.stromkreis.svgprocessor.\(normalizedColor)\(sizeIdentifier)"
         } else {
-            identifier = "org.openhab.svgprocessor\(sizeIdentifier)"
+            identifier = "net.stromkreis.svgprocessor\(sizeIdentifier)"
         }
     }
 

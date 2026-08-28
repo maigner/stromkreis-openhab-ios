@@ -40,7 +40,7 @@ private struct DateInputRowContent: View {
     @State private var suppressNextServerSync = false
     @State private var selectedDate = Date.distantPast
 
-    private let logger = Logger(subsystem: "org.openhab", category: "WidgetDatePickerInputView")
+    private let logger = Logger(subsystem: "net.stromkreis", category: "WidgetDatePickerInputView")
 
     private var datePickerComponents: DatePickerComponents {
         switch inputHint {

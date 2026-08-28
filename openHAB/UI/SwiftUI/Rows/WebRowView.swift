@@ -114,7 +114,7 @@ struct WidgetWebViewContainerView: View {
 struct WebRowView: UIViewRepresentable {
     class Coordinator: NSObject, WKNavigationDelegate {
         var lastLoadedURL: URL?
-        private let logger = Logger(subsystem: "org.openhab", category: "WebRowViewCoordinator")
+        private let logger = Logger(subsystem: "net.stromkreis", category: "WebRowViewCoordinator")
 
         func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: any Error) {
             logger.debug("WebView failed to load: \(error.localizedDescription)")

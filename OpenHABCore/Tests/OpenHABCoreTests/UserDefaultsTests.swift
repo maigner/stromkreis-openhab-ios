@@ -139,12 +139,12 @@ struct HomePreferencesDecodingTests {
     }
 }
 
-/// .serialized prevents parallel test clones from racing on the shared group.org.openhab.app UserDefaults suite.
+/// .serialized prevents parallel test clones from racing on the shared group.net.stromkreis.app UserDefaults suite.
 @Suite(.serialized)
 @MainActor
 struct UserDefaultsTests {
     @Test func consistency() throws {
-        let data = try #require(UserDefaults(suiteName: "group.org.openhab.app"))
+        let data = try #require(UserDefaults(suiteName: "group.net.stromkreis.app"))
         let defaultsName = try #require(Bundle.main.bundleIdentifier)
         data.removePersistentDomain(forName: defaultsName)
 

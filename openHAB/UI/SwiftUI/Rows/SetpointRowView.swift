@@ -31,7 +31,7 @@ private struct SetpointRowContent: View {
     @Binding var triggerFeedback: Bool
     let onSendValue: (Double) -> Void
 
-    private let logger = Logger(subsystem: "org.openhab", category: "WidgetSetpointView")
+    private let logger = Logger(subsystem: "net.stromkreis", category: "WidgetSetpointView")
     private let setpointService = SetPointService()
 
     var body: some View {

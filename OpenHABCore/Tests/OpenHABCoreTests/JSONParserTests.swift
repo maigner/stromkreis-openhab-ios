@@ -82,7 +82,7 @@ struct JSONParserTests {
         let testBundle = Bundle.module
         let url = try #require(testBundle.url(forResource: jsonFile, withExtension: "json"))
 
-        let signposter = OSSignposter(subsystem: "org.openhab.app", category: "RecordDecoding")
+        let signposter = OSSignposter(subsystem: "net.stromkreis.app", category: "RecordDecoding")
 
         let state = signposter.beginInterval("Read File")
         let contents = try Data(contentsOf: url)

@@ -32,7 +32,7 @@ private struct ButtonGridButton: View {
     @State private var isPressed = false
     @State private var triggerFeedback = false
 
-    private let logger = Logger(subsystem: "org.openhab", category: "ButtonGridButton")
+    private let logger = Logger(subsystem: "net.stromkreis", category: "ButtonGridButton")
 
     private var hasPressRelease: Bool {
         if let releaseCommand = button.releaseCommand, !releaseCommand.isEmpty {

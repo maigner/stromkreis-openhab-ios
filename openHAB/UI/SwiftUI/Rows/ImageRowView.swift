@@ -50,7 +50,7 @@ private struct ImageRowContent: View {
     @State private var embeddedGIFAspectRatio: CGFloat = 16.0 / 9.0
     @State private var imageLoadError: KingfisherError?
 
-    private let logger = Logger(subsystem: "org.openhab", category: "ImageRowView")
+    private let logger = Logger(subsystem: "net.stromkreis", category: "ImageRowView")
 
     private var shouldCache: Bool {
         input.refresh == 0

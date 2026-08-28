@@ -194,7 +194,7 @@ final class AppSettings: ObservableObject {
 
     /// Writes `storedHomes` to both UserDefaults suites that read it:
     /// - `group.openhab.shared["watchAllHomes"]` (string-keyed) — read by `AppSettings.init()`
-    /// - `group.org.openhab.app["storedHomes"]` (UUID-keyed) — read by `Preferences.shared` for App Intents
+    /// - `group.net.stromkreis.app["storedHomes"]` (UUID-keyed) — read by `Preferences.shared` for App Intents
     static func persistStoredHomes(_ uuidKeyed: [UUID: HomePreferences]) {
         let stringKeyed = Dictionary(uniqueKeysWithValues: uuidKeyed.map { ($0.key.uuidString, $0.value) })
         let watchStore = UserDefaults(suiteName: "group.openhab.shared") ?? UserDefaults.standard
@@ -203,11 +203,11 @@ final class AppSettings: ObservableObject {
         } else {
             Logger.preferences.error("Failed to persist storedHomes to group.openhab.shared")
         }
-        let prefsStore = UserDefaults(suiteName: "group.org.openhab.app") ?? UserDefaults.standard
+        let prefsStore = UserDefaults(suiteName: "group.net.stromkreis.app") ?? UserDefaults.standard
         if let data = try? JSONEncoder().encode(uuidKeyed) {
             prefsStore.set(data, forKey: "storedHomes")
         } else {
-            Logger.preferences.error("Failed to persist storedHomes to group.org.openhab.app")
+            Logger.preferences.error("Failed to persist storedHomes to group.net.stromkreis.app")
         }
     }
 }

@@ -190,7 +190,7 @@ private struct TextInputRowContent: View {
     @State private var draftUnitSuffix = ""
     @State private var showInputAlert = false
 
-    private let logger = Logger(subsystem: "org.openhab", category: "WidgetTextInputView")
+    private let logger = Logger(subsystem: "net.stromkreis", category: "WidgetTextInputView")
     private let inputCommandFormatter = InputCommandFormatter()
     private var formattedCommand: String? {
         inputCommandFormatter.command(from: draftInputText, hint: inputHint, unitSuffix: draftUnitSuffix)

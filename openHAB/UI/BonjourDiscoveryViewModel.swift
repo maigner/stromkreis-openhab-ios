@@ -23,7 +23,7 @@ final class BonjourDiscoveryViewModel: ObservableObject {
 
     private var bonjourService: (any BonjourServiceProtocol)?
     private let serviceFactory: @Sendable () -> any BonjourServiceProtocol
-    private let logger = Logger(subsystem: "org.openhab", category: "BonjourDiscovery")
+    private let logger = Logger(subsystem: "net.stromkreis", category: "BonjourDiscovery")
 
     /// Number of discovery cycles (more cycles help find multi-homed servers)
     var discoveryCycles = 2

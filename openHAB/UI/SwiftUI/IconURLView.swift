@@ -22,7 +22,7 @@ struct IconURLView: View {
 
     let size: CGSize
 
-    private let logger = Logger(subsystem: "org.openhab", category: "IconURLView")
+    private let logger = Logger(subsystem: "net.stromkreis", category: "IconURLView")
 
     var body: some View {
         ZStack {

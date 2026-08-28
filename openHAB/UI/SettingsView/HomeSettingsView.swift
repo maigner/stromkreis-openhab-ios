@@ -250,7 +250,7 @@ struct HomeSettingsView: View {
 
     private func commitSave() {
         saveSettings()
-        NotificationCenter.default.post(name: NSNotification.Name("org.openhab.preferences.saved"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name("net.stromkreis.preferences.saved"), object: nil)
     }
 
     private func handleSwipeDismiss() {
@@ -284,7 +284,7 @@ struct HomeSettingsView: View {
                 prefs.remoteConnectionConfig = rcc
                 prefs.sseCommandItem = sseCI
             }
-            NotificationCenter.default.post(name: NSNotification.Name("org.openhab.preferences.saved"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name("net.stromkreis.preferences.saved"), object: nil)
         }
     }
 
