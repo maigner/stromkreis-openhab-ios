@@ -133,7 +133,7 @@ public final class BonjourService: NSObject, BonjourServiceProtocol, NetServiceB
 
     // MARK: - Properties
 
-    private let logger = Logger(subsystem: "org.openhab", category: "BonjourService")
+    private let logger = Logger(subsystem: "net.stromkreis", category: "BonjourService")
 
     /// All mutable state is protected by this lock for thread-safe access.
     private let state = OSAllocatedUnfairLock(initialState: State())

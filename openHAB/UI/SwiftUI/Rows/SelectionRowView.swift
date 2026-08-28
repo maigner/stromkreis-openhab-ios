@@ -21,7 +21,7 @@ private struct SelectionRowContent: View {
     let interactionState: RowInteractionState
     let onSelect: (String) -> Void
 
-    private let logger = Logger(subsystem: "org.openhab", category: "SelectionRowView")
+    private let logger = Logger(subsystem: "net.stromkreis", category: "SelectionRowView")
 
     @State private var optimisticCommand: String?
     @State private var optimisticBaseState: String?

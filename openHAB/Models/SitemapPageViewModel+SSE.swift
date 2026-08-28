@@ -12,7 +12,7 @@
 import OpenHABCore
 import os.log
 
-private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "org.openhab.app", category: "SitemapPageViewModel")
+private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "net.stromkreis.app", category: "SitemapPageViewModel")
 
 @MainActor
 extension SitemapPageViewModel {

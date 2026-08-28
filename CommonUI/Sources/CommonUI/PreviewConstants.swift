@@ -16,7 +16,7 @@ import os.log
 #if DEBUG
 // swiftlint:disable type_body_length
 public enum PreviewConstants {
-    public static let logger = Logger(subsystem: "org.openhab", category: "PreviewConstants")
+    public static let logger = Logger(subsystem: "net.stromkreis", category: "PreviewConstants")
 
     public static let remoteURLString = "http://192.168.2.10:8080"
 

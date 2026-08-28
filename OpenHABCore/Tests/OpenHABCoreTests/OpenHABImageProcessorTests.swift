@@ -300,7 +300,7 @@ struct OpenHABImageProcessorTests {
         #expect(processor1.identifier == processor2.identifier)
         #expect(processor2.identifier == processor3.identifier)
         #expect(processor3.identifier == processor4.identifier)
-        #expect(processor1.identifier == "org.openhab.svgprocessor.FF0000")
+        #expect(processor1.identifier == "net.stromkreis.svgprocessor.FF0000")
     }
 
     @Test func cacheIdentifier_handlesDifferentColors() {
@@ -320,23 +320,23 @@ struct OpenHABImageProcessorTests {
         let processor2 = OpenHABImageProcessor(iconColor: nil)
         let processor3 = OpenHABImageProcessor(iconColor: "")
 
-        #expect(processor1.identifier == "org.openhab.svgprocessor")
-        #expect(processor2.identifier == "org.openhab.svgprocessor")
-        #expect(processor3.identifier == "org.openhab.svgprocessor")
+        #expect(processor1.identifier == "net.stromkreis.svgprocessor")
+        #expect(processor2.identifier == "net.stromkreis.svgprocessor")
+        #expect(processor3.identifier == "net.stromkreis.svgprocessor")
     }
 
     @Test func cacheIdentifier_fullSizeMode() {
         let processorWithoutColor = OpenHABImageProcessor(svgMaxSize: nil)
         let processorWithColor = OpenHABImageProcessor(iconColor: "red", svgMaxSize: nil)
 
-        #expect(processorWithoutColor.identifier == "org.openhab.svgprocessor.fullsize")
-        #expect(processorWithColor.identifier == "org.openhab.svgprocessor.FF0000.fullsize")
+        #expect(processorWithoutColor.identifier == "net.stromkreis.svgprocessor.fullsize")
+        #expect(processorWithColor.identifier == "net.stromkreis.svgprocessor.FF0000.fullsize")
     }
 
     @Test func cacheIdentifier_customSizeMode() {
         let processor = OpenHABImageProcessor(iconColor: "red", svgMaxSize: CGSize(width: 128, height: 128))
 
-        #expect(processor.identifier == "org.openhab.svgprocessor.FF0000.128x128")
+        #expect(processor.identifier == "net.stromkreis.svgprocessor.FF0000.128x128")
     }
 
     @Test func cacheIdentifier_normalizesOpenHABColors() {
@@ -345,7 +345,7 @@ struct OpenHABImageProcessorTests {
         let processor2 = OpenHABImageProcessor(iconColor: "#800000")
 
         #expect(processor1.identifier == processor2.identifier)
-        #expect(processor1.identifier == "org.openhab.svgprocessor.800000")
+        #expect(processor1.identifier == "net.stromkreis.svgprocessor.800000")
     }
 
     @Test func cacheIdentifier_handlesWhitespace() {

@@ -49,7 +49,7 @@ private struct RollershutterRowContent: View {
     @Binding var triggerDownFeedback: Bool
     let onSendCommand: (RollerShutterCommand) -> Void
 
-    private let logger = Logger(subsystem: "org.openhab", category: "WidgetRollershutterView")
+    private let logger = Logger(subsystem: "net.stromkreis", category: "WidgetRollershutterView")
 
     var body: some View {
         let displayState = input.displayState

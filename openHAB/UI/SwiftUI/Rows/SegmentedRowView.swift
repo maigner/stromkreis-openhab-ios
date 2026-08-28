@@ -25,7 +25,7 @@ private struct SegmentedRowContent: View {
 
     @Environment(\.colorScheme) var colorScheme
 
-    private let logger = Logger(subsystem: "org.openhab", category: "WidgetSegmentedView")
+    private let logger = Logger(subsystem: "net.stromkreis", category: "WidgetSegmentedView")
     @State private var optimisticSelectedIndex: Int?
     @State private var optimisticBaseState: String?
     @State private var optimisticWidgetId: String?

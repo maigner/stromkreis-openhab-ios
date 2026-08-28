@@ -15,5 +15,5 @@ public extension NSNotification.Name {
     /// Posted by AppDelegate when the app transitions to the active state.
     /// Subscribers outside the UIKit layer should use this instead of
     /// UIApplication.didBecomeActiveNotification.
-    static let appDidBecomeActive = NSNotification.Name("org.openhab.appDidBecomeActive")
+    static let appDidBecomeActive = NSNotification.Name("net.stromkreis.appDidBecomeActive")
 }

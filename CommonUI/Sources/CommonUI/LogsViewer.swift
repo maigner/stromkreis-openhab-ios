@@ -89,7 +89,7 @@ public struct LogsViewer: View {
         do {
             let predicate = Self.template.withSubstitutionVariables(
                 [
-                    "PREFIX": "org.openhab"
+                    "PREFIX": "net.stromkreis"
                 ]
             )
 

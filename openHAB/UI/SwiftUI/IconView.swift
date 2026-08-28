@@ -95,7 +95,7 @@ struct IconInputView: View {
     let size: CGSize
     let iconType: IconType = .svg
 
-    private let logger = Logger(subsystem: "org.openhab", category: "IconInputView")
+    private let logger = Logger(subsystem: "net.stromkreis", category: "IconInputView")
 
     @State private var currentImage: UIImage?
 
@@ -285,7 +285,7 @@ struct IconView: View {
     /// Optional SF Symbol to show as fallback when network icon is unavailable (useful for previews)
     let fallbackSymbol: SFSymbol?
 
-    private let logger = Logger(subsystem: "org.openhab", category: "IconView")
+    private let logger = Logger(subsystem: "net.stromkreis", category: "IconView")
 
     @State private var currentImage: UIImage?
 

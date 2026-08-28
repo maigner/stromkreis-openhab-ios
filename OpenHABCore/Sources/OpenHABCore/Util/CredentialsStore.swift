@@ -21,7 +21,7 @@ public enum CredentialsStore {
         case remote
     }
 
-    private static let service = "org.openhab.app.credentials"
+    private static let service = "net.stromkreis.app.credentials"
 
     private static func account(homeId: UUID, type: ConnectionType) -> String {
         "\(homeId.uuidString).\(type.rawValue)"

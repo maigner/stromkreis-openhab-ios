@@ -327,5 +327,5 @@ struct HomeSummaryView: View {
 
 extension Notification.Name {
     /// Posted immediately after the active home is switched in `HomeSelectionView`.
-    static let homeDidSwitch = Notification.Name("org.openhab.homeDidSwitch")
+    static let homeDidSwitch = Notification.Name("net.stromkreis.homeDidSwitch")
 }

@@ -102,7 +102,7 @@ struct OpenHABRootView: View {
         .onReceive(notificationService.$navigationCommand.compactMap { $0 }) { command in
             handleNavigationCommand(command)
         }
-        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("org.openhab.preferences.saved"))) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("net.stromkreis.preferences.saved"))) { _ in
             menuData.refresh()
             webViewModel.reloadView()
         }

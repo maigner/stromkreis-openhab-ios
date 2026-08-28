@@ -40,7 +40,7 @@ private struct VideoRowContent: View {
     @State private var currentStreamUrl: URL?
     @State private var playerObserver: NSKeyValueObservation?
 
-    private let logger = Logger(subsystem: "org.openhab", category: "VideoRowView")
+    private let logger = Logger(subsystem: "net.stromkreis", category: "VideoRowView")
 
     private var videoURL: URL? {
         guard !input.url.isEmpty else { return nil }

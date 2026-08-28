@@ -130,9 +130,9 @@ public actor OpenAPIService {
 
     private func sourceComponent(deviceId: String?) -> String? {
         #if os(watchOS)
-        let base = "org.openhab.watchos"
+        let base = "net.stromkreis.watchos"
         #else
-        let base = "org.openhab.ios"
+        let base = "net.stromkreis.ios"
         #endif
         guard let deviceId else { return base }
         let trimmed = deviceId.trimmingCharacters(in: .whitespacesAndNewlines)

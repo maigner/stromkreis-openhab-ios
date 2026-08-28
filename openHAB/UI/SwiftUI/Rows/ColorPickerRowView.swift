@@ -349,7 +349,7 @@ private struct ColorPickerRowContent: View {
     @State private var suppressNextColorSync = false
     @State private var triggerFeedback = false
 
-    private let logger = Logger(subsystem: "org.openhab", category: "WidgetColorPickerView")
+    private let logger = Logger(subsystem: "net.stromkreis", category: "WidgetColorPickerView")
 
     var body: some View {
         let displayState = input.displayState

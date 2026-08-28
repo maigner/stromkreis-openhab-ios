@@ -237,7 +237,7 @@ struct SitemapInitialLoadMeasurement {
 
 @MainActor
 enum SitemapDiagnostics {
-    private static let logger = Logger(subsystem: "org.openhab", category: "SitemapDiagnostics")
+    private static let logger = Logger(subsystem: "net.stromkreis", category: "SitemapDiagnostics")
     private static let processStartedAt = ProcessInfo.processInfo.systemUptime
 
     static var isEnabled: Bool {

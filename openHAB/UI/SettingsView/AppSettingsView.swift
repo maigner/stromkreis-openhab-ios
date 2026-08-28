@@ -81,7 +81,7 @@ struct AppSettingsView: View {
                     Button {
                         savedExplicitly = true
                         saveSettings()
-                        NotificationCenter.default.post(name: NSNotification.Name("org.openhab.preferences.saved"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name("net.stromkreis.preferences.saved"), object: nil)
                         dismiss()
                     } label: {
                         Image(systemName: "checkmark")
@@ -101,7 +101,7 @@ struct AppSettingsView: View {
             guard isDirty, !savedExplicitly else { return }
             // Sheet was swiped away with unsaved changes — auto-save
             saveSettings()
-            NotificationCenter.default.post(name: NSNotification.Name("org.openhab.preferences.saved"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name("net.stromkreis.preferences.saved"), object: nil)
         }
         .onChange(of: currentSnapshot) { _, newSnapshot in
             isDirty = newSnapshot != initialSnapshot
