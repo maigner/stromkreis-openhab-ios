@@ -63,7 +63,7 @@ public struct LogsViewer: View {
     }
 
     private func makeExportURL(for text: String) -> URL? {
-        let fileName = "openhab-logs-\(Date.now.formatted(.iso8601.year().month().day().time(includingFractionalSeconds: false)))"
+        let fileName = "stromkreis-logs-\(Date.now.formatted(.iso8601.year().month().day().time(includingFractionalSeconds: false)))"
             .replacingOccurrences(of: ":", with: "-")
         let url = FileManager.default.temporaryDirectory
             .appendingPathComponent(fileName)

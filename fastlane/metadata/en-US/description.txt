@@ -1,18 +1,13 @@
-This is the native iOS and Apple Watch companion application for openHAB - an open source home automation system. 
+Stromkreis is the open platform by energy communities for energy communities. This app connects members of an Austrian energy community (EEG) to their Stromkreis gateway at home and to the Stromkreis Cloud.
 
-The open Home Automation Bus (openHAB) project aims at providing a universal integration platform for connecting home automation technologies into a single intelligent system.  With more than 3000 things that openHAB can connect to, there’s virtually nothing that can’t be integrated. Its advanced rules based architecture allows complete automation using several popular scripting languages (Java Script, Ruby, Python, Java, RDSL, and more ) as well as visual rule designers using either drag and drop interfaces or simple “If / Then” forms. The new openHAB UI allows users to easily build beautiful interfaces customized to their needs.  openHAB is designed to be absolutely vendor-neutral as well as hardware/protocol-agnostic.  
+Features:
 
-iOS Key Features:
+* Live view of your PV system, home battery and grid feed-in
+* Forecast-driven battery management: charge your storage when it benefits the community
+* Remote access to your gateway from anywhere via the Stromkreis Cloud (https://hac.stromkreis.net)
+* Apple Watch companion app, widgets and Siri shortcuts
+* Natively supports iPhone and iPad
 
-* Integrates seamlessly with your own openHAB UI (Main UI or sitemaps)
-* Control everything on your openHAB server directly or remotely through the free openHAB Cloud service (https://myopenhab.org)
-* Enhanced push notifications with media from openHAB Cloud and the openHAB cloud binding
-* Apple Watch companion app
-* Natively supports both iPhone and iPad
+Stromkreis is non-profit and open source. Learn more at https://stromkreis.net
 
-Make openHAB the central integration and control point of your Smart Home. 
-You will find openHAB at http://www.openhab.org/
-
-openHAB has over 450 add-ons, supporting over 3000 things, some of which include:
-
-Aiphone, Amazon Dash Button, Amazon Echo Control, AmpliFi, AndroidTV, Anker, Apple HomeKit, Arlo, August, Belkin, Blink, Bosch Smart Home, Bose SoundTouch, Brinks, Chamberlain, Chromecast, Cree, D-Link, Daikin, Denon / Marantz, Dynaudio, Ecobee, Electrolux, Eero, Fibaro, Foscam, Freebox, Gardena, Google Home, Hisense, Honeywell, Honeywell Home, Hue, iRobot, JBL, Jablotron Alarm, Kaleidescape, Kenwood, KNX, Kodi, Kuka, Kwikset, LIFX, LG, Linksys, Logitech, Lutron, Miele Cloud, Miele@home, Moen, Nanoleaf, Neato, Netatmo, Nest, Nortek, Nuki, Osram, Philips Hue, Pioneer, Plex, Powermax, Rako, Ring, Ring Alarm, Roku, Samsung Smartthings, Sennheiser, Sensibo, Shelly, Siemens, SimpliSafe, Smarthome, Smartmeter, Smartthings, Sonos, Sony, Spotify, Squeezebox, Tado, Technics, Tesla, TP-Link Smart Home, TRÅDFRI, Unifi, Velux, Vera, Verisure, Vizio, Volumio, Wemo, Whirlpool, Wink, Xiaomi, Yamaha Musiccast, Yamaha Receiver, Yeelight, Zigbee, Z-Wave and 400 more popular technologies….
+The Stromkreis gateway is built on openHAB; this app is based on the openHAB iOS client (Eclipse Public License 2.0).

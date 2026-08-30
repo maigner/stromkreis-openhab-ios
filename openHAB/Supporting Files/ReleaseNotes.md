@@ -11,7 +11,7 @@ Addressing known issue and bugs:
 * Icons are fixed - App is now able to handle png AND svg icons
 * Long labels are correctly cut off 
 * Accessibility improved by handling changes in font size
-* Reworking the connection to remote myopenhab.org
+* Reworking the connection to remote hac.stromkreis.net
 * Search bar for items was added
 * Authentication with mTLS client certificates
 * Fixed handling push notifications

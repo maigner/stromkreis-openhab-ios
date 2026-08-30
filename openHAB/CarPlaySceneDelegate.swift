@@ -246,7 +246,7 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
             return
         }
 
-        let title = page.title.isEmpty ? "openHAB" : "openHAB – \(page.title)"
+        let title = page.title.isEmpty ? "Stromkreis" : "Stromkreis – \(page.title)"
         let newOrder = widgets.map(\.widgetId)
 
         if #available(iOS 26.0, *),
@@ -393,9 +393,9 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
                 titleVariants: [String(localized: "carplay_not_configured")],
                 image: placeholderButtonImage()
             ) { _ in }
-            return CPGridTemplate(title: "openHAB", gridButtons: [button])
+            return CPGridTemplate(title: "Stromkreis", gridButtons: [button])
         }
         let item = CPInformationItem(title: nil, detail: message)
-        return CPInformationTemplate(title: "openHAB", layout: .leading, items: [item], actions: [])
+        return CPInformationTemplate(title: "Stromkreis", layout: .leading, items: [item], actions: [])
     }
 }

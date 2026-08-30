@@ -48,7 +48,7 @@ final class AppSettings: ObservableObject {
     @Published var activeHomeId: UUID?
 
     init() {
-        let store = UserDefaults(suiteName: "group.openhab.shared") ?? UserDefaults.standard
+        let store = UserDefaults(suiteName: "group.net.stromkreis.app") ?? UserDefaults.standard
 
         if let data = store.data(forKey: "localConnectionConfig"),
            let decoded = try? JSONDecoder().decode(ConnectionConfiguration.self, from: data) {
@@ -197,7 +197,7 @@ final class AppSettings: ObservableObject {
     /// - `group.net.stromkreis.app["storedHomes"]` (UUID-keyed) — read by `Preferences.shared` for App Intents
     static func persistStoredHomes(_ uuidKeyed: [UUID: HomePreferences]) {
         let stringKeyed = Dictionary(uniqueKeysWithValues: uuidKeyed.map { ($0.key.uuidString, $0.value) })
-        let watchStore = UserDefaults(suiteName: "group.openhab.shared") ?? UserDefaults.standard
+        let watchStore = UserDefaults(suiteName: "group.net.stromkreis.app") ?? UserDefaults.standard
         if let data = try? JSONEncoder().encode(stringKeyed) {
             watchStore.set(data, forKey: "watchAllHomes")
         } else {

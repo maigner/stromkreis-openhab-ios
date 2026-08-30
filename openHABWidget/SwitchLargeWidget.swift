@@ -26,8 +26,8 @@ struct SwitchSmallWidget: Widget {
             SwitchWidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
-        .configurationDisplayName("openHAB Switch")
-        .description("Control an openHAB switch item")
+        .configurationDisplayName("Stromkreis Switch")
+        .description("Control a Stromkreis switch item")
         .supportedFamilies([
             .systemSmall,
             .accessoryCircular,
@@ -52,8 +52,8 @@ struct SwitchMediumWidget: Widget {
             SwitchWidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
-        .configurationDisplayName("openHAB Switch")
-        .description("Control two openHAB switch items")
+        .configurationDisplayName("Stromkreis Switch")
+        .description("Control two Stromkreis switch items")
         .supportedFamilies([.systemMedium])
         .widgetContentMarginsDisabled()
     }
@@ -73,8 +73,8 @@ struct SwitchLargeWidget: Widget {
             SwitchWidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
-        .configurationDisplayName("openHAB Switch")
-        .description("Control up to four openHAB switch items")
+        .configurationDisplayName("Stromkreis Switch")
+        .description("Control up to four Stromkreis switch items")
         .supportedFamilies([.systemLarge])
         .widgetContentMarginsDisabled()
     }

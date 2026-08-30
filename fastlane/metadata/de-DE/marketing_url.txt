@@ -1,1 +1,1 @@
-http://www.openhab.org
+https://stromkreis.net

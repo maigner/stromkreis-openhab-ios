@@ -1,3 +1,3 @@
-"NSLocalNetworkUsageDescription" = "openHAB trenger tilgang til ditt lokale nettverk for å koble til openHAB-serveren.";
-"NSCameraUsageDescription" = "openHAB trenger tilgang til kameraet.";
-"NSMicrophoneUsageDescription" = "openHAB trenger tilgang til mikrofonen.";
+"NSLocalNetworkUsageDescription" = "Stromkreis trenger tilgang til ditt lokale nettverk for å koble til Stromkreis-serveren.";
+"NSCameraUsageDescription" = "Stromkreis trenger tilgang til kameraet.";
+"NSMicrophoneUsageDescription" = "Stromkreis trenger tilgang til mikrofonen.";

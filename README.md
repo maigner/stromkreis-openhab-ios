@@ -1,44 +1,23 @@
 <p align="center">
     <img alt="Logo" src="openHAB/Images/Images.xcassets/launchImage.imageset/launchImage.png" width="100">
     <br>
-    <b>openHAB client for iOS</b>
+    <b>Stromkreis client for iOS</b>
 </p>
 
 ## Introduction
 
-This is the IOS native client for openHAB.
+This is the native iOS and Apple Watch app for [Stromkreis](https://stromkreis.net) – the open platform by energy
+communities for energy communities. It connects members of an Austrian energy community (EEG) to their Stromkreis
+gateway at home and, from anywhere, to the Stromkreis Cloud (`https://hac.stromkreis.net`).
+
+The Stromkreis gateway runs on [openHAB](https://www.openhab.org); this app is a fork of the
+[openHAB iOS client](https://github.com/openhab/openhab-ios) (EPL-2.0). Throughout the rest of this document
+"openHAB server" refers to the openHAB instance on your Stromkreis gateway.
 
 <p float="left">
 <img alt="Main UI" src="./doc/mainui.png" width="200">
 <img alt="Sitemap" src="./doc/sitemap.png" width="200">
 </p>
-
-## Download
-
-### openHAB (Current)
-
-This is the primary openHAB app which contains the latest features and is updated regularly. This includes Apple Watch support, enhanced notifications, shortcuts and more.
-Requires at least iOS 18 and openHAB 2.x and later.
-
-<a href="https://itunes.apple.com/us/app/openhab/id6505005945"><img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store"></a>
-
-There are 2 [TestFlight](https://testflight.apple.com) tester groups: 
-
-**Stable Betas** – for those who want to help validate upcoming releases before they reach the App Store - are available on [TestFlight Stable Beta](https://testflight.apple.com/join/0uFYONeF).
-
-**Feature Preview** – for people who enjoy testing new functionality early, even if it’s still under active development:
-[TestFlight Feature Preview](https://testflight.apple.com/join/fxEXH1qV).
-
-<a href="https://testflight.apple.com/join/0uFYONeF"><img src="https://developer.apple.com/assets/elements/icons/testflight/testflight-128x128_2x.png" width="100" alt="Download on TestFlight"></a>
-
-### openHAB V1 (Legacy)
-
-This is the legacy app for users on iOS 17 or earlier as well as openHAB system 1.x and later (tested to at least openHAB 4).
-This app only receives security updates and minor fixes and is not intended for most users. 
-
-<a href="https://itunes.apple.com/us/app/openhab/id492054521?ls=1&mt=8"><img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store"></a>
-
-Beta V1 releases are available on [TestFlight](https://testflight.apple.com/join/563WBakc).
 
 ## Features
 
@@ -74,18 +53,18 @@ Example:
 #### Remote URL
 
 This is the secondary connection to your openHAB instance, a fully qualified URL with a IP or host is required.
-If using the openHAB cloud service, leave this as the default setting of `https://myopenhab.org`.
+If using the Stromkreis Cloud, leave this as the default setting of `https://hac.stromkreis.net`.
 When set to the public cloud, the app will also register for push notifications (as long as credentials are correct)
 
 The [Local URL](#local-url) will be used as the primary connection, and if that fails or is not reachable, falls back to the remote URL.
 
 Example:
-`https://myopenhab.org`
+`https://hac.stromkreis.net`
 
 #### Username / Password
 
 This will be sent if the local or remote server challenges for authentication, or if "Always Send Credentials" is checked on.
-If using the openHAB cloud, these should be set to those login credentials.
+If using the Stromkreis Cloud, these should be set to the cloud login shown on your site page at stromkreis.net.
 
 ### Application Settings
 
@@ -93,7 +72,7 @@ If using the openHAB cloud, these should be set to those login credentials.
 
 Allows the installation of p12 formatted certificates for use in client side authentication setups.
 
-To install a client certificate, rename the certificate with the extension `.ohp12`, then send it to your iOS device (airdrop, icloud, dropbox, etc..), then open/save and select `openHAB` from the "Open In" menu (you may need to select "More..." to see all apps).
+To install a client certificate, rename the certificate with the extension `.ohp12`, then send it to your iOS device (airdrop, icloud, dropbox, etc..), then open/save and select `Stromkreis` from the "Open In" menu (you may need to select "More..." to see all apps).
 
 To delete a certificate, swipe left on the certificate name in the certificate menu 
 
@@ -306,7 +285,7 @@ All actions accept an optional **Home** parameter. When omitted the active home 
 
 If you want to contribute to the iOS application we are here to help you to set up
 development environment. 
-openHAB iOS app is developed using Xcode and the standard iOS SDK from Apple.
+The Stromkreis iOS app is developed using Xcode and the standard iOS SDK from Apple.
 The iOS application targets iOS 18 and watchOS 11 and makes uses of several Swift packages.
 
 To start developing you need an [Apple Developer](https://developer.apple.com/devcenter/ios/index.action) account.

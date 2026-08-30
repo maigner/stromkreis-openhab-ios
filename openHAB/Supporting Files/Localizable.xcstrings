@@ -4106,55 +4106,55 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Das Befehlselement ist ein Fernsteuerungskanal vom openHAB-Server zu dieser App. Die App beobachtet das gewählte Item über den Echtzeit-Ereignis-Stream des Servers. Sobald sich der Zustand des Items ändert, führt die App den neuen Wert sofort als Befehl aus – ohne Push-Benachrichtigung.\n\nUnterstützte Befehle: Navigation zu einer Sitemap oder Main UI-Seite, Senden eines Befehls an ein anderes Item, Auslösen einer Regel, Anzeigen des Bildschirmschoners, Text-to-Speech und Anpassen der Bildschirmhelligkeit.\n\nEs wird dasselbe Befehlsformat verwendet wie bei openHAB-Push-Benachrichtigungsaktionen."
+            "value" : "Das Befehlselement ist ein Fernsteuerungskanal vom Stromkreis-Server zu dieser App. Die App beobachtet das gewählte Item über den Echtzeit-Ereignis-Stream des Servers. Sobald sich der Zustand des Items ändert, führt die App den neuen Wert sofort als Befehl aus – ohne Push-Benachrichtigung.\n\nUnterstützte Befehle: Navigation zu einer Sitemap oder Main UI-Seite, Senden eines Befehls an ein anderes Item, Auslösen einer Regel, Anzeigen des Bildschirmschoners, Text-to-Speech und Anpassen der Bildschirmhelligkeit.\n\nEs wird dasselbe Befehlsformat verwendet wie bei Stromkreis-Push-Benachrichtigungsaktionen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Command Item is a server-to-app remote control channel. The app watches the named item for state changes via the server's real-time event stream. Whenever the item's state changes, the new value is interpreted as a command and executed immediately — without requiring a push notification.\n\nSupported commands include: navigate to a sitemap or Main UI page, send a command to another item, trigger a rule, show the screen saver, text-to-speech output, and adjust screen brightness.\n\nThis uses the same command format as openHAB push notification actions."
+            "value" : "The Command Item is a server-to-app remote control channel. The app watches the named item for state changes via the server's real-time event stream. Whenever the item's state changes, the new value is interpreted as a command and executed immediately — without requiring a push notification.\n\nSupported commands include: navigate to a sitemap or Main UI page, send a command to another item, trigger a rule, show the screen saver, text-to-speech output, and adjust screen brightness.\n\nThis uses the same command format as Stromkreis push notification actions."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "El Elemento de Comando es un canal de control remoto del servidor a la app. La app supervisa el estado del elemento a través del flujo de eventos en tiempo real del servidor. Cuando el estado del elemento cambia, el nuevo valor se interpreta como un comando y se ejecuta de inmediato, sin necesidad de notificación push.\n\nLos comandos admitidos incluyen: navegar a una sitemap o página de la interfaz principal, enviar un comando a otro elemento, activar una regla, mostrar el protector de pantalla, salida de texto a voz y ajustar el brillo de la pantalla.\n\nEsto usa el mismo formato de comando que las acciones de notificación push de openHAB."
+            "value" : "El Elemento de Comando es un canal de control remoto del servidor a la app. La app supervisa el estado del elemento a través del flujo de eventos en tiempo real del servidor. Cuando el estado del elemento cambia, el nuevo valor se interpreta como un comando y se ejecuta de inmediato, sin necesidad de notificación push.\n\nLos comandos admitidos incluyen: navegar a una sitemap o página de la interfaz principal, enviar un comando a otro elemento, activar una regla, mostrar el protector de pantalla, salida de texto a voz y ajustar el brillo de la pantalla.\n\nEsto usa el mismo formato de comando que las acciones de notificación push de Stromkreis."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Komento-elementti on palvelimelta sovellukseen suuntautuva kauko-ohjauskanava. Sovellus tarkkailee nimettyä elementtiä tilamuutoksien varalta palvelimen reaaliaikaisesta tapahtumavirrasta. Aina kun elementin tila muuttuu, uusi arvo tulkitaan komentona ja suoritetaan välittömästi – ilman push-ilmoitusta.\n\nTuettuja komentoja ovat: siirtyminen sivukarttaan tai Main UI -sivulle, komennon lähettäminen toiselle elementille, säännön käynnistäminen, näytönsäästäjän näyttäminen, tekstistä puheeksi -lähtö ja näytön kirkkauden säätäminen.\n\nTämä käyttää samaa komentomuotoa kuin openHAB:n push-ilmoitustoiminnot."
+            "value" : "Komento-elementti on palvelimelta sovellukseen suuntautuva kauko-ohjauskanava. Sovellus tarkkailee nimettyä elementtiä tilamuutoksien varalta palvelimen reaaliaikaisesta tapahtumavirrasta. Aina kun elementin tila muuttuu, uusi arvo tulkitaan komentona ja suoritetaan välittömästi – ilman push-ilmoitusta.\n\nTuettuja komentoja ovat: siirtyminen sivukarttaan tai Main UI -sivulle, komennon lähettäminen toiselle elementille, säännön käynnistäminen, näytönsäästäjän näyttäminen, tekstistä puheeksi -lähtö ja näytön kirkkauden säätäminen.\n\nTämä käyttää samaa komentomuotoa kuin Stromkreis:n push-ilmoitustoiminnot."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "L'Élément de Commande est un canal de contrôle à distance du serveur vers l'application. L'app surveille l'élément nommé pour les changements d'état via le flux d'événements en temps réel du serveur. Chaque fois que l'état de l'élément change, la nouvelle valeur est interprétée comme une commande et exécutée immédiatement — sans nécessiter de notification push.\n\nLes commandes prises en charge incluent : naviguer vers une sitemap ou une page de l'interface principale, envoyer une commande à un autre élément, déclencher une règle, afficher l'économiseur d'écran, la synthèse vocale et régler la luminosité de l'écran.\n\nCela utilise le même format de commande que les actions de notification push d'openHAB."
+            "value" : "L'Élément de Commande est un canal de contrôle à distance du serveur vers l'application. L'app surveille l'élément nommé pour les changements d'état via le flux d'événements en temps réel du serveur. Chaque fois que l'état de l'élément change, la nouvelle valeur est interprétée comme une commande et exécutée immédiatement — sans nécessiter de notification push.\n\nLes commandes prises en charge incluent : naviguer vers une sitemap ou une page de l'interface principale, envoyer une commande à un autre élément, déclencher une règle, afficher l'économiseur d'écran, la synthèse vocale et régler la luminosité de l'écran.\n\nCela utilise le même format de commande que les actions de notification push d'Stromkreis."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "L'Elemento Comando è un canale di controllo remoto dal server all'app. L'app monitora le modifiche di stato dell'elemento tramite il flusso di eventi in tempo reale del server. Ogni volta che lo stato dell'elemento cambia, il nuovo valore viene interpretato come un comando ed eseguito immediatamente, senza richiedere una notifica push.\n\nI comandi supportati includono: navigare verso una sitemap o una pagina dell'interfaccia principale, inviare un comando a un altro elemento, attivare una regola, mostrare lo screensaver, output di sintesi vocale e regolare la luminosità dello schermo.\n\nQuesta funzione utilizza lo stesso formato dei comandi delle azioni di notifica push di openHAB."
+            "value" : "L'Elemento Comando è un canale di controllo remoto dal server all'app. L'app monitora le modifiche di stato dell'elemento tramite il flusso di eventi in tempo reale del server. Ogni volta che lo stato dell'elemento cambia, il nuovo valore viene interpretato come un comando ed eseguito immediatamente, senza richiedere una notifica push.\n\nI comandi supportati includono: navigare verso una sitemap o una pagina dell'interfaccia principale, inviare un comando a un altro elemento, attivare una regola, mostrare lo screensaver, output di sintesi vocale e regolare la luminosità dello schermo.\n\nQuesta funzione utilizza lo stesso formato dei comandi delle azioni di notifica push di Stromkreis."
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kommandoelementet er en fjernkontrollkanal fra serveren til appen. Appen overvåker det navngitte elementet for tilstandsendringer via serverens sanntids-hendelsesstrøm. Når elementets tilstand endres, tolkes den nye verdien som en kommando og utføres umiddelbart – uten å kreve en push-varsling.\n\nStøttede kommandoer inkluderer: navigere til en sitemap eller Main UI-side, sende en kommando til et annet element, utløse en regel, vise skjermsparer, tekst-til-tale-utgang og justere skjermens lysstyrke.\n\nDette bruker det samme kommandoformatet som openHABs push-varslingshandlinger."
+            "value" : "Kommandoelementet er en fjernkontrollkanal fra serveren til appen. Appen overvåker det navngitte elementet for tilstandsendringer via serverens sanntids-hendelsesstrøm. Når elementets tilstand endres, tolkes den nye verdien som en kommando og utføres umiddelbart – uten å kreve en push-varsling.\n\nStøttede kommandoer inkluderer: navigere til en sitemap eller Main UI-side, sende en kommando til et annet element, utløse en regel, vise skjermsparer, tekst-til-tale-utgang og justere skjermens lysstyrke.\n\nDette bruker det samme kommandoformatet som Stromkreiss push-varslingshandlinger."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Het Opdrachtsitem is een kanaal voor bediening op afstand van de server naar de app. De app bewaakt het genoemde item op statuswijzigingen via de realtime-gebeurtenisstroom van de server. Wanneer de status van het item verandert, wordt de nieuwe waarde onmiddellijk als een opdracht geïnterpreteerd en uitgevoerd — zonder pushmelding.\n\nOndersteunde opdrachten zijn: navigeren naar een sitemap of Main UI-pagina, een opdracht naar een ander item sturen, een regel activeren, de schermbeveiliging weergeven, tekst-naar-spraak en de schermhelderheid aanpassen.\n\nHiervoor wordt hetzelfde opdrachtformaat gebruikt als bij openHAB pushmelding-acties."
+            "value" : "Het Opdrachtsitem is een kanaal voor bediening op afstand van de server naar de app. De app bewaakt het genoemde item op statuswijzigingen via de realtime-gebeurtenisstroom van de server. Wanneer de status van het item verandert, wordt de nieuwe waarde onmiddellijk als een opdracht geïnterpreteerd en uitgevoerd — zonder pushmelding.\n\nOndersteunde opdrachten zijn: navigeren naar een sitemap of Main UI-pagina, een opdracht naar een ander item sturen, een regel activeren, de schermbeveiliging weergeven, tekst-naar-spraak en de schermhelderheid aanpassen.\n\nHiervoor wordt hetzelfde opdrachtformaat gebruikt als bij Stromkreis pushmelding-acties."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Командный элемент — это канал дистанционного управления с сервера на приложение. Приложение отслеживает изменения состояния указанного элемента через поток событий сервера в реальном времени. Когда состояние элемента изменяется, новое значение немедленно интерпретируется как команда и выполняется — без push-уведомления.\n\nПоддерживаемые команды включают: переход к Sitemap или странице Main UI, отправку команды другому элементу, запуск правила, отображение экранной заставки, синтез речи из текста и регулировку яркости экрана.\n\nИспользуется тот же формат команд, что и для действий push-уведомлений openHAB."
+            "value" : "Командный элемент — это канал дистанционного управления с сервера на приложение. Приложение отслеживает изменения состояния указанного элемента через поток событий сервера в реальном времени. Когда состояние элемента изменяется, новое значение немедленно интерпретируется как команда и выполняется — без push-уведомления.\n\nПоддерживаемые команды включают: переход к Sitemap или странице Main UI, отправку команды другому элементу, запуск правила, отображение экранной заставки, синтез речи из текста и регулировку яркости экрана.\n\nИспользуется тот же формат команд, что и для действий push-уведомлений Stromkreis."
           }
         }
       }
@@ -4953,56 +4953,56 @@
         }
       }
     },
-    "Control an openHAB switch item" : {
+    "Control a Stromkreis switch item" : {
       "comment" : "Description of the openHAB Switch widget.",
       "isCommentAutoGenerated" : true,
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ein openHAB-Schalterelement steuern"
+            "value" : "Ein Stromkreis-Schalterelement steuern"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Controlar un elemento de interruptor de openHAB"
+            "value" : "Controlar un elemento de interruptor de Stromkreis"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ohjaa openHAB-kytkinkohde"
+            "value" : "Ohjaa Stromkreis-kytkinkohde"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Contrôler un élément commutateur openHAB"
+            "value" : "Contrôler un élément commutateur Stromkreis"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Controlla un elemento interruttore openHAB"
+            "value" : "Controlla un elemento interruttore Stromkreis"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Styr et openHAB-brytterelement"
+            "value" : "Styr et Stromkreis-brytterelement"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Een openHAB-schakelaaritem bedienen"
+            "value" : "Een Stromkreis-schakelaaritem bedienen"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Управлять элементом переключателя openHAB"
+            "value" : "Управлять элементом переключателя Stromkreis"
           }
         }
       }
@@ -5061,110 +5061,110 @@
         }
       }
     },
-    "Control two openHAB switch items" : {
+    "Control two Stromkreis switch items" : {
       "comment" : "Description of the openHAB Switch widget with 2 items.",
       "isCommentAutoGenerated" : true,
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zwei openHAB-Schalterelemente steuern"
+            "value" : "Zwei Stromkreis-Schalterelemente steuern"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Controlar dos elementos de interruptor de openHAB"
+            "value" : "Controlar dos elementos de interruptor de Stromkreis"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ohjaa kahta openHAB-kytkinkohteita"
+            "value" : "Ohjaa kahta Stromkreis-kytkinkohteita"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Contrôler deux éléments commutateur openHAB"
+            "value" : "Contrôler deux éléments commutateur Stromkreis"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Controlla due elementi interruttore openHAB"
+            "value" : "Controlla due elementi interruttore Stromkreis"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Styr to openHAB-brytterelementer"
+            "value" : "Styr to Stromkreis-brytterelementer"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Twee openHAB-schakelaaritems bedienen"
+            "value" : "Twee Stromkreis-schakelaaritems bedienen"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Управлять двумя элементами переключателей openHAB"
+            "value" : "Управлять двумя элементами переключателей Stromkreis"
           }
         }
       }
     },
-    "Control up to four openHAB switch items" : {
+    "Control up to four Stromkreis switch items" : {
       "comment" : "Description of the openHAB Switch widget for large screens.",
       "isCommentAutoGenerated" : true,
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bis zu vier openHAB-Schalterelemente steuern"
+            "value" : "Bis zu vier Stromkreis-Schalterelemente steuern"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Controlar hasta cuatro elementos de interruptor de openHAB"
+            "value" : "Controlar hasta cuatro elementos de interruptor de Stromkreis"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ohjaa enintään neljää openHAB-kytkinkohteita"
+            "value" : "Ohjaa enintään neljää Stromkreis-kytkinkohteita"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Contrôler jusqu'à quatre éléments commutateur openHAB"
+            "value" : "Contrôler jusqu'à quatre éléments commutateur Stromkreis"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Controlla fino a quattro elementi interruttore openHAB"
+            "value" : "Controlla fino a quattro elementi interruttore Stromkreis"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Styr opptil fire openHAB-brytterelementer"
+            "value" : "Styr opptil fire Stromkreis-brytterelementer"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Maximaal vier openHAB-schakelaaritems bedienen"
+            "value" : "Maximaal vier Stromkreis-schakelaaritems bedienen"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Управлять до четырёх элементов переключателей openHAB"
+            "value" : "Управлять до четырёх элементов переключателей Stromkreis"
           }
         }
       }
@@ -6942,55 +6942,55 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OpenHAB entdecken"
+            "value" : "Stromkreis entdecken"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Discovering openHAB"
+            "value" : "Discovering Stromkreis"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descubriendo openHAB"
+            "value" : "Descubriendo Stromkreis"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Discovering openHAB"
+            "value" : "Discovering Stromkreis"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Découvrir openHAB"
+            "value" : "Découvrir Stromkreis"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cercando openHAB"
+            "value" : "Cercando Stromkreis"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oppdager openHAB"
+            "value" : "Oppdager Stromkreis"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bezig met zoeken naar openHAB"
+            "value" : "Bezig met zoeken naar Stromkreis"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Discovering openHAB"
+            "value" : "Discovering Stromkreis"
           }
         }
       }
@@ -7001,217 +7001,217 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB Server werden entdeckt …"
+            "value" : "Stromkreis Server werden entdeckt …"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Discovering openHAB servers…"
+            "value" : "Discovering Stromkreis servers…"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descubriendo servidores openHAB…"
+            "value" : "Descubriendo servidores Stromkreis…"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Etsitään openHAB-palvelimia…"
+            "value" : "Etsitään Stromkreis-palvelimia…"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Recherche des serveurs openHAB…"
+            "value" : "Recherche des serveurs Stromkreis…"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ricerca server openHAB in corso…"
+            "value" : "Ricerca server Stromkreis in corso…"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oppdager openHAB-servere…"
+            "value" : "Oppdager Stromkreis-servere…"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB-servers worden ontdekt…"
+            "value" : "Stromkreis-servers worden ontdekt…"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Обнаружение серверов openHAB…"
+            "value" : "Обнаружение серверов Stromkreis…"
           }
         }
       }
     },
-    "Display an openHAB sensor value" : {
+    "Display a Stromkreis sensor value" : {
       "comment" : "Description of the openHAB sensor widget.",
       "isCommentAutoGenerated" : true,
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Einen openHAB-Sensorwert anzeigen"
+            "value" : "Einen Stromkreis-Sensorwert anzeigen"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mostrar un valor de sensor de openHAB"
+            "value" : "Mostrar un valor de sensor de Stromkreis"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Näytä openHAB-anturiarvo"
+            "value" : "Näytä Stromkreis-anturiarvo"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Afficher une valeur de capteur openHAB"
+            "value" : "Afficher une valeur de capteur Stromkreis"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Visualizza un valore sensore openHAB"
+            "value" : "Visualizza un valore sensore Stromkreis"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vis en openHAB-sensorverdi"
+            "value" : "Vis en Stromkreis-sensorverdi"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Een openHAB-sensorwaarde weergeven"
+            "value" : "Een Stromkreis-sensorwaarde weergeven"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Показать значение датчика openHAB"
+            "value" : "Показать значение датчика Stromkreis"
           }
         }
       }
     },
-    "Display two openHAB sensor values" : {
+    "Display two Stromkreis sensor values" : {
       "comment" : "Description of the SensorMedium widget.",
       "isCommentAutoGenerated" : true,
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zwei openHAB-Sensorwerte anzeigen"
+            "value" : "Zwei Stromkreis-Sensorwerte anzeigen"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mostrar dos valores de sensor de openHAB"
+            "value" : "Mostrar dos valores de sensor de Stromkreis"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Näytä kaksi openHAB-anturiarvoa"
+            "value" : "Näytä kaksi Stromkreis-anturiarvoa"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Afficher deux valeurs de capteur openHAB"
+            "value" : "Afficher deux valeurs de capteur Stromkreis"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Visualizza due valori sensore openHAB"
+            "value" : "Visualizza due valori sensore Stromkreis"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vis to openHAB-sensorverdier"
+            "value" : "Vis to Stromkreis-sensorverdier"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Twee openHAB-sensorwaarden weergeven"
+            "value" : "Twee Stromkreis-sensorwaarden weergeven"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Показать два значения датчиков openHAB"
+            "value" : "Показать два значения датчиков Stromkreis"
           }
         }
       }
     },
-    "Display up to four openHAB sensor values" : {
+    "Display up to four Stromkreis sensor values" : {
       "comment" : "Description of the SensorLarge widget.",
       "isCommentAutoGenerated" : true,
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bis zu vier openHAB-Sensorwerte anzeigen"
+            "value" : "Bis zu vier Stromkreis-Sensorwerte anzeigen"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mostrar hasta cuatro valores de sensor de openHAB"
+            "value" : "Mostrar hasta cuatro valores de sensor de Stromkreis"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Näytä enintään neljä openHAB-anturiarvoa"
+            "value" : "Näytä enintään neljä Stromkreis-anturiarvoa"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Afficher jusqu'à quatre valeurs de capteur openHAB"
+            "value" : "Afficher jusqu'à quatre valeurs de capteur Stromkreis"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Visualizza fino a quattro valori sensore openHAB"
+            "value" : "Visualizza fino a quattro valori sensore Stromkreis"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vis opptil fire openHAB-sensorverdier"
+            "value" : "Vis opptil fire Stromkreis-sensorverdier"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Maximaal vier openHAB-sensorwaarden weergeven"
+            "value" : "Maximaal vier Stromkreis-sensorwaarden weergeven"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Показать до четырёх значений датчиков openHAB"
+            "value" : "Показать до четырёх значений датчиков Stromkreis"
           }
         }
       }
@@ -7514,55 +7514,55 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB lieferte eine leere Sitemap-Liste"
+            "value" : "Stromkreis lieferte eine leere Sitemap-Liste"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB returned empty sitemap list"
+            "value" : "Stromkreis returned empty sitemap list"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "lista de mapas web de openHAB vacía"
+            "value" : "lista de mapas web de Stromkreis vacía"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB returned empty sitemap list"
+            "value" : "Stromkreis returned empty sitemap list"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB a renvoyé une liste vide de sitemaps"
+            "value" : "Stromkreis a renvoyé une liste vide de sitemaps"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB ha ritornato una lista vuota di sitemap"
+            "value" : "Stromkreis ha ritornato una lista vuota di sitemap"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB returnerte en tom Sitemap-liste"
+            "value" : "Stromkreis returnerte en tom Sitemap-liste"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB heeft een lege Sitemap geladen"
+            "value" : "Stromkreis heeft een lege Sitemap geladen"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB returned empty sitemap list"
+            "value" : "Stromkreis returned empty sitemap list"
           }
         }
       }
@@ -13273,55 +13273,55 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB-Secret"
+            "value" : "Stromkreis-Secret"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB Secret"
+            "value" : "Stromkreis Secret"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "código secreto de openHAB"
+            "value" : "código secreto de Stromkreis"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB Secret"
+            "value" : "Stromkreis Secret"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Phrase secrète openHAB"
+            "value" : "Phrase secrète Stromkreis"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB Secret"
+            "value" : "Stromkreis Secret"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB Hemmelighet"
+            "value" : "Stromkreis Hemmelighet"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB geheim"
+            "value" : "Stromkreis geheim"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB Secret"
+            "value" : "Stromkreis Secret"
           }
         }
       }
@@ -13333,55 +13333,55 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB-UUID"
+            "value" : "Stromkreis-UUID"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB UUID"
+            "value" : "Stromkreis UUID"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB UUID"
+            "value" : "Stromkreis UUID"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB UUID"
+            "value" : "Stromkreis UUID"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB UUID"
+            "value" : "Stromkreis UUID"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB UUID"
+            "value" : "Stromkreis UUID"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB UUID"
+            "value" : "Stromkreis UUID"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB UUID"
+            "value" : "Stromkreis UUID"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB UUID"
+            "value" : "Stromkreis UUID"
           }
         }
       }
@@ -13393,55 +13393,55 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB-Version"
+            "value" : "Stromkreis-Version"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB Version"
+            "value" : "Stromkreis Version"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Versión de openHAB"
+            "value" : "Versión de Stromkreis"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB Version"
+            "value" : "Stromkreis Version"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB Version"
+            "value" : "Stromkreis Version"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Versione openHAB"
+            "value" : "Versione Stromkreis"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB versjon"
+            "value" : "Stromkreis versjon"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB Versie"
+            "value" : "Stromkreis Versie"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB Version"
+            "value" : "Stromkreis Version"
           }
         }
       }
@@ -13899,169 +13899,169 @@
         }
       }
     },
-    "openHAB Cloud Service" : {
+    "Stromkreis Cloud Service" : {
       "comment" : "A toggle that allows the user to enable or disable notifications from the openHAB Cloud Service.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB Cloud-Dienst"
+            "value" : "Stromkreis Cloud-Dienst"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB Cloud Service"
+            "value" : "Stromkreis Cloud Service"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Servicio Cloud de openHAB"
+            "value" : "Servicio Cloud de Stromkreis"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB-pilvipalvelu"
+            "value" : "Stromkreis-pilvipalvelu"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Service openHAB Cloud"
+            "value" : "Service Stromkreis Cloud"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Servizio openHAB Cloud"
+            "value" : "Servizio Stromkreis Cloud"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB-skytjeneste"
+            "value" : "Stromkreis-skytjeneste"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB Cloud-dienst"
+            "value" : "Stromkreis Cloud-dienst"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Облачный сервис openHAB"
+            "value" : "Облачный сервис Stromkreis"
           }
         }
       }
     },
-    "openHAB Sensor" : {
+    "Stromkreis Sensor" : {
       "comment" : "Widget title.",
       "isCommentAutoGenerated" : true,
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB-Sensor"
+            "value" : "Stromkreis-Sensor"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sensor de openHAB"
+            "value" : "Sensor de Stromkreis"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB-anturi"
+            "value" : "Stromkreis-anturi"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Capteur openHAB"
+            "value" : "Capteur Stromkreis"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sensore openHAB"
+            "value" : "Sensore Stromkreis"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB-sensor"
+            "value" : "Stromkreis-sensor"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB-sensor"
+            "value" : "Stromkreis-sensor"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Датчик openHAB"
+            "value" : "Датчик Stromkreis"
           }
         }
       }
     },
-    "openHAB Switch" : {
+    "Stromkreis Switch" : {
       "comment" : "Widget name.",
       "isCommentAutoGenerated" : true,
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB-Schalter"
+            "value" : "Stromkreis-Schalter"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Interruptor de openHAB"
+            "value" : "Interruptor de Stromkreis"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB-kytkin"
+            "value" : "Stromkreis-kytkin"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Commutateur openHAB"
+            "value" : "Commutateur Stromkreis"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Interruttore openHAB"
+            "value" : "Interruttore Stromkreis"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB-bryter"
+            "value" : "Stromkreis-bryter"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB-schakelaar"
+            "value" : "Stromkreis-schakelaar"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Переключатель openHAB"
+            "value" : "Переключатель Stromkreis"
           }
         }
       }
@@ -14073,55 +14073,55 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB Verbindung"
+            "value" : "Stromkreis Verbindung"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB Connection"
+            "value" : "Stromkreis Connection"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "conexión openHAB"
+            "value" : "conexión Stromkreis"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB Connection"
+            "value" : "Stromkreis Connection"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Connexion openHAB"
+            "value" : "Connexion Stromkreis"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Connessione openHAB"
+            "value" : "Connessione Stromkreis"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB Tilkobling"
+            "value" : "Stromkreis Tilkobling"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "openHAB Verbinding"
+            "value" : "Stromkreis Verbinding"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "подключение к OpenHAB"
+            "value" : "подключение к Stromkreis"
           }
         }
       }
@@ -16231,55 +16231,55 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Suche openHAB Items"
+            "value" : "Suche Stromkreis Items"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Search openHAB items"
+            "value" : "Search Stromkreis items"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Buscar ítems en openHAB"
+            "value" : "Buscar ítems en Stromkreis"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Search openHAB items"
+            "value" : "Search Stromkreis items"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rechercher des items openHAB"
+            "value" : "Rechercher des items Stromkreis"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cerca Item openHAB"
+            "value" : "Cerca Item Stromkreis"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Søk i openHAB Items"
+            "value" : "Søk i Stromkreis Items"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zoek openHAB items"
+            "value" : "Zoek Stromkreis items"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Search openHAB items"
+            "value" : "Search Stromkreis items"
           }
         }
       }
@@ -22029,56 +22029,56 @@
         }
       }
     },
-    "Switch the active home in the openHAB app" : {
+    "Switch the active home in the Stromkreis app" : {
       "comment" : "Description of the intent to set the active home.",
       "isCommentAutoGenerated" : true,
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aktives Zuhause in der openHAB-App wechseln"
+            "value" : "Aktives Zuhause in der Stromkreis-App wechseln"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cambiar la casa activa en la app openHAB"
+            "value" : "Cambiar la casa activa en la app Stromkreis"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vaihda aktiivinen koti openHAB-sovelluksessa"
+            "value" : "Vaihda aktiivinen koti Stromkreis-sovelluksessa"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Changer le domicile actif dans l'application openHAB"
+            "value" : "Changer le domicile actif dans l'application Stromkreis"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cambia la casa attiva nell'app openHAB"
+            "value" : "Cambia la casa attiva nell'app Stromkreis"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bytt aktivt hjem i openHAB-appen"
+            "value" : "Bytt aktivt hjem i Stromkreis-appen"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Actief thuis wijzigen in de openHAB-app"
+            "value" : "Actief thuis wijzigen in de Stromkreis-app"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сменить активный дом в приложении openHAB"
+            "value" : "Сменить активный дом в приложении Stromkreis"
           }
         }
       }
@@ -22778,56 +22778,56 @@
         }
       }
     },
-    "To connect to your local openHAB server, please allow Local Network access when prompted. If you previously denied it, enable it in Settings → Privacy & Security → Local Network." : {
+    "To connect to your local Stromkreis server, please allow Local Network access when prompted. If you previously denied it, enable it in Settings → Privacy & Security → Local Network." : {
       "comment" : "A message displayed in the alert when the user tries to connect to a local openHAB server.",
       "isCommentAutoGenerated" : true,
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Um eine Verbindung zu deinem lokalen openHAB-Server herzustellen, erlauben bitte den Zugriff auf das lokale Netzwerk, wenn du dazu aufgefordert wirst. Wenn du es zuvor abgelehnt hast, aktiviere es unter Einstellungen → Datenschutz & Sicherheit → Lokales Netzwerk."
+            "value" : "Um eine Verbindung zu deinem lokalen Stromkreis-Server herzustellen, erlauben bitte den Zugriff auf das lokale Netzwerk, wenn du dazu aufgefordert wirst. Wenn du es zuvor abgelehnt hast, aktiviere es unter Einstellungen → Datenschutz & Sicherheit → Lokales Netzwerk."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Para conectarte a tu servidor openHAB local, permite el acceso a la Red Local cuando se te solicite. Si anteriormente lo denegaste, actívalo en Ajustes → Privacidad y Seguridad → Red Local."
+            "value" : "Para conectarte a tu servidor Stromkreis local, permite el acceso a la Red Local cuando se te solicite. Si anteriormente lo denegaste, actívalo en Ajustes → Privacidad y Seguridad → Red Local."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yhdistääksesi paikalliseen openHAB-palvelimeen, salli lähiverkkoyhteys pyydettäessä. Jos olet aiemmin kieltänyt sen, ota se käyttöön kohdassa Asetukset → Yksityisyys ja turvallisuus → Lähiverkko."
+            "value" : "Yhdistääksesi paikalliseen Stromkreis-palvelimeen, salli lähiverkkoyhteys pyydettäessä. Jos olet aiemmin kieltänyt sen, ota se käyttöön kohdassa Asetukset → Yksityisyys ja turvallisuus → Lähiverkko."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pour te connecter à ton serveur openHAB local, autorise l’accès au réseau local lorsque tu y es invité. Si tu l’as précédemment refusé, active-le dans Réglages → Confidentialité et sécurité → Réseau local."
+            "value" : "Pour te connecter à ton serveur Stromkreis local, autorise l’accès au réseau local lorsque tu y es invité. Si tu l’as précédemment refusé, active-le dans Réglages → Confidentialité et sécurité → Réseau local."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Per connetterti al tuo server openHAB locale, consenti l'accesso alla rete locale quando richiesto. Se in precedenza hai negato l'accesso, abilitalo in Impostazioni → Privacy e sicurezza → Rete locale."
+            "value" : "Per connetterti al tuo server Stromkreis locale, consenti l'accesso alla rete locale quando richiesto. Se in precedenza hai negato l'accesso, abilitalo in Impostazioni → Privacy e sicurezza → Rete locale."
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "For å koble til din lokale openHAB-server, vennligst tillat tilgang til lokalt nettverk når du blir bedt om det. Hvis du tidligere nektet det, aktiver det i Innstillinger → Personvern og sikkerhet → Lokalt nettverk."
+            "value" : "For å koble til din lokale Stromkreis-server, vennligst tillat tilgang til lokalt nettverk når du blir bedt om det. Hvis du tidligere nektet det, aktiver det i Innstillinger → Personvern og sikkerhet → Lokalt nettverk."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Om verbinding te maken met uw lokale openHAB-server, sta toegang tot het lokale netwerk toe wanneer hierom wordt gevraagd. Als u dit eerder heeft geweigerd, schakel het in via Instellingen → Privacy en beveiliging → Lokaal netwerk."
+            "value" : "Om verbinding te maken met uw lokale Stromkreis-server, sta toegang tot het lokale netwerk toe wanneer hierom wordt gevraagd. Als u dit eerder heeft geweigerd, schakel het in via Instellingen → Privacy en beveiliging → Lokaal netwerk."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Чтобы подключиться к локальному серверу openHAB, разрешите доступ к локальной сети при появлении запроса. Если вы ранее отказали, включите это в Настройках → Конфиденциальность и безопасность → Локальная сеть."
+            "value" : "Чтобы подключиться к локальному серверу Stromkreis, разрешите доступ к локальной сети при появлении запроса. Если вы ранее отказали, включите это в Настройках → Конфиденциальность и безопасность → Локальная сеть."
           }
         }
       }

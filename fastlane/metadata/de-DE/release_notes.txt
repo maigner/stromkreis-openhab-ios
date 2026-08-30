@@ -1,3 +1,1 @@
-Unterstützung für die openHAB 3.3 Main UI
-Verbesserte Netzwerkausfallsicherheit 
-Verbessertes Layout der Einstellungen
+Erste Stromkreis-Version.

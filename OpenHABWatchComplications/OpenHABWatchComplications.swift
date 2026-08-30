@@ -43,7 +43,7 @@ struct OpenHABComplicationEntryView: View {
             .containerBackground(for: .widget) {
                 AccessoryWidgetBackground()
             }
-            .accessibilityLabel("openHAB App")
+            .accessibilityLabel("Stromkreis App")
     }
 
     @ViewBuilder
@@ -72,8 +72,8 @@ struct OpenHABWatchComplications: Widget {
         StaticConfiguration(kind: kind, provider: OpenHABWatchComplicationsProvider()) { entry in
             OpenHABComplicationEntryView(entry: entry)
         }
-        .configurationDisplayName("openHAB App")
-        .description("Open the openHAB app.")
+        .configurationDisplayName("Stromkreis App")
+        .description("Open the Stromkreis app.")
         .supportedFamilies([
             .accessoryCircular,
             .accessoryCorner

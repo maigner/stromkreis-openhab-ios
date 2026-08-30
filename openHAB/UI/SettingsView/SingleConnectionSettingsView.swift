@@ -208,7 +208,7 @@ struct SingleConnectionSettingsView: View {
                 .opacity(0.8)
 
             if showNotificationToggle {
-                Toggle("openHAB Cloud Service", isOn: $connectionConfig.supportsNotifications)
+                Toggle("Stromkreis Cloud", isOn: $connectionConfig.supportsNotifications)
                     .font(.caption)
                     .opacity(0.8)
             }

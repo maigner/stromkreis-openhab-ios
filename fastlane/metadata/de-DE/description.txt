@@ -1,18 +1,13 @@
-Dies ist die native iOS- und Apple Watch-Begleit-App für openHAB – ein Open-Source-Hausautomationssystem.
+Stromkreis ist die offene Plattform von Energiegemeinschaften für Energiegemeinschaften. Diese App verbindet Mitglieder einer österreichischen Energiegemeinschaft (EEG) mit ihrem Stromkreis-Gateway zu Hause und mit der Stromkreis-Cloud.
 
-Das open Home Automation Bus (openHAB) Projekt zielt darauf ab, eine universelle Integrationsplattform bereitzustellen, die Heimautomationstechnologien in ein einziges intelligentes System integriert. Mit mehr als 3000 Geräten, die openHAB verbinden kann, gibt es praktisch nichts, was nicht integriert werden kann. Seine fortschrittliche, regelbasierte Architektur ermöglicht die vollständige Automatisierung mit mehreren beliebten Skriptsprachen (Java Script, Ruby, Python, Java, RDSL und mehr) sowie visuellen Regel-Designern, die entweder Drag-and-Drop-Schnittstellen oder einfache "Wenn/Dann"-Formulare verwenden. Die neue openHAB-Benutzeroberfläche ermöglicht es Benutzern, problemlos schöne Schnittstellen zu erstellen, die an ihre Bedürfnisse angepasst sind. openHAB ist so konzipiert, dass es absolut herstellerneutral sowie hardware-/protokollunabhängig ist.
+Funktionen:
 
-iOS-Hauptfunktionen:
+* Live-Ansicht von PV-Anlage, Heimspeicher und Netzeinspeisung
+* Prognosegesteuertes Batteriemanagement: Speicher laden, wenn es der Gemeinschaft nützt
+* Fernzugriff auf das Gateway von unterwegs über die Stromkreis-Cloud (https://hac.stromkreis.net)
+* Apple-Watch-App, Widgets und Siri-Kurzbefehle
+* Native Unterstützung für iPhone und iPad
 
-* Integriert sich nahtlos in Ihre eigene openHAB-Benutzeroberfläche (Hauptbenutzeroberfläche oder Sitemaps)
-* Steuern Sie alles auf Ihrem openHAB-Server direkt oder remote über den kostenlosen openHAB Cloud-Service (https://myopenhab.org)
-* Verbesserte Push-Benachrichtigungen mit Medien von openHAB Cloud und dem openHAB-Cloud-Binding
-* Apple Watch-Begleit-App
-* Unterstützt nativ sowohl iPhone als auch iPad
+Stromkreis ist gemeinnützig und quelloffen. Mehr unter https://stromkreis.net
 
-Machen Sie openHAB zum zentralen Integrations- und Steuerungspunkt Ihres Smart Home.
-Sie finden openHAB unter http://www.openhab.org/
-
-openHAB hat über 450 Add-Ons, die über 3000 Geräte unterstützen, darunter:
-
-Aiphone, Amazon Dash Button, Amazon Echo Control, AmpliFi, AndroidTV, Anker, Apple HomeKit, Arlo, August, Belkin, Blink, Bosch Smart Home, Bose SoundTouch, Brinks, Chamberlain, Chromecast, Cree, D-Link, Daikin, Denon / Marantz, Dynaudio, Ecobee, Electrolux, Eero, Fibaro, Foscam, Freebox, Gardena, Google Home, Hisense, Honeywell, Honeywell Home, Hue, iRobot, JBL, Jablotron Alarm, Kaleidescape, Kenwood, KNX, Kodi, Kuka, Kwikset, LIFX, LG, Linksys, Logitech, Lutron, Miele Cloud, Miele@home, Moen, Nanoleaf, Neato, Netatmo, Nest, Nortek, Nuki, Osram, Philips Hue, Pioneer, Plex, Powermax, Rako, Ring, Ring Alarm, Roku, Samsung Smartthings, Sennheiser, Sensibo, Shelly, Siemens, SimpliSafe, Smarthome, Smartmeter, Smartthings, Sonos, Sony, Spotify, Squeezebox, Tado, Technics, Tesla, TP-Link Smart Home, TRÅDFRI, Unifi, Velux, Vera, Verisure, Vizio, Volumio, Wemo, Whirlpool, Wink, Xiaomi, Yamaha Musiccast, Yamaha Receiver, Yeelight, Zigbee, Z-Wave und 400 weitere beliebte Technologien.
+Das Stromkreis-Gateway basiert auf openHAB; diese App basiert auf dem openHAB-iOS-Client (Eclipse Public License 2.0).

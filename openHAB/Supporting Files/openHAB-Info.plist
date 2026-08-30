@@ -12,7 +12,7 @@
 			<key>CFBundleTypeIconFiles</key>
 			<array/>
 			<key>CFBundleTypeName</key>
-			<string>openHAB Client Certificate</string>
+			<string>Stromkreis Client Certificate</string>
 			<key>LSHandlerRank</key>
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
@@ -74,13 +74,13 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Stromkreis needs access to your camera.</string>
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>stromkreis needs access to your local network to connect with the server.</string>
+	<string>Stromkreis needs access to your local network to connect with the server.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>stromkreis needs access to your microphone.</string>
+	<string>Stromkreis needs access to your microphone.</string>
 	<key>NSPrincipalClass</key>
 	<string>$(PRODUCT_MODULE_NAME).ActivityTrackingApplication</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>stromkreis needs access for speech recognition.</string>
+	<string>Stromkreis needs access for speech recognition.</string>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>OpenHABGetItemStateIntent</string>
@@ -150,7 +150,7 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>OpenHAB Client Certificate</string>
+			<string>Stromkreis Client Certificate</string>
 			<key>UTTypeIdentifier</key>
 			<string>openhab.p12</string>
 			<key>UTTypeTagSpecification</key>

@@ -140,7 +140,7 @@ struct HomeSettingsView: View {
                 dismiss()
             }
         } message: {
-            Text("To connect to your local openHAB server, please allow Local Network access when prompted. If you previously denied it, enable it in Settings → Privacy & Security → Local Network.")
+            Text("To connect to your local Stromkreis server, please allow Local Network access when prompted. If you previously denied it, enable it in Settings → Privacy & Security → Local Network.")
         }
         .toolbar { settingsToolbar }
         .onDisappear(perform: handleSwipeDismiss)

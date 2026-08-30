@@ -1,6 +1,6 @@
 files:
-  - source: /openHAB/Resources/en.lproj/*.strings
-    translation: /openHAB/Resources/%osx_locale%.lproj/%original_file_name%
+  - source: /openHAB/Supporting Files/en.lproj/*.strings
+    translation: /openHAB/Supporting Files/%osx_locale%.lproj/%original_file_name%
     languages_mapping:
       osx_locale:
         pt-BR: pt-BR

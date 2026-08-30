@@ -18,7 +18,7 @@ struct SetActiveHomeIntent: AppIntent {
     }
 
     static let title: LocalizedStringResource = "Set Active Home"
-    static let description = IntentDescription("Switch the active home in the openHAB app")
+    static let description = IntentDescription("Switch the active home in the Stromkreis app")
 
     static var parameterSummary: some ParameterSummary {
         Summary("Set active home to \(\.$home)")

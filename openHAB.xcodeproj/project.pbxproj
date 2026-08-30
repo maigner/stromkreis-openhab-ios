@@ -1080,7 +1080,7 @@
 				DEVELOPMENT_TEAM = 6U7435AK45;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = openHABWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = openHABWidget;
+				INFOPLIST_KEY_CFBundleDisplayName = "Stromkreis Widget";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 openHAB e.V. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1117,7 +1117,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OpenHABWatchComplications/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = OpenHABWatchComplications;
+				INFOPLIST_KEY_CFBundleDisplayName = "Stromkreis Complications";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 openHAB e.V. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1163,7 +1163,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OpenHABWatchComplications/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = OpenHABWatchComplications;
+				INFOPLIST_KEY_CFBundleDisplayName = "Stromkreis Complications";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 openHAB e.V. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1278,7 +1278,7 @@
 				DEVELOPMENT_TEAM = 6U7435AK45;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = openHABWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = openHABWidget;
+				INFOPLIST_KEY_CFBundleDisplayName = "Stromkreis Widget";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 openHAB e.V. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1391,7 +1391,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = openHABWatch/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = openHAB;
+				INFOPLIST_KEY_CFBundleDisplayName = Stromkreis;
 				INFOPLIST_KEY_CLKComplicationPrincipalClass = openHABWatch.ComplicationController;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = net.stromkreis.app;
@@ -1435,7 +1435,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = openHABWatch/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = openHAB;
+				INFOPLIST_KEY_CFBundleDisplayName = Stromkreis;
 				INFOPLIST_KEY_CLKComplicationPrincipalClass = openHABWatch.ComplicationController;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = net.stromkreis.app;
@@ -1901,7 +1901,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "openHAB/openHAB-Prefix.pch";
 				INFOPLIST_FILE = "openHAB/Supporting Files/openHAB-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = openHAB;
+				INFOPLIST_KEY_CFBundleDisplayName = Stromkreis;
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1948,7 +1948,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "openHAB/openHAB-Prefix.pch";
 				INFOPLIST_FILE = "openHAB/Supporting Files/openHAB-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = openHAB;
+				INFOPLIST_KEY_CFBundleDisplayName = Stromkreis;
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -26,8 +26,8 @@ struct SensorSmallWidget: Widget {
             SensorWidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
-        .configurationDisplayName("openHAB Sensor")
-        .description("Display an openHAB sensor value")
+        .configurationDisplayName("Stromkreis Sensor")
+        .description("Display a Stromkreis sensor value")
         .supportedFamilies([
             .systemSmall,
             .accessoryCircular,
@@ -52,8 +52,8 @@ struct SensorMediumWidget: Widget {
             SensorWidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
-        .configurationDisplayName("openHAB Sensor")
-        .description("Display two openHAB sensor values")
+        .configurationDisplayName("Stromkreis Sensor")
+        .description("Display two Stromkreis sensor values")
         .supportedFamilies([.systemMedium])
         .widgetContentMarginsDisabled()
     }
@@ -73,8 +73,8 @@ struct SensorLargeWidget: Widget {
             SensorWidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
-        .configurationDisplayName("openHAB Sensor")
-        .description("Display up to four openHAB sensor values")
+        .configurationDisplayName("Stromkreis Sensor")
+        .description("Display up to four Stromkreis sensor values")
         .supportedFamilies([.systemLarge])
         .widgetContentMarginsDisabled()
     }
