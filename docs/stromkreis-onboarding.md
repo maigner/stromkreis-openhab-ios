@@ -28,9 +28,20 @@ has a cloud login (URL + username + password) the app shows the onboarding scree
 Any `https` host is accepted for the `/app/setup/…` form (self-hosted platforms); the origin of the
 link is used to redeem the token. Parsing lives in `OpenHABCore/Sources/OpenHABCore/Util/StromkreisSetup.swift`.
 
-## Server contract (to implement in the `stromkreis` platform)
+## Server contract (implemented in the `stromkreis` platform, commit `5523f69`)
 
-Token redemption — unauthenticated, the token is the credential:
+Platform side lives in `platform/src/lib/server/app-setup.js`, `platform/src/routes/api/app/setup/v1/`,
+`platform/src/routes/app/setup/[token]/` and `platform/src/routes/.well-known/apple-app-site-association/`.
+
+- **Token**: 24 random bytes, base64url (`A–Z a–z 0–9 - _`), only its SHA-256 hash is stored in
+  `app_setup_token` (`tenant_id, site_id, token_hash, expires_at, used_at`). Valid **7 days**; creating a
+  new code for a site invalidates the old one. Created by the admin on `/intern/anlagen/[id]` (tab
+  *App-Einrichtung*, action `app_code_erzeugen`); link and QR are shown exactly once.
+- **QR content / link**: `https://stromkreis.net/app/setup/<token>` (from `platformBaseUrl()`).
+- **Fallback page** `/app/setup/[token]` (public, checks the token without consuming it): steps for
+  members, button *In der App öffnen* → `stromkreis://setup?token=<token>&origin=https://stromkreis.net`,
+  and the QR code for the desktop case.
+- **Redeem** — unauthenticated, the token is the credential; POST so it never lands in access logs:
 
 ```
 POST /api/app/setup/v1
@@ -39,36 +50,33 @@ Content-Type: application/json
 {"token": "<one-time token>"}
 ```
 
-Success `200`:
+Success `200` (token is consumed only after the password was decrypted successfully):
 
 ```json
 {
-  "cloudUrl": "https://hac.stromkreis.net",   // optional, defaults to hac.stromkreis.net
+  "cloudUrl": "https://hac.stromkreis.net",   // CLOUD_BASE_URL of the platform
   "username": "anlage-7@stromkreis.net",      // battery_site.cloud_username
-  "password": "abcdefghi123",                 // decrypted battery_site.cloud_password
-  "siteName": "Haus Mustermann"               // optional, becomes the home name in the app
+  "password": "kqzrtwmnb482",                 // decrypted battery_site.cloud_password
+  "siteName": "Haus Muster"                   // battery_site.name → home name in the app
 }
 ```
 
-Failure: any non-2xx; optional `{"error": "human readable reason"}` is shown verbatim. The app treats
-401/403/404/410 without a message as "invalid or already used".
+Errors carry `{"error": "<German text>"}` which the app shows verbatim:
 
-Suggested implementation on the platform (mirrors the existing `login_token` pattern):
+| Status | Meaning |
+|---|---|
+| `400` | malformed request / missing token |
+| `409` | site has no cloud account yet — token is **not** consumed, retry later with the same code |
+| `410` | token unknown, expired or already used |
+| `500` | stored password could not be decrypted |
 
-- table `app_setup_token (id, tenant_id, site_id, token_hash, expires_at, used_at, created_at)`;
-  create from the `/intern/anlagen/[id]` page ("App-Einrichtungscode erzeugen"), e.g. 7 days validity;
-- page `/app/setup/[token]` that renders the QR code (content = the page's own URL) plus an
-  "In der App öffnen" button, and explains the steps for members without the app installed;
-- `POST /api/app/setup/v1` consuming the token once (`used_at`), returning the JSON above;
-- `static/.well-known/apple-app-site-association` served as `application/json` without redirect:
+- **Universal links**: `/.well-known/apple-app-site-association` is served as JSON for
+  `6U7435AK45.net.stromkreis.app` with `/app/setup/*` and `/app/setup?token=*`. The app declares
+  `applinks:stromkreis.net` / `applinks:www.stromkreis.net` and signs with team `6U7435AK45`, so links
+  open the app directly once the platform is deployed. `stromkreis://` links work without that.
 
-```json
-{"applinks":{"details":[{"appIDs":["<TEAMID>.net.stromkreis.app"],"components":[{"/":"/app/setup/*"},{"/":"/app/setup","?":{"token":"*"}}]}]}}
-```
-
-The app declares `applinks:stromkreis.net` and `applinks:www.stromkreis.net` in its entitlements;
-universal links only work once the AASA file is live and the app is signed with the matching team.
-`stromkreis://` links work immediately without server support.
+The app's redeem path is tested against these exact responses in
+`OpenHABCore/Tests/OpenHABCoreTests/StromkreisSetupRedeemTests.swift`.
 
 ## In-app
 
