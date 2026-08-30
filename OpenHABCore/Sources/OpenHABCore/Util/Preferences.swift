@@ -90,10 +90,9 @@ public struct UserDefaultObject<T: Codable & Sendable> {
 public struct HomePreferences: Codable, Equatable {
     public let id: UUID
     public var defaultView = "web"
-    public var demomode = true
     public var realTimeSliders = false
     public var iconType = 0
-    public var defaultSitemap = "demo"
+    public var defaultSitemap = ""
     public var sortSitemapsBy = 0
     // Backing store for `sitemapNameLabelDisplayMode`. Optional on purpose: synthesized
     // `Codable` throws `keyNotFound` for a missing *non-optional* key (even one
@@ -129,12 +128,10 @@ public struct HomePreferences: Codable, Equatable {
         self.id = id
     }
 
-    /// The connection configurations the network tracker uses for this home: the shared
-    /// demo connection in demo mode, otherwise the local and remote connections. Two demo
-    /// homes therefore resolve to the same set, which is why the tracker does not
-    /// re-publish when switching between them.
+    /// The connection configurations the network tracker uses for this home: the local
+    /// and remote (Stromkreis Cloud) connections, skipping any whose URL is empty.
     public var trackedConnections: [ConnectionConfiguration] {
-        demomode ? [.demo] : [localConnectionConfig, remoteConnectionConfig]
+        [localConnectionConfig, remoteConnectionConfig].filter { !$0.url.isEmpty }
     }
 
     /// Custom decoder so that stored data from older app versions that are missing
@@ -146,10 +143,9 @@ public struct HomePreferences: Codable, Equatable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(UUID.self, forKey: .id)
         defaultView = try container.decodeIfPresent(String.self, forKey: .defaultView) ?? "web"
-        demomode = try container.decodeIfPresent(Bool.self, forKey: .demomode) ?? true
         realTimeSliders = try container.decodeIfPresent(Bool.self, forKey: .realTimeSliders) ?? false
         iconType = try container.decodeIfPresent(Int.self, forKey: .iconType) ?? 0
-        defaultSitemap = try container.decodeIfPresent(String.self, forKey: .defaultSitemap) ?? "demo"
+        defaultSitemap = try container.decodeIfPresent(String.self, forKey: .defaultSitemap) ?? ""
         sortSitemapsBy = try container.decodeIfPresent(Int.self, forKey: .sortSitemapsBy) ?? 0
         defaultMainUIPath = try container.decodeIfPresent(String.self, forKey: .defaultMainUIPath) ?? ""
         alwaysAllowWebRTC = try container.decodeIfPresent(Bool.self, forKey: .alwaysAllowWebRTC) ?? false
@@ -595,7 +591,6 @@ public extension Preferences {
             currentHomePreferences.remoteConnectionConfig.password = UserDefaults.standard.string(forKey: "password") ?? currentHomePreferences.remoteConnectionConfig.password
             currentHomePreferences.remoteConnectionConfig.alwaysSendBasicAuth = UserDefaults.standard.object(forKey: "alwaysSendCreds") as? Bool ?? currentHomePreferences.remoteConnectionConfig.alwaysSendBasicAuth
             currentHomePreferences.remoteConnectionConfig.ignoreSSL = UserDefaults.standard.object(forKey: "ignoreSSL") as? Bool ?? currentHomePreferences.remoteConnectionConfig.ignoreSSL
-            currentHomePreferences.demomode = UserDefaults.standard.object(forKey: "demomode") as? Bool ?? currentHomePreferences.demomode
             currentHomePreferences.realTimeSliders = UserDefaults.standard.object(forKey: "realTimeSliders") as? Bool ?? currentHomePreferences.realTimeSliders
             currentHomePreferences.iconType = UserDefaults.standard.object(forKey: "iconType") as? Int ?? currentHomePreferences.iconType
             currentHomePreferences.defaultSitemap = UserDefaults.standard.string(forKey: "defaultSitemap") ?? currentHomePreferences.defaultSitemap
@@ -637,7 +632,6 @@ public extension Preferences {
         // Save to Preferences
         Preferences.shared.modifyActiveHome { currentHomePreferences in
             currentHomePreferences.defaultView = sharedDefaults.string(forKey: "defaultView") ?? currentHomePreferences.defaultView
-            currentHomePreferences.demomode = sharedDefaults.object(forKey: "demomode") as? Bool ?? currentHomePreferences.demomode
             currentHomePreferences.realTimeSliders = sharedDefaults.object(forKey: "realTimeSliders") as? Bool ?? currentHomePreferences.realTimeSliders
             currentHomePreferences.iconType = sharedDefaults.object(forKey: "iconType") as? Int ?? currentHomePreferences.iconType
             currentHomePreferences.defaultSitemap = sharedDefaults.string(forKey: "defaultSitemap") ?? currentHomePreferences.defaultSitemap
@@ -702,7 +696,7 @@ public extension Preferences {
 
 public extension ConnectionConfiguration {
     static let localDefault = ConnectionConfiguration(
-        url: "https://openhab.local:8443",
+        url: "",
         username: "",
         password: "",
         alwaysSendBasicAuth: false,
@@ -712,7 +706,7 @@ public extension ConnectionConfiguration {
     )
 
     static let remoteDefault = ConnectionConfiguration(
-        url: "https://myopenhab.org",
+        url: "https://hac.stromkreis.net",
         username: "",
         password: "",
         alwaysSendBasicAuth: false,
@@ -721,12 +715,4 @@ public extension ConnectionConfiguration {
         priority: 1
     )
 
-    /// The single connection every demo home is tracked against, regardless of its
-    /// stored local/remote configuration.
-    static let demo = ConnectionConfiguration(
-        url: "https://demo.openhab.org",
-        username: "",
-        password: "",
-        priority: 0
-    )
 }

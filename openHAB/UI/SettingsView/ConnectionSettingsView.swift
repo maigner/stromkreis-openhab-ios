@@ -14,7 +14,6 @@ import SFSafeSymbols
 import SwiftUI
 
 struct ConnectionSettingsView: View {
-    @Binding var settingsDemomode: Bool
     @Binding var localConnectionConfiguration: ConnectionConfiguration
     @Binding var remoteConnectionConfiguration: ConnectionConfiguration
     @Binding var localTestedOKURL: String
@@ -22,20 +21,12 @@ struct ConnectionSettingsView: View {
     @State private var remoteTestedOKURL = ""
 
     var body: some View {
-        Toggle("Demo Mode", isOn: $settingsDemomode)
-            .accessibilityIdentifier("Demo Mode")
-
-        if !settingsDemomode {
-            Group {
-                SingleConnectionSettingsView(headerText: String(localized: "Local server"), isLocalConnection: true, connectionConfig: $localConnectionConfiguration, showNotificationToggle: false, testedOKURL: $localTestedOKURL)
-                SingleConnectionSettingsView(headerText: String(localized: "Remote server"), connectionConfig: $remoteConnectionConfiguration, showNotificationToggle: true, testedOKURL: $remoteTestedOKURL)
-            }
-        }
+        SingleConnectionSettingsView(headerText: String(localized: "Stromkreis Cloud"), connectionConfig: $remoteConnectionConfiguration, showNotificationToggle: true, testedOKURL: $remoteTestedOKURL)
+        SingleConnectionSettingsView(headerText: String(localized: "Local server"), isLocalConnection: true, connectionConfig: $localConnectionConfiguration, showNotificationToggle: false, testedOKURL: $localTestedOKURL)
     }
 }
 
 #Preview {
-    @Previewable @State var demoMode = false
     @Previewable @State var connectionConfig1 = ConnectionConfiguration(
         url: "https://openhab.local:8443",
         username: "user",
@@ -50,7 +41,6 @@ struct ConnectionSettingsView: View {
     NavigationStack {
         Form {
             ConnectionSettingsView(
-                settingsDemomode: $demoMode,
                 localConnectionConfiguration: $connectionConfig1,
                 remoteConnectionConfiguration: $connectionConfig2,
                 localTestedOKURL: .constant("")

@@ -31,7 +31,7 @@ struct HomePreferencesDecodingTests {
                 "priority": 0
             },
             "remoteConnectionConfig": {
-                "url": "https://myopenhab.org",
+                "url": "https://hac.stromkreis.net",
                 "alwaysSendBasicAuth": false,
                 "ignoreSSL": false,
                 "priority": 1
@@ -42,9 +42,8 @@ struct HomePreferencesDecodingTests {
 
         #expect(prefs.homeName == "My House")
         #expect(prefs.localConnectionConfig.url == "https://local.example.com")
-        #expect(prefs.remoteConnectionConfig.url == "https://myopenhab.org")
+        #expect(prefs.remoteConnectionConfig.url == "https://hac.stromkreis.net")
         // Missing HomePreferences fields must fall back to their struct defaults
-        #expect(prefs.demomode == true)
         #expect(prefs.alwaysAllowWebRTC == false)
         #expect(prefs.sortSitemapsBy == 0)
         // Local config: missing supportsNotifications must default to false
@@ -61,7 +60,6 @@ struct HomePreferencesDecodingTests {
         let prefs = try JSONDecoder().decode(HomePreferences.self, from: Data(json.utf8))
 
         #expect(prefs.homeName == "Home#1")
-        #expect(prefs.demomode == true)
         #expect(prefs.localConnectionConfig == .localDefault)
         #expect(prefs.remoteConnectionConfig == .remoteDefault)
     }
@@ -73,7 +71,7 @@ struct HomePreferencesDecodingTests {
         {
             "id": "550E8400-E29B-41D4-A716-446655440000",
             "remoteConnectionConfig": {
-                "url": "https://myopenhab.org",
+                "url": "https://hac.stromkreis.net",
                 "supportsNotifications": false,
                 "alwaysSendBasicAuth": false,
                 "ignoreSSL": false,
@@ -91,7 +89,6 @@ struct HomePreferencesDecodingTests {
         {
             "id": "550E8400-E29B-41D4-A716-446655440000",
             "homeName": "Custom Home",
-            "demomode": false,
             "realTimeSliders": true,
             "iconType": 2,
             "defaultSitemap": "mymap",
@@ -112,7 +109,7 @@ struct HomePreferencesDecodingTests {
                 "priority": 0
             },
             "remoteConnectionConfig": {
-                "url": "https://myopenhab.org",
+                "url": "https://hac.stromkreis.net",
                 "username": "remoteuser",
                 "password": "remotepass",
                 "alwaysSendBasicAuth": false,
@@ -127,7 +124,6 @@ struct HomePreferencesDecodingTests {
         let decoded = try JSONDecoder().decode(HomePreferences.self, from: reencoded)
 
         #expect(decoded.homeName == "Custom Home")
-        #expect(decoded.demomode == false)
         #expect(decoded.alwaysAllowWebRTC == true)
         // Credentials are not preserved in the re-encoded JSON (they move to Keychain);
         // the initial decode reads them as legacy fields, but encode strips them.
@@ -156,7 +152,6 @@ struct UserDefaultsTests {
         home.remoteConnectionConfig.url = "http://remote\(random).test"
         home.remoteConnectionConfig.password = "secret\(random)"
         home.remoteConnectionConfig.ignoreSSL = true
-        home.demomode = true
         home.iconType = 2
         home.defaultSitemap = "default\(random)"
         home.sitemapForWatch = "watchmap\(random)"
@@ -167,7 +162,6 @@ struct UserDefaultsTests {
             preferences.remoteConnectionConfig.url = "http://remote\(random).test"
             preferences.remoteConnectionConfig.password = "secret\(random)"
             preferences.remoteConnectionConfig.ignoreSSL = true
-            preferences.demomode = true
             preferences.iconType = 2
             preferences.defaultSitemap = "default\(random)"
             preferences.sitemapForWatch = "watchmap\(random)"
@@ -179,7 +173,6 @@ struct UserDefaultsTests {
         #expect(Preferences.shared.currentHomePreferences.localConnectionConfig.url == home.localConnectionConfig.url)
         #expect(Preferences.shared.currentHomePreferences.remoteConnectionConfig.url == home.remoteConnectionConfig.url)
         #expect(Preferences.shared.currentHomePreferences.remoteConnectionConfig.ignoreSSL == home.remoteConnectionConfig.ignoreSSL)
-        #expect(Preferences.shared.currentHomePreferences.demomode == home.demomode)
         #expect(Preferences.shared.idleOff == data.bool(forKey: "idleOff"))
         #expect(Preferences.shared.currentHomePreferences.iconType == home.iconType)
         #expect(Preferences.shared.currentHomePreferences.defaultSitemap == home.defaultSitemap)

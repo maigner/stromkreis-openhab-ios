@@ -212,8 +212,7 @@ struct ToolbarMenu: View {
 
     @ViewBuilder
     private func systemMenu() -> some View {
-        if Preferences.shared.getNotificationConnection() != nil,
-           !Preferences.shared.currentHomePreferences.demomode {
+        if Preferences.shared.getNotificationConnection() != nil {
             systemRow(symbol: .bell, label: String(localized: "notifications", comment: "")) { select(.notifications) }
         }
         systemRow(symbol: .gear, label: String(localized: "App Settings")) {

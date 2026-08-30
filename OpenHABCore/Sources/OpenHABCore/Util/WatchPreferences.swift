@@ -31,7 +31,7 @@ public struct HomeCredentials: Codable, Sendable, Equatable {
 public struct WatchPreferences: Codable {
     enum CodingKeys: String, CodingKey {
         case localUrl, remoteUrl, username, password, alwaysSendCreds, defaultSitemap
-        case ignoreSSL, sitemapForWatch, sitemapForWatchLabel, iconType, demoMode
+        case ignoreSSL, sitemapForWatch, sitemapForWatchLabel, iconType
         case sitemapNameLabelDisplayMode, sortSitemapsBy
         case localConnectionConfiguration, remoteConnectionConfiguration
         case localUsername, localPassword
@@ -51,7 +51,6 @@ public struct WatchPreferences: Codable {
     public var sitemapForWatch: String
     public var sitemapForWatchLabel: String
     public var iconType: Int
-    public var demoMode: Bool
     // Optional so a payload from a mismatched app version still decodes; the
     // watch resolves them to defaults (`.name` / `.label`) when absent.
     public var sitemapNameLabelDisplayMode: Int?
@@ -83,7 +82,6 @@ public struct WatchPreferences: Codable {
         sitemapForWatch = try c.decode(String.self, forKey: .sitemapForWatch)
         sitemapForWatchLabel = try c.decode(String.self, forKey: .sitemapForWatchLabel)
         iconType = try c.decode(Int.self, forKey: .iconType)
-        demoMode = try c.decode(Bool.self, forKey: .demoMode)
         sitemapNameLabelDisplayMode = try c.decodeIfPresent(Int.self, forKey: .sitemapNameLabelDisplayMode)
         sortSitemapsBy = try c.decodeIfPresent(Int.self, forKey: .sortSitemapsBy)
         localConnectionConfiguration = try c.decodeIfPresent(ConnectionConfiguration.self, forKey: .localConnectionConfiguration)
@@ -105,7 +103,6 @@ public struct WatchPreferences: Codable {
                 sitemapForWatch: String,
                 sitemapForWatchLabel: String,
                 iconType: Int,
-                demoMode: Bool,
                 sitemapNameLabelDisplayMode: Int? = nil,
                 sortSitemapsBy: Int? = nil,
                 localConnectionConfiguration: ConnectionConfiguration? = nil,
@@ -125,7 +122,6 @@ public struct WatchPreferences: Codable {
         self.sitemapForWatch = sitemapForWatch
         self.sitemapForWatchLabel = sitemapForWatchLabel
         self.iconType = iconType
-        self.demoMode = demoMode
         self.sitemapNameLabelDisplayMode = sitemapNameLabelDisplayMode
         self.sortSitemapsBy = sortSitemapsBy
         self.localConnectionConfiguration = localConnectionConfiguration

@@ -15,10 +15,14 @@ import SwiftUI
 @main
 struct OpenHABApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @StateObject private var onboarding = OnboardingCoordinator()
 
     var body: some Scene {
         WindowGroup {
             OpenHABRootView()
+                .fullScreenCover(isPresented: $onboarding.isPresented) {
+                    OnboardingView(coordinator: onboarding)
+                }
                 .onOpenURL { url in
                     if url.isFileURL {
                         let clientCertificateManager = CertificateManagers.clientCertificateManager
@@ -27,10 +31,19 @@ struct OpenHABApp: App {
                         }
                         return
                     }
+                    // Stromkreis setup links: stromkreis://setup?… and https://stromkreis.net/app/setup/…
+                    if onboarding.handle(url: url) {
+                        return
+                    }
                     // Strip the "openhab:" scheme prefix to recover the action string,
                     // preserving any colons inside the payload (e.g. "command:item:value").
                     let action = url.absoluteString.split(separator: ":").dropFirst().joined(separator: ":")
                     appDelegate.notificationDelegate.notifyNotificationListeners(action: action)
+                }
+                .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { activity in
+                    if let url = activity.webpageURL {
+                        onboarding.handle(url: url)
+                    }
                 }
         }
     }

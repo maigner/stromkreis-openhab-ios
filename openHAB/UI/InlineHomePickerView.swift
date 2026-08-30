@@ -203,10 +203,6 @@ struct InlineHomePickerView: View {
             return [Text("")]
         }
 
-        guard !prefs.demomode else {
-            return [Text("Demo")]
-        }
-
         var parts: [Text] = []
 
         let localHost = prefs.localConnectionConfig.url.isEmpty

@@ -103,19 +103,14 @@ class NetworkConnectionService: ObservableObject {
             .sink { homeSettings in
                 let localConnectionConfig = homeSettings.localConnectionConfig
                 let remoteConnectionConfig = homeSettings.remoteConnectionConfig
-                let demomode = homeSettings.demomode
                 let sseCommandItem = homeSettings.sseCommandItem
 
                 Task {
-                    if demomode {
-                        await NetworkTracker.shared.startTracking(connectionConfigurations: [.demo])
-                    } else {
-                        await NetworkTracker.shared.startTracking(connectionConfigurations: [
-                            localConnectionConfig,
-                            remoteConnectionConfig
-                        ])
-                        await ItemEventStream.trackItems(sseCommandItem.isEmpty ? [] : [sseCommandItem])
-                    }
+                    await NetworkTracker.shared.startTracking(connectionConfigurations: [
+                        localConnectionConfig,
+                        remoteConnectionConfig
+                    ].filter { !$0.url.isEmpty })
+                    await ItemEventStream.trackItems(sseCommandItem.isEmpty ? [] : [sseCommandItem])
                 }
             }
             .store(in: &cancellables)

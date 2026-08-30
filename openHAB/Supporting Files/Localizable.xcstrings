@@ -24232,6 +24232,226 @@
           }
         }
       }
+    },
+    "Scan Stromkreis setup code" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stromkreis-Einrichtungscode scannen"
+          }
+        }
+      }
+    },
+    "Scan the one-time QR code from your Stromkreis page to (re)connect this home to the Stromkreis Cloud." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scanne den einmaligen QR-Code von deiner Stromkreis-Seite, um dieses Zuhause (erneut) mit der Stromkreis-Cloud zu verbinden."
+          }
+        }
+      }
+    },
+    "Welcome to Stromkreis" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Willkommen bei Stromkreis"
+          }
+        }
+      }
+    },
+    "Scan the one-time QR code from your Stromkreis page to connect the app to your energy community's gateway." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scanne den einmaligen QR-Code von deiner Stromkreis-Seite, um die App mit dem Gateway deiner Energiegemeinschaft zu verbinden."
+          }
+        }
+      }
+    },
+    "Point the camera at the QR code" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Richte die Kamera auf den QR-Code"
+          }
+        }
+      }
+    },
+    "Received a setup link instead?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einrichtungslink erhalten?"
+          }
+        }
+      }
+    },
+    "Opening the link on this phone sets the app up automatically. You can also paste it here." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn du den Link auf diesem Telefon öffnest, richtet sich die App automatisch ein. Du kannst ihn auch hier einfügen."
+          }
+        }
+      }
+    },
+    "Connect" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbinden"
+          }
+        }
+      }
+    },
+    "Close" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schließen"
+          }
+        }
+      }
+    },
+    "Continue" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weiter"
+          }
+        }
+      }
+    },
+    "Try again" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erneut versuchen"
+          }
+        }
+      }
+    },
+    "Setting up your Stromkreis connection…" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stromkreis-Verbindung wird eingerichtet…"
+          }
+        }
+      }
+    },
+    "Connected to %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbunden mit %@"
+          }
+        }
+      }
+    },
+    "Your Stromkreis app is ready." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine Stromkreis-App ist bereit."
+          }
+        }
+      }
+    },
+    "This is not a Stromkreis setup code. Scan the QR code from your Stromkreis page or paste the setup link." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das ist kein Stromkreis-Einrichtungscode. Scanne den QR-Code von deiner Stromkreis-Seite oder füge den Einrichtungslink ein."
+          }
+        }
+      }
+    },
+    "This setup code is invalid or has already been used. Ask your Stromkreis admin for a new one." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieser Einrichtungscode ist ungültig oder wurde bereits verwendet. Bitte deinen Stromkreis-Admin um einen neuen."
+          }
+        }
+      }
+    },
+    "The Stromkreis server rejected the setup code (HTTP %lld)." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Stromkreis-Server hat den Einrichtungscode abgelehnt (HTTP %lld)."
+          }
+        }
+      }
+    },
+    "The Stromkreis server sent an unexpected reply. Please try again later." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Stromkreis-Server hat unerwartet geantwortet. Bitte versuche es später erneut."
+          }
+        }
+      }
+    },
+    "Could not reach the Stromkreis server. Check your internet connection and try again." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Stromkreis-Server ist nicht erreichbar. Prüfe deine Internetverbindung und versuche es erneut."
+          }
+        }
+      }
+    },
+    "Camera access was denied. Allow it in Settings or paste the setup link below." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kamerazugriff wurde verweigert. Erlaube ihn in den Einstellungen oder füge den Einrichtungslink unten ein."
+          }
+        }
+      }
+    },
+    "No camera available on this device. Paste the setup link below instead." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auf diesem Gerät ist keine Kamera verfügbar. Füge stattdessen den Einrichtungslink unten ein."
+          }
+        }
+      }
+    },
+    "Stromkreis Cloud" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stromkreis-Cloud"
+          }
+        }
+      }
     }
   },
   "version" : "1.1"

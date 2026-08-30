@@ -48,9 +48,6 @@ struct OpenHABRootView: View {
         .onAppear {
             #if DEBUG
             let env = ProcessInfo.processInfo.environment
-            if env["UITest"] != nil {
-                Preferences.shared.modifyActiveHome { $0.demomode = true }
-            }
             if let title = env["UITestToastTitle"],
                let message = env["UITestToastMessage"] {
                 let actions: [NotificationActionItem]
@@ -414,16 +411,14 @@ struct OpenHABRootView: View {
                 break // modal/transient targets never reach switchContent
             }
 
-            if !Preferences.shared.currentHomePreferences.demomode {
-                let viewName: String
-                switch newContent {
-                case .webview: viewName = "web"
-                case .sitemap: viewName = "sitemap"
-                case .tile: viewName = "web" // treat tile as web for persistence
-                default: return // modal/transient targets never reach switchContent
-                }
-                Preferences.shared.modifyActiveHome { $0.defaultView = viewName }
+            let viewName: String
+            switch newContent {
+            case .webview: viewName = "web"
+            case .sitemap: viewName = "sitemap"
+            case .tile: viewName = "web" // treat tile as web for persistence
+            default: return // modal/transient targets never reach switchContent
             }
+            Preferences.shared.modifyActiveHome { $0.defaultView = viewName }
         }
     }
 
@@ -464,9 +459,7 @@ struct OpenHABRootView: View {
             webViewModel.loadWebView(force: false, path: path)
         }
         persistDefaultViewIfNeeded("web")
-        if !Preferences.shared.currentHomePreferences.demomode {
-            Preferences.shared.modifyActiveHome { $0.defaultMainUIPath = path ?? "" }
-        }
+        Preferences.shared.modifyActiveHome { $0.defaultMainUIPath = path ?? "" }
     }
 
     private var isMainUIShown: Bool {
@@ -479,7 +472,6 @@ struct OpenHABRootView: View {
     /// Persists the home's default view only when it actually changes, avoiding a
     /// redundant preferences write (which would otherwise restart network tracking).
     private func persistDefaultViewIfNeeded(_ viewName: String) {
-        guard !Preferences.shared.currentHomePreferences.demomode else { return }
         guard Preferences.shared.currentHomePreferences.defaultView != viewName else { return }
         Preferences.shared.modifyActiveHome { $0.defaultView = viewName }
     }

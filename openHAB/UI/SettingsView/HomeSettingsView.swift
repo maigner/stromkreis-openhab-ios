@@ -10,6 +10,7 @@
 // SPDX-License-Identifier: EPL-2.0
 
 import OpenHABCore
+import SFSafeSymbols
 import os
 import SwiftUI
 
@@ -23,7 +24,6 @@ struct HomeSettingsView: View {
     var onDismissedDirty: ((SettingsSnapshot, @escaping () -> Void) -> Void)?
     var initialValues: SettingsSnapshot?
 
-    @State private var settingsDemomode = false
     @State private var settingsRealTimeSliders = true
     @State private var settingsIconType: IconType = .svg
     @State private var settingsSortSitemapsBy: SortSitemapsOrder = .label
@@ -52,13 +52,14 @@ struct HomeSettingsView: View {
     @State private var savedExplicitly = false
     @State private var selectedSSEItemName: String?
     @State private var showAppSettings = false
+    @StateObject private var setupCoordinator = OnboardingCoordinator()
+    @State private var showSetupScanner = false
     @State private var showCommandItemInfo = false
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
 
     struct SettingsSnapshot: Equatable {
-        var demomode: Bool
         var realTimeSliders: Bool
         var iconType: IconType
         var sortSitemapsBy: SortSitemapsOrder
@@ -74,7 +75,6 @@ struct HomeSettingsView: View {
 
     private var currentSnapshot: SettingsSnapshot {
         SettingsSnapshot(
-            demomode: settingsDemomode,
             realTimeSliders: settingsRealTimeSliders,
             iconType: settingsIconType,
             sortSitemapsBy: settingsSortSitemapsBy,
@@ -91,8 +91,19 @@ struct HomeSettingsView: View {
 
     var body: some View {
         Form {
+            Section {
+                Button {
+                    setupCoordinator.reset()
+                    showSetupScanner = true
+                } label: {
+                    Label("Scan Stromkreis setup code", systemSymbol: .qrcodeViewfinder)
+                }
+                .disabled(isDirty)
+            } footer: {
+                Text("Scan the one-time QR code from your Stromkreis page to (re)connect this home to the Stromkreis Cloud.")
+            }
+
             ConnectionSettingsView(
-                settingsDemomode: $settingsDemomode,
                 localConnectionConfiguration: $settingsLocalConnectionConfiguration,
                 remoteConnectionConfiguration: $settingsRemoteConnectionConfiguration,
                 localTestedOKURL: $localTestedOKURL
@@ -166,6 +177,14 @@ struct HomeSettingsView: View {
             else { return }
             await updateSitemaps(activeConfiguration: activeConnection.configuration)
         }
+        .fullScreenCover(isPresented: $showSetupScanner) {
+            OnboardingView(coordinator: setupCoordinator)
+        }
+        .onChange(of: showSetupScanner) { _, shown in
+            if !shown, case .succeeded = setupCoordinator.phase {
+                loadSettings()
+            }
+        }
         .sheet(isPresented: $showAppSettings) {
             NavigationStack {
                 AppSettingsView()
@@ -237,8 +256,7 @@ struct HomeSettingsView: View {
         // server, triggers the certificate-trust alert. Showing that heads-up first and
         // deferring the actual save until it's acknowledged avoids the two alerts racing
         // (the local-network one would otherwise flash and immediately get covered).
-        if !settingsDemomode,
-           !settingsLocalConnectionConfiguration.url.isEmpty,
+        if !settingsLocalConnectionConfiguration.url.isEmpty,
            settingsLocalConnectionConfiguration.url != loadedLocalURL,
            settingsLocalConnectionConfiguration.url != localTestedOKURL {
             showLocalNetworkAlert = true
@@ -256,7 +274,7 @@ struct HomeSettingsView: View {
     private func handleSwipeDismiss() {
         guard isDirty, !savedExplicitly else { return }
         // Sheet was swiped away with unsaved changes — capture values and notify parent
-        let dm = settingsDemomode, rts = settingsRealTimeSliders
+        let rts = settingsRealTimeSliders
         let it = settingsIconType, ssb = settingsSortSitemapsBy
         let sdm = settingsSitemapNameLabelDisplayMode
         let dmu = settingsDefaultMainUIPath, aawrtc = settingsAlwaysAllowWebRTC
@@ -270,7 +288,6 @@ struct HomeSettingsView: View {
         let snapshot = currentSnapshot
         onDismissedDirty?(snapshot) {
             Preferences.shared.modifyStoredHome(targetId) { @MainActor prefs in
-                prefs.demomode = dm
                 prefs.realTimeSliders = rts
                 prefs.iconType = it.rawValue
                 prefs.sortSitemapsBy = ssb.rawValue
@@ -318,7 +335,6 @@ struct HomeSettingsView: View {
         } else {
             homePrefs = Preferences.shared.currentHomePreferences
         }
-        settingsDemomode = homePrefs.demomode
         settingsRealTimeSliders = homePrefs.realTimeSliders
         settingsIconType = IconType(rawValue: homePrefs.iconType) ?? .svg
         settingsSortSitemapsBy = SortSitemapsOrder(rawValue: homePrefs.sortSitemapsBy) ?? .label
@@ -336,7 +352,6 @@ struct HomeSettingsView: View {
     }
 
     private func applySnapshot(_ snapshot: SettingsSnapshot) {
-        settingsDemomode = snapshot.demomode
         settingsRealTimeSliders = snapshot.realTimeSliders
         settingsIconType = snapshot.iconType
         settingsSortSitemapsBy = snapshot.sortSitemapsBy
@@ -354,7 +369,6 @@ struct HomeSettingsView: View {
         let sitemapLabel = sitemaps.first { $0.name == settingsSitemapForWatch }?.label ?? settingsSitemapForWatchLabel
         let targetId = homeId ?? Preferences.shared.currentHomePreferences.id
         Preferences.shared.modifyStoredHome(targetId) { @MainActor homePreferences in
-            homePreferences.demomode = settingsDemomode
             homePreferences.realTimeSliders = settingsRealTimeSliders
             homePreferences.iconType = settingsIconType.rawValue
             homePreferences.sortSitemapsBy = settingsSortSitemapsBy.rawValue

@@ -290,12 +290,6 @@ struct HomeSummaryView: View {
                             .font(.caption)
                             .foregroundStyle(.orange)
                     }
-                    if prefs.demomode {
-                        Text("·").foregroundStyle(.tertiary)
-                        Text("Demo")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
                     let defaultView = prefs.defaultView
                     if defaultView != "web" {
                         Text("·").foregroundStyle(.tertiary)
