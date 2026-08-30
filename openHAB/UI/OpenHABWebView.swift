@@ -282,19 +282,31 @@ struct OpenHABWebViewContainer: UIViewControllerRepresentable {
         func webView(_ webView: WKWebView, respondTo challenge: URLAuthenticationChallenge) async -> (URLSession.AuthChallengeDisposition, URLCredential?) {
             Logger.viewController.info("Challenge.protectionSpace.authenticationMethod: \(String(describing: challenge.protectionSpace.authenticationMethod))")
 
-            if let url = viewModel.resolvedURL(), challenge.protectionSpace.host == url.host {
-                if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
+            let method = challenge.protectionSpace.authenticationMethod
+            let host = challenge.protectionSpace.host
+
+            // Basic-auth challenges from our own connection hosts must never fall through
+            // to WKWebView's built-in login sheet: the app has no credential entry —
+            // access is provisioned via the QR/link setup. When the stored credentials
+            // are missing or rejected (e.g. the Stromkreis Cloud password changed),
+            // cancel the challenge and re-run the setup instead.
+            if method.isAny(of: NSURLAuthenticationMethodHTTPBasic, NSURLAuthenticationMethodDefault), viewModel.isKnownHost(host) {
+                let (disposition, credential) = await onReceiveSessionTaskChallenge(with: challenge)
+                if disposition == .useCredential {
+                    return (disposition, credential)
+                }
+                viewModel.handleCredentialsRejected()
+                return (.cancelAuthenticationChallenge, nil)
+            }
+
+            if let url = viewModel.resolvedURL(), host == url.host {
+                if method == NSURLAuthenticationMethodServerTrust {
                     guard let serverTrust = challenge.protectionSpace.serverTrust else {
                         return (.performDefaultHandling, nil)
                     }
                     return (.useCredential, URLCredential(trust: serverTrust))
-                } else {
-                    if challenge.protectionSpace.authenticationMethod.isAny(of: NSURLAuthenticationMethodHTTPBasic, NSURLAuthenticationMethodDefault) {
-                        return await onReceiveSessionTaskChallenge(with: challenge)
-                    } else {
-                        return await onReceiveSessionChallenge(with: challenge)
-                    }
                 }
+                return await onReceiveSessionChallenge(with: challenge)
             }
             return (.performDefaultHandling, nil)
         }

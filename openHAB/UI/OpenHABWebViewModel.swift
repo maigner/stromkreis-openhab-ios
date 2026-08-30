@@ -99,6 +99,7 @@ class OpenHABWebViewModel: ObservableObject {
         window.__stromkreisChrome = true;
         var css = '.panel-left, .panel[data-panel="left"] { display: none !important; }'
             + ' .panel-backdrop { display: none !important; }'
+            + ' .navbar .right a.link:not(.back), .navbar .right .link:not(.back) { display: none !important; }'
             + ' a.panel-open[data-panel="left"], a.panel-toggle[data-panel="left"], .navbar .left a.panel-open:not([data-panel="right"]) { display: none !important; }'
             + ' html.with-panel-left-cover .views, html.with-panel-left-reveal .views, .framework7-root > .views, .framework7-root > .view { margin-left: 0 !important; }';
         function addStyle() {
@@ -216,8 +217,11 @@ class OpenHABWebViewModel: ObservableObject {
                 var items = [];
                 btns.forEach(function(el, idx) {
                     var inRight = !!el.closest('.navbar-inner .right');
-                    // Skip right-side panel-open buttons (the web "Other Apps" drawer).
-                    if (inRight && el.classList.contains('panel-open')) return;
+                    // Skip every panel toggle: the right "Other Apps" drawer and the left
+                    // side menu (admin login, chat, help), which Stromkreis hides entirely.
+                    if (el.classList.contains('panel-open') || el.classList.contains('panel-toggle')) return;
+                    // Skip anything the Stromkreis chrome CSS has hidden.
+                    try { if (getComputedStyle(el).display === 'none') return; } catch (e) {}
                     // Skip the in-app exit-to-app button (F7 icon: square_arrow_right).
                     var iconChild = el.querySelector('i.icon, .icon');
                     if (inRight && iconChild && iconChild.innerText.trim() === 'square_arrow_right') return;
@@ -236,7 +240,9 @@ class OpenHABWebViewModel: ObservableObject {
                         || el.innerText || '').trim();
                     // Include back buttons even without a text label; give them a
                     // fallback label so the native button has an accessibility string.
-                    if (!label && !isBack) return;
+                    // Stromkreis: mirror only back buttons. Every other navbar action
+                    // (edit page, page settings, ...) would let members change the setup.
+                    if (!isBack) return;
                     if (!label) label = 'Back';
                     // Back links: use history.back() for standard F7 .back class.
                     // oh-nav-content style backs use a Vue click handler — proxy the click.
@@ -990,5 +996,31 @@ class OpenHABWebViewModel: ObservableObject {
             path: nil,
             defaultPath: Preferences.shared.currentHomePreferences.defaultMainUIPath
         )
+    }
+
+    /// True when `host` belongs to one of the app's own connections — the resolved web
+    /// view URL, the last loaded page, the active cloud proxy, or any stored home's
+    /// local/remote URL. Distinguishes our own auth challenges (answered from stored
+    /// credentials, never via WKWebView's login sheet) from embedded third-party content.
+    func isKnownHost(_ host: String) -> Bool {
+        var candidates: [String?] = [
+            resolvedURL()?.host,
+            lastLoadedURL.flatMap { URL(string: $0)?.host },
+            activeConnectionInfo?.proxyURL?.host
+        ]
+        for home in Preferences.shared.storedHomes.values {
+            candidates.append(URL(string: home.localConnectionConfig.url)?.host)
+            candidates.append(URL(string: home.remoteConnectionConfig.url)?.host)
+        }
+        return candidates.contains(host)
+    }
+
+    /// Called when the server rejected the stored connection credentials (e.g. the
+    /// Stromkreis Cloud password changed). Blanks the web view so it stops retrying
+    /// with dead credentials and asks the onboarding flow to run the QR/link setup again.
+    func handleCredentialsRejected() {
+        Logger.viewController.warning("Stored credentials rejected — presenting Stromkreis setup")
+        clearView()
+        NotificationCenter.default.post(name: .stromkreisCredentialsRejected, object: nil)
     }
 }

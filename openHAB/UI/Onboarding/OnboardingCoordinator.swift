@@ -11,6 +11,12 @@ import Foundation
 import OpenHABCore
 import os.log
 
+extension Notification.Name {
+    /// Posted when a server rejected the stored connection credentials (e.g. the
+    /// Stromkreis Cloud password changed) so the QR/link setup can be shown again.
+    static let stromkreisCredentialsRejected = Notification.Name("net.stromkreis.credentials.rejected")
+}
+
 /// Drives the first-run setup: shows the onboarding screen until the active home has a
 /// Stromkreis Cloud login, and applies setup links that arrive via QR scan, paste, the
 /// `stromkreis://` scheme or a `https://stromkreis.net/app/setup/…` universal link.
@@ -25,6 +31,9 @@ final class OnboardingCoordinator: ObservableObject {
 
     @Published var isPresented: Bool
     @Published private(set) var phase: Phase = .idle
+    /// Explains why setup reappeared (e.g. rejected credentials). Shown above the
+    /// scanner until a new setup link succeeds.
+    @Published private(set) var notice: String?
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -38,6 +47,17 @@ final class OnboardingCoordinator: ObservableObject {
                 if !configured, phase == .idle {
                     isPresented = true
                 }
+            }
+            .store(in: &cancellables)
+        NotificationCenter.default.publisher(for: .stromkreisCredentialsRejected)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                notice = String(localized: "Your access is no longer valid — for example because the password was changed. Scan the QR code from your Stromkreis page again or paste a new setup link.")
+                if phase != .working {
+                    phase = .idle
+                }
+                isPresented = true
             }
             .store(in: &cancellables)
     }
@@ -77,6 +97,7 @@ final class OnboardingCoordinator: ObservableObject {
             StromkreisSetup.apply(creds)
             NotificationCenter.default.post(name: NSNotification.Name("net.stromkreis.preferences.saved"), object: nil)
             let name = creds.siteName?.trimmingCharacters(in: .whitespacesAndNewlines)
+            notice = nil
             phase = .succeeded(name?.isEmpty == false ? name! : creds.username)
         } catch let error as StromkreisSetupError {
             phase = .failed(Self.message(for: error))

@@ -65,6 +65,13 @@ struct OnboardingView: View {
                             .foregroundStyle(Color(red: 0x1d / 255, green: 0x47 / 255, blue: 0x16 / 255))
                         }
                     case .idle:
+                        if let notice = coordinator.notice {
+                            statusCard {
+                                Image(systemSymbol: .exclamationmarkTriangleFill).font(.system(size: 44)).foregroundStyle(.yellow)
+                                Text(notice).multilineTextAlignment(.center)
+                            }
+                            .accessibilityIdentifier("OnboardingNotice")
+                        }
                         scannerCard
                         pasteCard
                     }
