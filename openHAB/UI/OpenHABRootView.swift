@@ -25,7 +25,6 @@ struct OpenHABRootView: View {
     @StateObject private var crashService = CrashReportService()
     @StateObject private var menuData = MenuDataService()
     @StateObject private var webViewModel = OpenHABWebViewModel()
-    @State private var menuPresented = false
     @State private var navbarActionsPresented = false
     @State private var currentContent: TargetController = .webview
     @State private var currentViewTitle: String = ""
@@ -34,16 +33,10 @@ struct OpenHABRootView: View {
     @State private var sitemapResetID = UUID()
 
     var body: some View {
+        // Stromkreis: no app menu. The app is configured solely through the activation
+        // link/QR code, so members get MainUI only — no tiles, sitemaps or settings.
         ZStack {
             contentView
-
-            // Toolbar menu overlay
-            ToolbarMenu(
-                isPresented: $menuPresented,
-                menuData: menuData,
-                onSelect: { target in handleMenuSelection(target) },
-                onReload: { reloadCurrentContent() }
-            )
         }
         .onAppear {
             #if DEBUG
@@ -181,7 +174,7 @@ struct OpenHABRootView: View {
             .animation(.easeInOut(duration: 0.25), value: webViewModel.hasLoadedContent)
             .onAppear { webViewModel.triggerAppMenuProbe() }
         case let .sitemap(name):
-            SitemapNavigationView(onShowSideMenu: { menuPresented = true })
+            SitemapNavigationView()
                 .id("\(name)-\(sitemapResetID)")
         case .tile:
             VStack(spacing: 0) {
@@ -256,33 +249,7 @@ struct OpenHABRootView: View {
 
             Spacer()
 
-            Group {
-                if #available(iOS 26, *) {
-                    Button {
-                        menuPresented = true
-                    } label: {
-                        Image(systemSymbol: .line3Horizontal)
-                            .font(.title)
-                    }
-                    .buttonStyle(.glass)
-                    .accessibilityIdentifier("HamburgerButton")
-                    .accessibilityLabel("Menu")
-                    .padding(.trailing)
-                } else {
-                    Button {
-                        menuPresented = true
-                    } label: {
-                        Image(systemSymbol: .line3Horizontal)
-                            .font(.title)
-                    }
-                    .accessibilityIdentifier("HamburgerButton")
-                    .accessibilityLabel("Menu")
-                    .padding(.trailing)
-                }
-            }
-            .scaleEffect(menuPresented ? 3.0 : 1.0, anchor: .topTrailing)
-            .opacity(menuPresented ? 0.0 : 1.0)
-            .animation(.spring(response: 0.32, dampingFraction: 0.78), value: menuPresented)
+            Spacer().frame(width: 16)
         }
         .frame(height: 44)
         .accessibilityElement(children: .contain)
@@ -514,9 +481,8 @@ struct OpenHABRootView: View {
     // MARK: - Helpers
 
     private func setupExitToApp() {
-        webViewModel.onExitToApp = {
-            menuPresented = true
-        }
+        // Stromkreis has no app menu; the MainUI "exit to app" gesture is a no-op.
+        webViewModel.onExitToApp = nil
     }
 
     private func switchToTile(_ urlString: String) {
