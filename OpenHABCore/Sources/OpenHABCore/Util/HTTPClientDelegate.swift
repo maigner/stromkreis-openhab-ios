@@ -50,6 +50,16 @@ public final class HTTPClientDelegate: NSObject, URLSessionDelegate, URLSessionT
         Logger.httpClientDelegate.debug("URLAuthenticationChallenge: \(authenticationMethod)")
 
         if challenge.previousFailureCount > 0 {
+            // A repeated basic-auth challenge means the server rejected the stored
+            // credentials we supplied on the first round (e.g. the Stromkreis Cloud
+            // password changed). Cancelling kills the task with a transport error, so
+            // no 401 response ever surfaces to callers — signal the rejection here,
+            // where it is unambiguous, so the app can re-run its QR/link setup.
+            if authenticationMethod.isAny(of: NSURLAuthenticationMethodHTTPBasic, NSURLAuthenticationMethodDefault),
+               !connectionConfiguration.username.isEmpty {
+                Logger.httpClientDelegate.warning("Stored credentials rejected by host \(challenge.protectionSpace.host, privacy: .public)")
+                NotificationCenter.default.post(name: .stromkreisCredentialsRejected, object: nil)
+            }
             return (.cancelAuthenticationChallenge, nil)
         }
         switch authenticationMethod {

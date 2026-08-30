@@ -16,6 +16,14 @@ import OpenAPIRuntime
 import os.log
 import Timeout
 
+public extension Notification.Name {
+    /// Posted when a server rejected the stored connection credentials — a 401 from a
+    /// tracked connection's test, or a failed basic-auth challenge in the web view
+    /// (e.g. the Stromkreis Cloud password changed) — so the app can re-run its
+    /// QR/link setup flow instead of surfacing a credential prompt.
+    static let stromkreisCredentialsRejected = Notification.Name("net.stromkreis.credentials.rejected")
+}
+
 // TODO: these strings should reference Localizable keys
 public enum NetworkStatus: String, Sendable {
     case started = "Started"
@@ -519,8 +527,14 @@ public actor NetworkTracker {
         } catch let error as OpenAPIServiceError {
             await failureTracker.recordFailure(configuration)
             switch error {
+            case .unAuthorized:
+                Logger.networkTracker.warning("NetworkTracker: Credentials rejected for \(configuration.publicLogDescription, privacy: .public)")
+                NotificationCenter.default.post(name: .stromkreisCredentialsRejected, object: nil)
             case let .undocumented(statusCode, payload):
                 Logger.networkTracker.info("NetworkTracker: Undocumented status code: \(statusCode), payload: \(String(describing: payload))")
+                if statusCode == 401 {
+                    NotificationCenter.default.post(name: .stromkreisCredentialsRejected, object: nil)
+                }
             default: break
             }
         } catch let openAPIError as OpenAPIRuntime.ClientError {

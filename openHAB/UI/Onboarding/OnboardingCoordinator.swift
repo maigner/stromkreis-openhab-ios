@@ -11,11 +11,8 @@ import Foundation
 import OpenHABCore
 import os.log
 
-extension Notification.Name {
-    /// Posted when a server rejected the stored connection credentials (e.g. the
-    /// Stromkreis Cloud password changed) so the QR/link setup can be shown again.
-    static let stromkreisCredentialsRejected = Notification.Name("net.stromkreis.credentials.rejected")
-}
+// Notification.Name.stromkreisCredentialsRejected is defined in OpenHABCore
+// (NetworkTracker.swift) so both the tracker and the web view can post it.
 
 /// Drives the first-run setup: shows the onboarding screen until the active home has a
 /// Stromkreis Cloud login, and applies setup links that arrive via QR scan, paste, the
