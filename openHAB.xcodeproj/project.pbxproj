@@ -805,19 +805,11 @@
 			};
 			buildConfigurationList = DFB2622218830A3600D3244D /* Build configuration list for PBXProject "openHAB" */;
 			compatibilityVersion = "Xcode 10.0";
-			developmentRegion = en;
+			developmentRegion = de;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
-				Base,
 				de,
-				it,
-				es,
-				fi,
-				fr,
-				nl,
-				ru,
-				nb,
+				Base,
 			);
 			mainGroup = DFB2621E18830A3600D3244D;
 			packageReferences = (
