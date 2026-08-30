@@ -88,7 +88,10 @@ class MenuDataService: ObservableObject {
 
     private func fetchTiles(using service: OpenAPIService) async {
         do {
-            uiTiles = try await service.getUITiles()
+            // Hide server-side tiles that are meaningless to Stromkreis members (e.g. "openHABian Help").
+            uiTiles = try await service.getUITiles().filter { tile in
+                !tile.name.localizedCaseInsensitiveContains("openhabian") && !tile.url.localizedCaseInsensitiveContains("openhabian")
+            }
             Logger.drawerView.info("Fetched UI tiles successfully")
         } catch {
             Logger.drawerView.error("Failed to fetch UI tiles: \(error.localizedDescription)")

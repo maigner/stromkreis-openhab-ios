@@ -89,6 +89,53 @@ class OpenHABWebViewModel: ObservableObject {
     private var etagCheckerConfigURL: String?
     private var trackerCancellables = Set<AnyCancellable>()
 
+    /// Injected at document start: hides the MainUI left sidebar (admin login, openHAB chat,
+    /// help & about) and its hamburger toggle, and disables the panel's swipe-open gesture.
+    /// Stromkreis members only use the pages on their gateway; the sidebar is openHAB
+    /// administration chrome.
+    private let stromkreisChromeJS = """
+    (function () {
+        if (window.__stromkreisChrome) return;
+        window.__stromkreisChrome = true;
+        var css = '.panel-left, .panel[data-panel="left"] { display: none !important; }'
+            + ' .panel-backdrop { display: none !important; }'
+            + ' a.panel-open[data-panel="left"], a.panel-toggle[data-panel="left"], .navbar .left a.panel-open:not([data-panel="right"]) { display: none !important; }'
+            + ' html.with-panel-left-cover .views, html.with-panel-left-reveal .views, .framework7-root > .views, .framework7-root > .view { margin-left: 0 !important; }';
+        function addStyle() {
+            if (document.getElementById('stromkreis-chrome')) return;
+            var style = document.createElement('style');
+            style.id = 'stromkreis-chrome';
+            style.textContent = css;
+            (document.head || document.documentElement).appendChild(style);
+        }
+        function disableSwipe() {
+            var el = document.querySelector('.panel-left');
+            var panel = el && el.f7Panel;
+            if (panel && !panel.__stromkreisSwipeOff) {
+                panel.__stromkreisSwipeOff = true;
+                try { if (panel.opened) panel.close(false); } catch (e) {}
+                try { if (typeof panel.disableSwipe === 'function') panel.disableSwipe(); } catch (e) {}
+                try { if (typeof panel.disableVisibleBreakpoint === 'function') panel.disableVisibleBreakpoint(); } catch (e) {}
+                try { panel.params.swipe = false; } catch (e) {}
+            }
+        }
+        addStyle();
+        var observer = new MutationObserver(function () { addStyle(); disableSwipe(); });
+        function start() {
+            addStyle();
+            disableSwipe();
+            if (document.documentElement) {
+                observer.observe(document.documentElement, { childList: true, subtree: true });
+            }
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', start);
+        } else {
+            start();
+        }
+    })();
+    """
+
     /// JS injected after each page load to proxy the MainUI Framework7 navbar
     /// into the native bar and hide the web navbar.
     private let navbarProxyJS = """
@@ -547,6 +594,9 @@ class OpenHABWebViewModel: ObservableObject {
         // JS bridge is added by the Coordinator when it attaches delegates
         config.userContentController.addUserScript(
             WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
+        )
+        config.userContentController.addUserScript(
+            WKUserScript(source: stromkreisChromeJS, injectionTime: .atDocumentStart, forMainFrameOnly: true)
         )
         #if DEBUG
         let ohUITestJS = """
