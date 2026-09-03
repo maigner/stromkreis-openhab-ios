@@ -62,11 +62,6 @@ final class NotificationInteractionUITests: XCTestCase {
         app.launch()
     }
 
-    private func launchWithNotificationList() {
-        app.launchEnvironment["UITestNotifications"] = "1"
-        app.launch()
-    }
-
     // MARK: - Toast action button tests
 
     func testToastActionButtonAppears() {
@@ -109,55 +104,5 @@ final class NotificationInteractionUITests: XCTestCase {
         let gone = NSPredicate(format: "exists == false")
         let expectation = expectation(for: gone, evaluatedWith: app.staticTexts[InteractionFixture.toastTitle])
         wait(for: [expectation], timeout: 2)
-    }
-
-    // MARK: - Notification list interaction tests
-
-    func testNotificationRowWithActionsShowsButton() {
-        launchWithNotificationList()
-
-        // Notifications sheet is auto-opened after 0.5 s; wait for mock data to load
-        let alertText = waitFor("UITest Front Door Alert")
-        let button = waitForButton("Open Camera")
-        XCTAssertTrue(button.isHittable, "Action button must be visible in the notification row")
-
-        // Layout assertions — action control must be right-aligned and inline with the row text.
-        let s = screen
-        XCTAssertGreaterThan(button.frame.minX, s.width * 0.45,
-                             "Row action button must be on the right side of the screen")
-        XCTAssertLessThan(abs(button.frame.midY - alertText.frame.midY), 30,
-                          "Row action button and message text must share roughly the same vertical centre")
-    }
-
-    func testNotificationRowActionButtonDismissesSheet() {
-        launchWithNotificationList()
-
-        waitFor("UITest Front Door Alert")
-        waitForButton("Open Camera").tap()
-
-        let gone = NSPredicate(format: "exists == false")
-        let expectation = expectation(for: gone, evaluatedWith: app.staticTexts["UITest Front Door Alert"])
-        wait(for: [expectation], timeout: 2)
-    }
-
-    func testNotificationRowWithOnClickIsTappable() {
-        launchWithNotificationList()
-
-        // The row with onClickAction should be hittable (tappable region exists)
-        let alertText = waitFor("UITest Front Door Alert")
-        XCTAssertTrue(alertText.isHittable, "Notification row with on-click action must be hittable")
-    }
-
-    func testNotificationRowWithoutActionsHasNoActionButton() {
-        launchWithNotificationList()
-
-        // "UITest Regular Info" row should exist but have no "Open Camera" action button
-        waitFor("UITest Regular Info")
-
-        // The "Open Camera" button belongs only to the first row; query it via the second row's
-        // containing element. Since we can't easily scope to a specific cell, we verify at the
-        // list level: exactly one "Open Camera" button exists (for the first row only).
-        let buttons = app.buttons.matching(identifier: "Open Camera")
-        XCTAssertEqual(buttons.count, 1, "Only the row with actions should show an 'Open Camera' button")
     }
 }

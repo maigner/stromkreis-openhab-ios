@@ -244,9 +244,6 @@ public actor Preferences {
     @UserDefaultObject("currentHomePreferences", defaultValue: HomePreferences(id: defaultHomeId))
     private var _currentHomePreferences: HomePreferences
 
-    @UserDefault("sendCrashReports", defaultValue: false)
-    public var sendCrashReports: Bool
-
     @UserDefault("idleOff", defaultValue: false)
     public var idleOff: Bool
 
@@ -597,7 +594,6 @@ public extension Preferences {
         }
 
         Preferences.shared.idleOff = UserDefaults.standard.object(forKey: "idleOff") as? Bool ?? Preferences.shared.idleOff
-        Preferences.shared.sendCrashReports = UserDefaults.standard.object(forKey: "sendCrashReports") as? Bool ?? Preferences.shared.sendCrashReports
 
         Preferences.shared.didMigrateToSharedDefaults = true
         // this was done implicitly

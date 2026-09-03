@@ -9,7 +9,6 @@
 //
 // SPDX-License-Identifier: EPL-2.0
 
-import FirebaseCrashlytics
 import Kingfisher
 import OpenHABCore
 import os

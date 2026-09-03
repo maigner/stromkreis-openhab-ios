@@ -18,8 +18,6 @@ public enum HTTPClientError: Error {
     case noDataForProperties
     case baseURLIsNil
     case httpError(Int)
-    case couldNotRegister
-    case couldNotLoadNotification
     case failedtoFetchMJPEG
     case noConfiguration
 
@@ -35,10 +33,6 @@ public enum HTTPClientError: Error {
             "Base URL is nil"
         case let .httpError(statusCode):
             "HTTP error \(statusCode)"
-        case .couldNotRegister:
-            "Could not register"
-        case .couldNotLoadNotification:
-            "Could not load notification"
         case .failedtoFetchMJPEG:
             "Failed to fetch MJPEG"
         case .noConfiguration:
@@ -307,33 +301,6 @@ public final class HTTPClient: NSObject, Sendable {
             Logger.httpClient.error("Failed to fetch MJPEG stream: \(error.localizedDescription)")
             throw HTTPClientError.failedtoFetchMJPEG
         }
-    }
-
-    @discardableResult
-    public func register(prefsURL: String,
-                         deviceToken: String,
-                         deviceId: String,
-                         deviceName: String) async throws -> String? {
-        if let url = Endpoint.appleRegistration(prefsURL: prefsURL, deviceToken: deviceToken, deviceId: deviceId, deviceName: deviceName).url {
-            let (data, _): (Data, URLResponse) = try await doRequest(baseURL: url, type: .data)
-            struct CloudUserResponse: Decodable { let userId: String }
-            return try? JSONDecoder().decode(CloudUserResponse.self, from: data).userId
-        }
-        throw HTTPClientError.couldNotRegister
-    }
-
-    public func notification(url: URL) async throws -> Data {
-        let (data, _): (Data, URLResponse) = try await doRequest(baseURL: url, type: .data)
-        return data
-    }
-
-    public func notifications(urlString: String) async throws -> [OpenHABNotification] {
-        guard let url = Endpoint.notification(prefsURL: urlString).url else { throw HTTPClientError.couldNotLoadNotification }
-        let data = try await notification(url: url)
-
-        let decoder = JSONDecoder.makeISO8601TolerantDecoder()
-        let codingDatas = try data.decoded(as: [OpenHABNotification.CodingData].self, using: decoder)
-        return codingDatas.map(\.openHABNotification)
     }
 
     /*

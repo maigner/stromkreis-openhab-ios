@@ -11,22 +11,14 @@
 
 import AVFoundation
 import CarPlay
-import Combine
-import Firebase
-import FirebaseMessaging
 import Kingfisher
 import OpenHABCore
 import os.log
 import SDWebImageSVGCoder
 import UIKit
-@preconcurrency import UserNotifications
 import WatchConnectivity
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    private var crashlyticsSubscriber: AnyCancellable?
-
-    let notificationDelegate = NotificationCenterDelegateImpl()
 
     /// Delegate Requests from the Watch to the WatchMessageService
     var session: WCSession? {
@@ -57,14 +49,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Preferences.migratePreferences()
         SitemapDiagnostics.markProcessLaunch(source: launchSource(launchOptions))
 
-        // Firebase must be configured before the storyboard loads its root view controller,
-        // because OpenHABRootViewController.viewDidLoad calls Crashlytics before the deferred
-        // task would have had a chance to run. Calling Crashlytics before FirebaseApp.configure()
-        // silences crash detection for the entire session.
-        setupFirebase()
-
-        UNUserNotificationCenter.current().delegate = notificationDelegate
-
         Logger.appDelegate.info("didFinishLaunchingWithOptions ended")
 
         // Defer non-essential initialization to after first frame renders
@@ -79,9 +63,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func launchSource(_ launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> String {
         guard let launchOptions, !launchOptions.isEmpty else { return "user" }
-        if launchOptions[.remoteNotification] != nil {
-            return "remoteNotification"
-        }
         if launchOptions[.url] != nil {
             return "url"
         }
@@ -94,7 +75,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /// Setup that can be deferred until after the UI appears
     @MainActor
     private func performDeferredSetup() {
-        registerForPushNotifications()
         Logger.appDelegate.info("uniq id: \(UIDevice.current.identifierForVendor?.uuidString ?? "")")
         Logger.appDelegate.info("device name: \(UIDevice.current.name)")
 
@@ -140,17 +120,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Logger.appDelegate.info("SDImageSVGCoder registered")
     }
 
-    private func setupFirebase() {
-        // init Firebase crash reporting
-        FirebaseApp.configure()
-        FirebaseApp.app()?.isDataCollectionDefaultEnabled = false
-        crashlyticsSubscriber = Preferences.shared.$sendCrashReports.sink {
-            Crashlytics.crashlytics().setCrashlyticsCollectionEnabled($0)
-            Logger.appDelegate.debug("setCrashlyticsCollectionEnabled to \($0)")
-        }
-        Messaging.messaging().delegate = self
-    }
-
     func activateWatchConnectivity() {
         if WCSession.isSupported() {
             session = WCSession.default
@@ -159,69 +128,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    nonisolated func registerForPushNotifications() {
-        #if DEBUG
-        // do not request authorization if running UITest
-        if ProcessInfo.processInfo.environment["UITest"] != nil {
-            return
-        }
-        #endif
-
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, _ in
-            Logger.appDelegate.info("Permission granted: \(granted ? "YES" : "NO")")
-            guard granted else { return }
-            UNUserNotificationCenter.current().getNotificationSettings { settings in
-                Logger.appDelegate.info("Notification settings: \(settings)")
-
-                guard settings.authorizationStatus == .authorized else { return }
-                Task { @MainActor in
-                    UIApplication.shared.registerForRemoteNotifications()
-                }
-            }
-        }
-    }
-
-    /// This is only informational - on success - DID Register
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        // TODO: remove before shipping
-        // Logger.appDelegate.info("APNs token: \(deviceToken.map { String(format: "%02x", $0) }.joined())")
-        // Do nothing now, we are using FCM
-    }
-
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: any Error) {
-        Logger.appDelegate.error("Failed to get token for notifications: \(error.localizedDescription)")
-    }
-
-    @MainActor
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) async -> UIBackgroundFetchResult {
-        Logger.appDelegate.info("didReceiveRemoteNotification \(String(describing: userInfo), privacy: .public)")
-
-        guard let type = userInfo["type"] as? String, type == "hideNotification" else {
-            return .noData
-        }
-
-        if let refid = userInfo["reference-id"] as? String {
-            Logger.appDelegate.info("Removing notification with id \(refid, privacy: .public)")
-            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [refid])
-        }
-
-        if let tag = userInfo["tag"] as? String {
-            // Hop off the MainActor to avoid Sendable warning
-            let identifiers: [String] = await Task.detached(priority: .userInitiated) {
-                let notifications = await UNUserNotificationCenter.current().deliveredNotifications()
-                return notifications
-                    .filter { $0.request.content.userInfo["tag"] as? String == tag }
-                    .map(\.request.identifier)
-            }.value
-
-            if !identifiers.isEmpty {
-                Logger.appDelegate.info("Removing notifications with tag \(tag, privacy: .public), identifiers: \(String(describing: identifiers), privacy: .public)")
-                UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: identifiers)
-            }
-        }
-
-        return .newData
-    }
 }
 
 extension Notification.Name {
@@ -318,28 +224,4 @@ extension AppDelegate {
     }
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {}
-}
-
-extension AppDelegate: MessagingDelegate {
-    nonisolated func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        Task { @MainActor in
-            let safeToken = fcmToken ?? ""
-            let deviceID = UIDevice.current.identifierForVendor?.uuidString ?? "UnknownDeviceID"
-            let deviceName = UIDevice.current.name
-
-            Logger.appDelegate.info("My FCM token is: \(safeToken, privacy: .private)")
-
-            let dataDict: [String: Any] = [
-                "deviceToken": safeToken,
-                "deviceId": deviceID,
-                "deviceName": deviceName
-            ]
-
-            NotificationCenter.default.post(
-                name: NSNotification.Name("apsRegistered"),
-                object: self,
-                userInfo: dataDict
-            )
-        }
-    }
 }

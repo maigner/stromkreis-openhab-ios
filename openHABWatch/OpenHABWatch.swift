@@ -14,7 +14,6 @@ import Kingfisher
 import OpenHABCore
 internal import SFSafeSymbols
 import SwiftUI
-import UserNotifications
 
 @main
 struct OpenHABWatch: App {
@@ -44,10 +43,6 @@ struct OpenHABWatch: App {
             .tabViewStyle(.automatic)
             .environmentObject(settings)
             .task {
-                let center = UNUserNotificationCenter.current()
-                _ = try? await center.requestAuthorization(
-                    options: [.alert, .sound, .badge]
-                )
                 // Configure Kingfisher to use our app delegate for auth challenges
                 ImageDownloader.default.authenticationChallengeResponder = appDelegate
             }
@@ -66,6 +61,5 @@ struct OpenHABWatch: App {
                 }
             }
         }
-        WKNotificationScene(controller: NotificationController.self, category: "openHABNotification")
     }
 }

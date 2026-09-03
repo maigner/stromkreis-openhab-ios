@@ -45,7 +45,6 @@ The app reads `ProcessInfo.processInfo.environment` at launch. Set keys on `app.
 | `UITestToastTitle` | Toast title to show 0.5 s after launch |
 | `UITestToastMessage` | Toast message body |
 | `UITestToastActions` | JSON-encoded `[{"title":"…","action":"…"}]` for toast action buttons |
-| `UITestNotifications` = `"1"` | Auto-opens the Notifications sheet with mock data 0.5 s after launch |
 
 ### App-side hook (inside `#if DEBUG`)
 
@@ -64,12 +63,12 @@ Every new test surface needs a corresponding `#if DEBUG` block that reads the en
 #endif
 ```
 
-For views that require mock network data (e.g. `NotificationsView`), add a branch in the `init` that returns early with fixture data:
+For views that require mock network data, add a branch in the `init` that returns early with fixture data:
 
 ```swift
 #if DEBUG
-if ProcessInfo.processInfo.environment["UITestNotifications"] != nil {
-    loadNotifications = { [ /* fixture notifications */ ] }
+if ProcessInfo.processInfo.environment["UITestFixtureFlag"] != nil {
+    loadItems = { [ /* fixture items */ ] }
     return
 }
 #endif

@@ -145,29 +145,6 @@ public extension Endpoint {
 //        Logger.endpoint.debug("URL: \(url?.absoluteString ?? "", privacy: .private)")
     }
 
-    static func appleRegistration(prefsURL: String,
-                                  deviceToken: String,
-                                  deviceId: String,
-                                  deviceName: String) -> Endpoint {
-        Endpoint(
-            baseURL: prefsURL,
-            path: "/addIosRegistration",
-            queryItems: [
-                URLQueryItem(name: "regId", value: deviceToken),
-                URLQueryItem(name: "deviceId", value: deviceId),
-                URLQueryItem(name: "deviceModel", value: deviceName)
-            ]
-        )
-    }
-
-    static func notification(prefsURL: String) -> Endpoint {
-        Endpoint(
-            baseURL: prefsURL,
-            path: "/api/v1/notifications",
-            queryItems: [URLQueryItem(name: "limit", value: "20")]
-        )
-    }
-
     static func resource(openHABRootUrl: String, path: String) -> Endpoint {
         Endpoint(
             baseURL: openHABRootUrl,

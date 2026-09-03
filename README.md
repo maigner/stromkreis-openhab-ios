@@ -22,7 +22,6 @@ The Stromkreis gateway runs on [openHAB](https://www.openhab.org); this app is a
 ## Features
 
 * Control your openHAB server directly and through a [openHAB Cloud instance](https://github.com/openhab/openhab-cloud)
-* [Enhanced push notification](#push-notifications) from openHAB Cloud and the openHAB cloud binding 
 * [Apple Watch](#apple-watch-configuration) companion app
 * [Shortcuts](#shortcuts)
 * [Multiple Home Support](#multiple-homes)
@@ -54,7 +53,6 @@ Example:
 
 This is the secondary connection to your openHAB instance, a fully qualified URL with a IP or host is required.
 If using the Stromkreis Cloud, leave this as the default setting of `https://hac.stromkreis.net`.
-When set to the public cloud, the app will also register for push notifications (as long as credentials are correct)
 
 The [Local URL](#local-url) will be used as the primary connection, and if that fails or is not reachable, falls back to the remote URL.
 
@@ -104,7 +102,7 @@ You can also control the screen saver from the [command item](#command-item) usi
 
 The iOS app can react to updates of a dedicated String Item so you can remotely control the device or navigate the UI from your openHAB server.
 
-Whenever the state of the Item changes the app interprets the new value as an [Action String](#action-syntax) and executes it immediately – exactly the same mechanism that is used for push-notification actions.
+Whenever the state of the Item changes the app interprets the new value as an [Action String](#action-syntax) and executes it immediately.
 
 **Setting up the Command Item**
 
@@ -139,9 +137,13 @@ Notes:
 
 ---
 
-#### Crash Reporting
+#### No Google or Apple push services
 
-Sends crash reports to Google / Firebase.
+The app deliberately contains no third-party services beyond the libraries it links:
+
+* no Firebase / Crashlytics: crashes are not reported anywhere
+* no push notifications (neither Firebase Cloud Messaging nor Apple Push Notification service): the app only talks to the Stromkreis Cloud while it is open
+* no rich-notification extension
 
 ### Main UI Settings
 
@@ -213,30 +215,9 @@ Clicking this when the Main UI is already visible will force a reload of the Mai
 
 - Sitemaps show the available sitemaps on the users system.  Selecting a sitemap will present the native sitemap renderer view.
 
-- Notifications is a list of push notification retrieved from the openHAB cloud (if configured).
-
 - Settings opens the application settings view.
 
 - The app will persist the last primary view opened (Main UI or Sitemaps) when the app is opened or restarted.
-
-## Push Notifications
-
-The [openHAB Cloud Connector](https://next.openhab.org/addons/integrations/openhabcloud/)  allows users to send push notifications mobile devices registered with an [openHAB Cloud instance](https://github.com/openhab/openhab-cloud) such as [myopenHAB.org](https://www.myopenhab.org).
-
-<p float="left">
-<img alt="Logo" src="./doc/notifications.png" width="500">
-</p>
-
-Push Notifications on iOS support:
-- Title and message text
-- Image and video attachments
-- Up to 3 action buttons (long press notification)
-- Collapsible / updated notifications
-- Removing notifications
-
-See [Cloud Push Notifications](https://www.openhab.org/addons/integrations/openhabcloud/#cloud-notification-actions) for more information on sending push notifications from rules.
-
-Also see [Action Syntax](#action-syntax) for more information on actions that can be included in push notifications.
 
 ## Shortcuts
 

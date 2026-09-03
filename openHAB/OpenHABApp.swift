@@ -38,7 +38,12 @@ struct OpenHABApp: App {
                     // Strip the "openhab:" scheme prefix to recover the action string,
                     // preserving any colons inside the payload (e.g. "command:item:value").
                     let action = url.absoluteString.split(separator: ":").dropFirst().joined(separator: ":")
-                    appDelegate.notificationDelegate.notifyNotificationListeners(action: action)
+                    NotificationCenter.default.post(name: .wakeScreenSaver, object: nil)
+                    NotificationCenter.default.post(
+                        name: .openHABHandleNotificationAction,
+                        object: nil,
+                        userInfo: ["action": action]
+                    )
                 }
                 .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { activity in
                     if let url = activity.webpageURL {

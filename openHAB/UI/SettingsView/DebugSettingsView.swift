@@ -9,54 +9,15 @@
 //
 // SPDX-License-Identifier: EPL-2.0
 
-import Combine
 import CommonUI
 import OpenHABCore
 import os.log
-import SafariServices
 import SwiftUI
 
 struct DebugSettingsView: View {
-    @Binding var settingsSendCrashReports: Bool
     @Binding var settingsSitemapDiagnosticsLogging: Bool
 
-    @State private var hasBeenLoaded = false
-    @State var showCrashReportingAlert = false
-
     var body: some View {
-        Toggle("Crash Reporting", isOn: $settingsSendCrashReports)
-            .task { @MainActor in
-                updateSettingsSendCrashReports(Preferences.shared.sendCrashReports)
-            }
-            .onChange(of: settingsSendCrashReports) { _, newValue in
-                #if !DEBUG
-                Logger.settingsView.debug("Detected change on settingsSendCrashReports")
-                #endif
-                if newValue, hasBeenLoaded {
-                    showCrashReportingAlert = true
-                }
-            }
-            .confirmationDialog(
-                "crash_reporting",
-                isPresented: $showCrashReportingAlert
-            ) {
-                Button(role: .destructive) {
-                    settingsSendCrashReports = true
-                } label: {
-                    Text(LocalizedStringKey("activate"))
-                }
-                Button(LocalizedStringKey("privacy_policy")) {
-                    presentPrivacyPolicy()
-                    settingsSendCrashReports = false
-                }
-                Button(role: .cancel) {
-                    settingsSendCrashReports = false
-                } label: {
-                    Text(LocalizedStringKey("cancel"))
-                }
-            } message: {
-                Text(LocalizedStringKey("crash_reporting_info"))
-            }
         Section(header: Text(LocalizedStringKey("debug"))) {
             Toggle("Sitemap Diagnostics Logging", isOn: $settingsSitemapDiagnosticsLogging)
                 .onChange(of: settingsSitemapDiagnosticsLogging) { _, newValue in
@@ -71,28 +32,15 @@ struct DebugSettingsView: View {
             }
         }
     }
-
-    func presentPrivacyPolicy() {
-        let vc = SFSafariViewController(url: .privacyPolicy)
-        UIApplication.shared.firstKeyWindow?.rootViewController?.present(vc, animated: true)
-    }
-
-    private func updateSettingsSendCrashReports(_ send: Bool) {
-        settingsSendCrashReports = send
-    }
 }
 
 #Preview {
     struct PreviewWrapper: View {
-        @State private var ignoreSSL = true
-        @State private var idleOff = false
-        @State private var sendCrashReports = false
         @State private var sitemapDiagnosticsLogging = false
 
         var body: some View {
             Form {
                 DebugSettingsView(
-                    settingsSendCrashReports: $sendCrashReports,
                     settingsSitemapDiagnosticsLogging: $sitemapDiagnosticsLogging
                 )
             }

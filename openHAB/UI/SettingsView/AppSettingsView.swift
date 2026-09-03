@@ -15,7 +15,6 @@ import SwiftUI
 
 struct AppSettingsView: View {
     @State private var settingsIdleOff = true
-    @State private var settingsSendCrashReports = false
     @State private var settingsShowSearchField = true
     @State private var settingsSitemapDiagnosticsLogging = false
 
@@ -28,14 +27,12 @@ struct AppSettingsView: View {
 
     struct AppSettingsSnapshot: Equatable {
         var idleOff: Bool
-        var sendCrashReports: Bool
         var showSearchField: Bool
     }
 
     private var currentSnapshot: AppSettingsSnapshot {
         AppSettingsSnapshot(
             idleOff: settingsIdleOff,
-            sendCrashReports: settingsSendCrashReports,
             showSearchField: settingsShowSearchField
         )
     }
@@ -67,7 +64,6 @@ struct AppSettingsView: View {
             }
 
             DebugSettingsView(
-                settingsSendCrashReports: $settingsSendCrashReports,
                 settingsSitemapDiagnosticsLogging: $settingsSitemapDiagnosticsLogging
             )
 
@@ -116,14 +112,12 @@ struct AppSettingsView: View {
 
     private func loadSettings() {
         settingsIdleOff = Preferences.shared.idleOff
-        settingsSendCrashReports = Preferences.shared.sendCrashReports
         settingsShowSearchField = Preferences.shared.applicationPreferences.showSearchField
         settingsSitemapDiagnosticsLogging = Preferences.shared.applicationPreferences.sitemapDiagnosticsLogging
     }
 
     private func saveSettings() {
         Preferences.shared.idleOff = settingsIdleOff
-        Preferences.shared.sendCrashReports = settingsSendCrashReports
         Preferences.shared.modifyApplicationPreferences { @MainActor prefs in
             prefs.showSearchField = settingsShowSearchField
             prefs.sitemapDiagnosticsLogging = settingsSitemapDiagnosticsLogging

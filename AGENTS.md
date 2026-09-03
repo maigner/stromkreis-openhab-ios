@@ -12,9 +12,9 @@
 - **Main app**: openHAB/ - SwiftUI iOS app targeting iOS 18+ (UIKit still present in some files, goal is full removal)
 - **Core library**: OpenHABCore/ - Swift Package with shared business logic, models, API clients
 - **Watch app**: openHABWatch/ - watchOS companion app (watchOS 11+)
-- **Extensions**: openHABIntents/ (Siri shortcuts), NotificationService/ (rich notifications)
+- **Extensions**: openHABWidget/ (widgets), OpenHABWatchComplications/ (watch complications). No push notifications, no notification service extension
 - **Tests**: openHABTestsSwift/ (Swift Testing), openHABUITests/ (UI automation). For targeted bug fixes,  run only focused tests by default.
-- **Dependencies**: Kingfisher (image loading), SwiftUI, Firebase, OpenAPI runtime, SFSafeSymbols
+- **Dependencies**: Kingfisher (image loading), SwiftUI, OpenAPI runtime, SFSafeSymbols. Deliberately no Google/Firebase or other analytics/crash-reporting SDKs
 
 ## Code Style
 - Swift 6

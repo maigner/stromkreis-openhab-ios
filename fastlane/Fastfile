@@ -144,12 +144,6 @@ platform :ios do
         )
         
         update_code_signing_settings(
-            targets: 'NotificationService',
-            profile_name: 'match AppStore net.stromkreis.app.NotificationService',
-            build_configurations: ["Release"]
-        )
-
-        update_code_signing_settings(
             targets: 'openHABWidgetExtension',
             profile_name: 'match AppStore net.stromkreis.app.openHABWidget',
             build_configurations: ["Release"]
@@ -241,11 +235,6 @@ platform :ios do
             notify_external_testers: !options[:isfeaturebuild],
             changelog: changelog,
             groups: ['Beta Testers']
-        )
-
-        upload_symbols_to_crashlytics(
-            gsp_path: "openHAB/Supporting Files/GoogleService-Info.plist",
-            binary_path: './scripts/upload-symbols'
         )
 
         clean_build_artifacts

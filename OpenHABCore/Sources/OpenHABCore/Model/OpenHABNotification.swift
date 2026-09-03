@@ -11,11 +11,7 @@
 
 import Foundation
 
-/// An actionable button attached to a notification, shown in the in-app notification list
-/// and toasts for interaction parity with the push notification's action buttons.
-// TODO: Consider unifying with PushNotificationPayload.NotificationAction (same shape: title + action);
-// they are kept separate for now because the list model and the APNs push payload decode from
-// different sources.
+/// An actionable button attached to a notification, shown in in-app toasts.
 public struct NotificationActionItem: Sendable, Decodable, Hashable {
     public let title: String
     public let action: String
@@ -120,7 +116,7 @@ public extension OpenHABNotification {
         // is FLAT: `on-click`, `actions`, `userId` sit at the TOP level of each notification object.
         // develop's #1226 instead modelled a nested `payload` object (media-attachment-url, reference-id,
         // tag, type). Those two describe different sources — the flat REST list vs. the APNs push
-        // userInfo (now handled by PushNotificationPayload). This decoder reads the flat top-level fields
+        // userInfo (no longer used; push notifications were removed). This decoder reads the flat top-level fields
         // (matching the shipped feature + tests) AND an optional nested `payload` (nil for flat
         // notifications). If the live list API actually nests media-attachment-url/reference-id, move
         // those reads accordingly. The server API is not believed to have changed in a breaking way.

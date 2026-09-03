@@ -21,15 +21,12 @@ import SwiftUI
 struct OpenHABRootView: View {
     @StateObject private var networkService = NetworkConnectionService()
     @StateObject private var notificationService = NotificationActionService()
-    @StateObject private var pushService = PushRegistrationService()
-    @StateObject private var crashService = CrashReportService()
     @StateObject private var menuData = MenuDataService()
     @StateObject private var webViewModel = OpenHABWebViewModel()
     @State private var navbarActionsPresented = false
     @State private var currentContent: TargetController = .webview
     @State private var currentViewTitle: String = ""
     @State private var activeNetworkConnection: ConnectionInfo? = MainActorNetworkTracker.shared.activeConnection
-    @State private var showNotifications = false
     @State private var sitemapResetID = UUID()
 
     var body: some View {
@@ -53,11 +50,6 @@ struct OpenHABRootView: View {
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     ToastService.shared.show(title: title, message: message, actions: actions)
-                }
-            }
-            if env["UITestNotifications"] != nil {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    showNotifications = true
                 }
             }
             if env["UITestWebViewMode"] != nil {
@@ -109,9 +101,6 @@ struct OpenHABRootView: View {
                 activeNetworkConnection = connection
             }
         }
-        .sheet(isPresented: $showNotifications) {
-            NavigationView { NotificationsView() }
-        }
         .alert(
             networkService.certificateAlert?.title ?? "",
             isPresented: Binding(
@@ -124,12 +113,6 @@ struct OpenHABRootView: View {
             Button("Deny", role: .cancel) { networkService.certificateAlertAction(.deny) }
         } message: {
             Text(networkService.certificateAlert?.message ?? "")
-        }
-        .alert("Crash Report", isPresented: $crashService.crashReportAlert) {
-            Button("Send") { crashService.enableCrashReporting() }
-            Button("Don't Send", role: .cancel) { crashService.deleteCrashReports() }
-        } message: {
-            Text("The app crashed during the previous session. Would you like to send a crash report?")
         }
         .overlay(alignment: .bottom) {
             InAppToastBanner(service: ToastService.shared)
@@ -401,7 +384,7 @@ struct OpenHABRootView: View {
             Preferences.shared.modifyActiveHome { $0.defaultSitemap = name }
             switchContent(to: .sitemap(name))
         case .notifications:
-            showNotifications = true
+            break // Stromkreis: no cloud notification list
         case let .tile(urlString):
             currentViewTitle = menuData.label(forURL: urlString)
             switchToTile(urlString)
