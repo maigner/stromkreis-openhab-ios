@@ -244,9 +244,9 @@ In SwiftUI, a `Button` or `Menu` inside a view that also has `.onTapGesture` wil
 
 If a new UI test file is not added to `membershipExceptions`, it compiles successfully but is never executed. The test run reports zero tests for that file without any warning. Always verify a new test file appears in the test output before trusting a "all tests passed" result.
 
-### Fixture strings must be unique in the demo sitemap
+### Fixture strings must be unique
 
-Demo mode is active during UI tests (key `UITest = "1"`). The demo sitemap already contains many labels. Always prefix fixture strings with `UITest ` (e.g. `"UITest Front Door Alert"`) to avoid collisions with real sitemap content that would cause `waitForExistence` to resolve against the wrong element.
+UI tests run with `UITest = "1"` and inject their own HTML into the web view. Always prefix fixture strings with `UITest ` (e.g. `"UITest Front Door Alert"`) to avoid collisions with real Main UI content that would cause `waitForExistence` to resolve against the wrong element.
 
 ### Layout assertions must be proportional, not pixel-perfect
 

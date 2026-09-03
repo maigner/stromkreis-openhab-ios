@@ -6,21 +6,6 @@
 	<string>de</string>
 	<key>CFBundleDisplayName</key>
 	<string>Stromkreis</string>
-	<key>CFBundleDocumentTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeIconFiles</key>
-			<array/>
-			<key>CFBundleTypeName</key>
-			<string>Stromkreis Client Certificate</string>
-			<key>LSHandlerRank</key>
-			<string>Owner</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>openhab.p12</string>
-			</array>
-		</dict>
-	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
@@ -55,54 +40,23 @@
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>LSSupportsOpeningDocumentsInPlace</key>
-	<false/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>NSBonjourServices</key>
-	<array>
-		<string>_http._tcp</string>
-		<string>_openhab-server-ssl._tcp</string>
-		<string>_openhab-server._tcp</string>
-	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>Stromkreis needs access to your camera.</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Stromkreis needs access to your local network to connect with the server.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Stromkreis needs access to your microphone.</string>
-	<key>NSPrincipalClass</key>
-	<string>$(PRODUCT_MODULE_NAME).ActivityTrackingApplication</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Stromkreis needs access for speech recognition.</string>
-	<key>NSUserActivityTypes</key>
-	<array>
-		<string>OpenHABGetItemStateIntent</string>
-		<string>OpenHABSetColorValueIntent</string>
-		<string>OpenHABSetContactStateValueIntent</string>
-		<string>OpenHABSetDimmerRollerValueIntent</string>
-		<string>OpenHABSetNumberValueIntent</string>
-		<string>OpenHABSetStringValueIntent</string>
-		<string>OpenHABSetSwitchStateIntent</string>
-	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
-		<true/>
+		<false/>
 		<key>UISceneConfigurations</key>
 		<dict>
-			<key>CPTemplateApplicationSceneSessionRoleApplication</key>
-			<array>
-				<dict>
-					<key>UISceneConfigurationName</key>
-					<string>CarPlay Configuration</string>
-					<key>UISceneDelegateClassName</key>
-					<string>$(PRODUCT_MODULE_NAME).CarPlaySceneDelegate</string>
-				</dict>
-			</array>
 			<key>UIWindowSceneSessionRoleApplication</key>
 			<array>
 				<dict>
@@ -134,26 +88,6 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UTExportedTypeDeclarations</key>
-	<array>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Stromkreis Client Certificate</string>
-			<key>UTTypeIdentifier</key>
-			<string>openhab.p12</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>ohp12</string>
-				</array>
-			</dict>
-		</dict>
 	</array>
 </dict>
 </plist>

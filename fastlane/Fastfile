@@ -131,29 +131,8 @@ platform :ios do
             build_configurations: ["Release"]
         )
         
-        update_code_signing_settings(
-            targets: 'openHABWatch',
-            profile_name: 'match AppStore net.stromkreis.app.watchkitapp',
-            build_configurations: ["Release"]
-        )
         
-        update_code_signing_settings(
-            targets: 'openHABIntents',
-            profile_name: 'match AppStore net.stromkreis.app.openHABIntents',
-            build_configurations: ["Release"]
-        )
         
-        update_code_signing_settings(
-            targets: 'openHABWidgetExtension',
-            profile_name: 'match AppStore net.stromkreis.app.openHABWidget',
-            build_configurations: ["Release"]
-        )
-
-        update_code_signing_settings(
-            targets: 'OpenHABWatchComplicationsExtension',
-            profile_name: 'match AppStore net.stromkreis.app.watchkitapp.OpenHABWatchComplications',
-            build_configurations: ["Release"]
-        )
 
         # setup code signing
         setup_keychain

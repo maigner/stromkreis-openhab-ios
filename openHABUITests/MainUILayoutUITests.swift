@@ -9,6 +9,7 @@
 //
 // SPDX-License-Identifier: EPL-2.0
 
+import Foundation
 import XCTest
 
 // MARK: - JS probes

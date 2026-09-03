@@ -12,7 +12,6 @@
 import Combine
 import Foundation
 import Network
-import OpenAPIRuntime
 import os.log
 import Timeout
 
@@ -73,7 +72,7 @@ public enum NetworkTrackerError: Error, CustomDebugStringConvertible, Sendable {
 
     public var debugDescription: String {
         switch self {
-        case .serviceUnavailable: "Could not create OpenAPIService instance"
+        case .serviceUnavailable: "Could not create server probe"
         case .invalidServerVersion: "Invalid server version"
         case .noActiveConnection: "No active server found"
         }
@@ -84,19 +83,19 @@ public enum NetworkTrackerError: Error, CustomDebugStringConvertible, Sendable {
 // Ensure thread-safe dictionary access.
 // Avoid memory corruption errors like unrecognized selector.
 public actor ConnectionPool {
-    private var services: [ConnectionConfiguration: any OpenAPIServiceProtocol] = [:]
-    private let serviceFactory: @Sendable (ConnectionConfiguration) throws -> any OpenAPIServiceProtocol
+    private var services: [ConnectionConfiguration: any ServerProbe] = [:]
+    private let serviceFactory: @Sendable (ConnectionConfiguration) throws -> any ServerProbe
 
-    // Initializer allowing the injection of mocked OpenAPIServiceProtocol
-    init(serviceFactory: @escaping @Sendable (ConnectionConfiguration) throws -> any OpenAPIServiceProtocol = {
-        try OpenAPIService(connectionConfiguration: $0, serviceConfiguration: .shortTerm)
+    // Initializer allowing the injection of a mocked ServerProbe
+    init(serviceFactory: @escaping @Sendable (ConnectionConfiguration) throws -> any ServerProbe = {
+        HTTPServerProbe(connectionConfiguration: $0)
     }) {
         self.serviceFactory = serviceFactory
     }
 
     @discardableResult
     // swiftlint:disable:next async_without_await
-    func getOrCreateService(for configuration: ConnectionConfiguration) async throws -> any OpenAPIServiceProtocol {
+    func getOrCreateService(for configuration: ConnectionConfiguration) async throws -> any ServerProbe {
         if let existing = services[configuration] {
             return existing
         }
@@ -524,23 +523,17 @@ public actor NetworkTracker {
         } catch NetworkTrackerError.invalidServerVersion {
             await failureTracker.recordFailure(configuration)
             Logger.networkTracker.info("NetworkTracker: testConnection error - Invalid server version from \(configuration.publicLogDescription, privacy: .public)")
-        } catch let error as OpenAPIServiceError {
+        } catch let error as ServerProbeError {
             await failureTracker.recordFailure(configuration)
             switch error {
-            case .unAuthorized:
+            case .unauthorized:
                 Logger.networkTracker.warning("NetworkTracker: Credentials rejected for \(configuration.publicLogDescription, privacy: .public)")
                 NotificationCenter.default.post(name: .stromkreisCredentialsRejected, object: nil)
-            case let .undocumented(statusCode, payload):
-                Logger.networkTracker.info("NetworkTracker: Undocumented status code: \(statusCode), payload: \(String(describing: payload))")
-                if statusCode == 401 {
-                    NotificationCenter.default.post(name: .stromkreisCredentialsRejected, object: nil)
-                }
-            default: break
+            case let .httpStatus(statusCode):
+                Logger.networkTracker.info("NetworkTracker: Unexpected status code \(statusCode) from \(configuration.publicLogDescription, privacy: .public)")
+            case .invalidResponse:
+                Logger.networkTracker.info("NetworkTracker: Unparseable root document from \(configuration.publicLogDescription, privacy: .public)")
             }
-        } catch let openAPIError as OpenAPIRuntime.ClientError {
-            await failureTracker.recordFailure(configuration)
-            Logger.networkTracker.info("Networktracker: testConnection error - OpenAPIRuntime.RuntimeError encountered for \(configuration.publicLogDescription, privacy: .public)")
-            Logger.networkTracker.debug("OpenAPIRuntime.RuntimeError is \(openAPIError)")
         } catch {
             await failureTracker.recordFailure(configuration)
             Logger.networkTracker.info("NetworkTracker: testConnection error - Failed to connect to \(configuration.publicLogDescription, privacy: .public) \(error.localizedDescription)")
@@ -656,71 +649,6 @@ public extension NetworkTracker {
         }
     }
 
-    private func service() async throws -> any OpenAPIServiceProtocol {
-        guard let connection = await waitForActiveConnection()?.configuration else {
-            throw NetworkTrackerError.noActiveConnection
-        }
-        guard let service = try? await connectionPool.getOrCreateService(for: connection) else {
-            throw NetworkTrackerError.serviceUnavailable
-        }
-        return service
-    }
-
-    func send(to item: OpenHABItem, command: String, sourcePrefix: String? = nil, deviceId: String? = nil) async throws {
-        try await send(to: item.name, command: command, sourcePrefix: sourcePrefix, deviceId: deviceId)
-    }
-
-    /// Retries once after revalidating the connection on two transient failure kinds:
-    ///  • ClientError  — transport failure against a stale connection (network switch, suspension)
-    ///  • noActiveConnection — all connection tests timed out during a network handoff; the
-    ///    tracker recovers shortly after, so one revalidation + retry is enough.
-    private func withClientErrorRetry<T>(_ operation: () async throws -> T) async throws -> T {
-        do {
-            return try await operation()
-        } catch is OpenAPIRuntime.ClientError {
-            await revalidateConnection()
-            return try await operation()
-        } catch NetworkTrackerError.noActiveConnection {
-            await revalidateConnection()
-            return try await operation()
-        }
-    }
-
-    func send(to item: String, command: String, sourcePrefix: String? = nil, deviceId: String? = nil) async throws {
-        try await withClientErrorRetry {
-            try await service().sendItemCommand(itemname: item, command: command, sourcePrefix: sourcePrefix, deviceId: deviceId)
-        }
-    }
-
-    func updateState(item: OpenHABItem, state: String, sourcePrefix: String? = nil, deviceId: String? = nil) async throws {
-        try await withClientErrorRetry {
-            try await service().updateItemState(itemname: item.name, with: state, sourcePrefix: sourcePrefix, deviceId: deviceId)
-        }
-    }
-
-    func getStaticItems() async throws -> [OpenHABItem] {
-        try await withClientErrorRetry {
-            // staticDataOnly=true is intentionally omitted: it excludes dynamically-created
-            // items (e.g. Shelly binding channel items), causing them to be missing from the
-            // App Intents item cache and triggering re-prompts in Shortcuts.
-            let items = try await service().getItems(query: Operations.getItems.Input.Query())
-            return items.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
-        }
-    }
-
-    func getItemByName(id: String) async throws -> OpenHABItem? {
-        try await withClientErrorRetry {
-            try await service().getItemByName(id: id)
-        }
-    }
-
-    func pollDataForPage(sitemapname: String, pageId: String = "", longPolling: Bool = false) async throws -> OpenHABPage? {
-        try await service().pollDataForPage(sitemapname: sitemapname, pageId: pageId, longPolling: longPolling)
-    }
-
-    func runNow(ruleUID: String, payload: [String: String]) async throws {
-        try await service().runNow(ruleUID: ruleUID, payload: payload)
-    }
 }
 
 public extension NetworkTracker {

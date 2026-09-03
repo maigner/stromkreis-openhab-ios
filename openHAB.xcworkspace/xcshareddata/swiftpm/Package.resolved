@@ -1,33 +1,6 @@
 {
-  "originHash" : "1feac5c00a3bddcb04aaa858454dd7a407c3138354f4f7e8383809f28586467d",
+  "originHash" : "2daff8150c3f225bda6feada395e63877e674ae5c696f74f0a34a18399ec4022",
   "pins" : [
-    {
-      "identity" : "kingfisher",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/onevcat/Kingfisher.git",
-      "state" : {
-        "revision" : "d30a5fad881137e2267f96a8e3fc35c58999bb94",
-        "version" : "8.6.2"
-      }
-    },
-    {
-      "identity" : "sdwebimage",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SDWebImage/SDWebImage",
-      "state" : {
-        "revision" : "36e79ba485e9bb4d3cd4e3318908866dac5e7b51",
-        "version" : "5.21.5"
-      }
-    },
-    {
-      "identity" : "sdwebimagesvgcoder",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SDWebImage/SDWebImageSVGCoder.git",
-      "state" : {
-        "revision" : "85b5d58ad02c207c496fa34426dc6560d6ae32f0",
-        "version" : "1.8.0"
-      }
-    },
     {
       "identity" : "sfsafesymbols",
       "kind" : "remoteSourceControl",
@@ -35,51 +8,6 @@
       "state" : {
         "revision" : "e01b3d4f861412f8dcee8d93c417d2c2b0cdfd77",
         "version" : "7.0.0"
-      }
-    },
-    {
-      "identity" : "swift-collections",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-collections",
-      "state" : {
-        "revision" : "7b847a3b7008b2dc2f47ca3110d8c782fb2e5c7e",
-        "version" : "1.3.0"
-      }
-    },
-    {
-      "identity" : "swift-http-types",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-http-types.git",
-      "state" : {
-        "revision" : "45eb0224913ea070ec4fba17291b9e7ecf4749ca",
-        "version" : "1.5.1"
-      }
-    },
-    {
-      "identity" : "swift-numerics",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-numerics",
-      "state" : {
-        "revision" : "0c0290ff6b24942dadb83a929ffaaa1481df04a2",
-        "version" : "1.1.1"
-      }
-    },
-    {
-      "identity" : "swift-openapi-runtime",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-openapi-runtime",
-      "state" : {
-        "revision" : "7cdf33371bf89b23b9cf4fd3ce8d3c825c28fbe8",
-        "version" : "1.9.0"
-      }
-    },
-    {
-      "identity" : "swift-openapi-urlsession",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-openapi-urlsession",
-      "state" : {
-        "revision" : "279aa6b77be6aa842a4bf3c45fa79fa15edf3e07",
-        "version" : "1.2.0"
       }
     },
     {
@@ -116,15 +44,6 @@
       "state" : {
         "revision" : "3741567a0252090897336f1f39b8490107b49ead",
         "version" : "0.63.3"
-      }
-    },
-    {
-      "identity" : "swiftui-flow",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/tevelee/SwiftUI-Flow.git",
-      "state" : {
-        "revision" : "d227f999b2894ab737ef5786d9b14d02d3e5362e",
-        "version" : "3.1.1"
       }
     }
   ],

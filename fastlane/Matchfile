@@ -4,7 +4,7 @@ storage_mode("git")
 
 type("appstore") # The default type, can be: appstore, adhoc, enterprise or development
 
-app_identifier(["net.stromkreis.app", "net.stromkreis.app.openHABIntents", "net.stromkreis.app.watchkitapp", "net.stromkreis.app.watchkitapp.OpenHABWatchComplications", "net.stromkreis.app.openHABWidget"])
+app_identifier(["net.stromkreis.app"])
 # username("user@fastlane.tools") # Your Apple Developer Portal username
 
 # For all available options run `fastlane match --help`

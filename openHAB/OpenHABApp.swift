@@ -24,26 +24,8 @@ struct OpenHABApp: App {
                     OnboardingView(coordinator: onboarding)
                 }
                 .onOpenURL { url in
-                    if url.isFileURL {
-                        let clientCertificateManager = CertificateManagers.clientCertificateManager
-                        Task { @MainActor in
-                            await clientCertificateManager.startImportClientCertificate(url: url)
-                        }
-                        return
-                    }
                     // Stromkreis setup links: stromkreis://setup?… and https://stromkreis.net/app/setup/…
-                    if onboarding.handle(url: url) {
-                        return
-                    }
-                    // Strip the "openhab:" scheme prefix to recover the action string,
-                    // preserving any colons inside the payload (e.g. "command:item:value").
-                    let action = url.absoluteString.split(separator: ":").dropFirst().joined(separator: ":")
-                    NotificationCenter.default.post(name: .wakeScreenSaver, object: nil)
-                    NotificationCenter.default.post(
-                        name: .openHABHandleNotificationAction,
-                        object: nil,
-                        userInfo: ["action": action]
-                    )
+                    onboarding.handle(url: url)
                 }
                 .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { activity in
                     if let url = activity.webpageURL {

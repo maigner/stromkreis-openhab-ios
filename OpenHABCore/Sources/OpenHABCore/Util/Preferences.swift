@@ -10,6 +10,7 @@
 // SPDX-License-Identifier: EPL-2.0
 
 @preconcurrency import Combine
+import Foundation
 import os.log
 
 @MainActor
@@ -94,19 +95,6 @@ public struct HomePreferences: Codable, Equatable {
     public var iconType = 0
     public var defaultSitemap = ""
     public var sortSitemapsBy = 0
-    // Backing store for `sitemapNameLabelDisplayMode`. Optional on purpose: synthesized
-    // `Codable` throws `keyNotFound` for a missing *non-optional* key (even one
-    // with a default), which would discard the whole home. Optional decodes a
-    // missing key as `nil`. Never read this directly — use `sitemapNameLabelDisplayMode`.
-    private var sitemapNameLabelDisplayModeStorage: SitemapNameLabelDisplayMode?
-
-    /// Which sitemap field(s) to show in menus and pickers. Resolves to the
-    /// default (`.label`) when unset — both for fresh installs and for homes saved
-    /// before this setting existed — so callers never have to handle `nil`.
-    public var sitemapNameLabelDisplayMode: SitemapNameLabelDisplayMode {
-        get { SitemapNameLabelDisplayMode.resolved(sitemapNameLabelDisplayModeStorage) }
-        set { sitemapNameLabelDisplayModeStorage = newValue }
-    }
     public var defaultMainUIPath = ""
     public var alwaysAllowWebRTC = false
     public var sitemapForWatch = "watch"
@@ -159,7 +147,6 @@ public struct HomePreferences: Codable, Equatable {
         sseCommandItem = try container.decodeIfPresent(String.self, forKey: .sseCommandItem) ?? ""
         // Fields added on this branch. Optional, so a missing key decodes as nil (the documented
         // "treat as unset/expanded" behavior) rather than throwing keyNotFound and discarding the home.
-        sitemapNameLabelDisplayModeStorage = try container.decodeIfPresent(SitemapNameLabelDisplayMode.self, forKey: .sitemapNameLabelDisplayModeStorage)
         isMainUIExpanded = try container.decodeIfPresent(Bool.self, forKey: .isMainUIExpanded)
         isSitemapsExpanded = try container.decodeIfPresent(Bool.self, forKey: .isSitemapsExpanded)
         isTilesExpanded = try container.decodeIfPresent(Bool.self, forKey: .isTilesExpanded)
@@ -253,51 +240,6 @@ public actor Preferences {
         ApplicationPreferences()
     )
     public private(set) var applicationPreferences: ApplicationPreferences
-
-    @UserDefault("screensaverEnabled", defaultValue: false)
-    public var screensaverEnabled: Bool
-
-    @UserDefault("screensaverShowsTime", defaultValue: true)
-    public var screensaverShowsTime: Bool
-
-    @UserDefault("screensaverShowsDate", defaultValue: true)
-    public var screensaverShowsDate: Bool
-
-    @UserDefault("screensaverIdleInterval", defaultValue: 120.0)
-    public var screensaverIdleInterval: Double
-
-    @UserDefault("screensaverMovementInterval", defaultValue: 8.0)
-    public var screensaverMovementInterval: Double
-
-    @UserDefault("screensaverFontName", defaultValue: "")
-    public var screensaverFontName: String
-
-    @UserDefault("screensaverTimeFontRatio", defaultValue: 0.2)
-    public var screensaverTimeFontRatio: Double
-
-    @UserDefault("screensaverDateFontRatio", defaultValue: 0.4)
-    public var screensaverDateFontRatio: Double
-
-    @UserDefault("screensaverEnableDimming", defaultValue: true)
-    public var screensaverEnableDimming: Bool
-
-    @UserDefault("screensaverDimLevel", defaultValue: 0.3)
-    public var screensaverDimLevel: Double
-
-    @UserDefault("screensaverShowsSeconds", defaultValue: false)
-    public var screensaverShowsSeconds: Bool
-
-    @UserDefault("screensaverUse24Hour", defaultValue: false)
-    public var screensaverUse24Hour: Bool
-
-    @UserDefault("screensaverFadeDuration", defaultValue: 2.0)
-    public var screensaverFadeDuration: Double
-
-    @UserDefault("screensaverRestoreBrightness", defaultValue: true)
-    public var screensaverRestoreBrightness: Bool
-
-    @UserDefault("screensaverWakeBrightness", defaultValue: 1.0)
-    public var screensaverWakeBrightness: Double
 
     @UserDefault("hideStatusBar", defaultValue: false)
     public var hideStatusBar: Bool

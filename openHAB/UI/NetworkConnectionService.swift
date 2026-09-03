@@ -10,7 +10,6 @@
 // SPDX-License-Identifier: EPL-2.0
 
 import Combine
-import Kingfisher
 import OpenHABCore
 import os.log
 import SwiftUI
@@ -85,32 +84,17 @@ class NetworkConnectionService: ObservableObject {
             queue: nil
         ) { _ in
             Task { @MainActor in
-                await WatchMessageService.singleton.syncPreferencesToWatch()
                 await NetworkTracker.shared.restartTracking()
             }
         }
 
-        // TODO: DEVELOP MERGE (regression) — sitemap list sometimes fails to reload on home switch.
-        // This subscription drives startTracking → activeConnection change → MenuDataService reload.
-        // Pre-merge this used `$currentHomePreferences` (raw stored value); develop's Preferences refactor
-        // required switching to `currentHomePreferencesPublisher`, which additionally injects Keychain
-        // credentials via `.map`. Emission timing looks equivalent ($_currentHomePreferences), but the
-        // 500 ms debounce + credential-injecting map is the prime suspect for the intermittent missed
-        // reload. Investigate whether an emission is being coalesced/dropped or whether the new
-        // connection compares equal so `$activeConnection` doesn't re-emit. Deferred for later.
+        // Every change of the active home's connection settings restarts connection tracking.
         Preferences.shared.currentHomePreferencesPublisher
             .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
             .sink { homeSettings in
-                let localConnectionConfig = homeSettings.localConnectionConfig
-                let remoteConnectionConfig = homeSettings.remoteConnectionConfig
-                let sseCommandItem = homeSettings.sseCommandItem
-
+                let connections = homeSettings.trackedConnections
                 Task {
-                    await NetworkTracker.shared.startTracking(connectionConfigurations: [
-                        localConnectionConfig,
-                        remoteConnectionConfig
-                    ].filter { !$0.url.isEmpty })
-                    await ItemEventStream.trackItems(sseCommandItem.isEmpty ? [] : [sseCommandItem])
+                    await NetworkTracker.shared.startTracking(connectionConfigurations: connections)
                 }
             }
             .store(in: &cancellables)
@@ -127,20 +111,5 @@ class NetworkConnectionService: ObservableObject {
     func certificateAlertAction(_ result: CertificateEvaluateResult) {
         certificateAlert?.delegate.completeEvaluation(result)
         certificateAlert = nil
-    }
-}
-
-// MARK: - Kingfisher authentication
-
-extension NetworkConnectionService: AuthenticationChallengeResponsible {
-    nonisolated func downloader(_ downloader: ImageDownloader,
-                                didReceive challenge: URLAuthenticationChallenge) async -> (URLSession.AuthChallengeDisposition, URLCredential?) {
-        await onReceiveSessionChallenge(with: challenge)
-    }
-
-    nonisolated func downloader(_ downloader: ImageDownloader,
-                                task: URLSessionTask,
-                                didReceive challenge: URLAuthenticationChallenge) async -> (URLSession.AuthChallengeDisposition, URLCredential?) {
-        await onReceiveSessionTaskChallenge(with: challenge)
     }
 }

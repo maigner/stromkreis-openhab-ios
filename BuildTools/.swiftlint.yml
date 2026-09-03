@@ -42,16 +42,10 @@ excluded:
   - ../fastlane
   - ../OpenHABCore/.build
   - .build
-  - ../OpenHABCore/Sources/OpenHABCore/GeneratedSources/*
-  - ../OpenHABCore/swift-openapi-generator
   - ../vendor
   - ../DerivedData
-  - ../openHAB/Intents/Generated
-  - ../openHABWatch/Intents/Generated
   - ../OsLogRewriter/.build
   - ../build
-  - ../BonjourDiscoveryTool
-  - ../CommonUI/.build
 
 nesting:
     type_level: 2
@@ -128,7 +122,7 @@ custom_rules:
 
 file_name:
   suffix_pattern: "Extension?|\\+.*"
-  excluded: ["WatchTypography.swift", "WidgetRowInputs.swift", "SitemapPageViewModel+SupportTypes.swift", "SnapshotHelper.swift", "AppIntentsTests.swift"]
+  excluded: ["SnapshotHelper.swift"]
 
 opening_brace:
   ignore_multiline_function_signatures: true

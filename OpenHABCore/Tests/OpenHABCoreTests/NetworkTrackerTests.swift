@@ -12,14 +12,13 @@
 import Combine
 import Foundation
 import Network
-import OpenAPIRuntime
 import OSLog
 
 @testable import OpenHABCore
 import Testing
 import XCTest
 
-final actor MockOpenAPIService: OpenAPIServiceProtocol {
+final actor MockOpenAPIService: ServerProbe {
     final class MockError: Error {
         var debugDescription: String {
             "MockConnectionFailure"
@@ -30,69 +29,12 @@ final actor MockOpenAPIService: OpenAPIServiceProtocol {
 
     var shouldFail = false
     var returnedVersion = 123
-    var mockServerProperties = OpenHABServerProperties(version: "", links: [])
     var rootVersionDelay: Duration?
-    var sendCommandCallCount: Int = 0
-    var clientErrorsBeforeSuccess: Int = 0
 
-    init(returnedVersion: Int = 123, shouldFail: Bool = false, mockServerProperties: OpenHABServerProperties = .init(version: "", links: []), rootVersionDelay: Duration? = nil, clientErrorsBeforeSuccess: Int = 0) {
+    init(returnedVersion: Int = 123, shouldFail: Bool = false, rootVersionDelay: Duration? = nil) {
         self.returnedVersion = returnedVersion
         self.shouldFail = shouldFail
-        self.mockServerProperties = mockServerProperties
         self.rootVersionDelay = rootVersionDelay
-        self.clientErrorsBeforeSuccess = clientErrorsBeforeSuccess
-    }
-
-    func sendItemCommand(itemname: String, command: String, sourcePrefix: String?, deviceId: String?) async throws {
-        sendCommandCallCount += 1
-        if sendCommandCallCount <= clientErrorsBeforeSuccess {
-            throw OpenAPIRuntime.ClientError(
-                operationID: "sendItemCommand",
-                operationInput: "" as any Sendable,
-                causeDescription: "simulated transport failure",
-                underlyingError: networkTrackerError
-            )
-        }
-        if shouldFail {
-            throw networkTrackerError
-        }
-    }
-
-    func updateItemState(itemname: String, with: String, sourcePrefix: String?, deviceId: String?) async throws {
-        if shouldFail {
-            throw networkTrackerError
-        }
-    }
-
-    func getItems(query: OpenHABCore.Operations.getItems.Input.Query) async throws -> [OpenHABCore.OpenHABItem] {
-        try await getItems()
-    }
-
-    func getItems() async throws -> [OpenHABCore.OpenHABItem] {
-        if shouldFail {
-            throw networkTrackerError
-        }
-        return []
-    }
-
-    func getItemByName(id: String) async throws -> OpenHABCore.OpenHABItem? {
-        if shouldFail {
-            throw networkTrackerError
-        }
-        return nil
-    }
-
-    func pollDataForPage(sitemapname: String, pageId: String, longPolling: Bool) async throws -> OpenHABCore.OpenHABPage? {
-        if shouldFail {
-            throw networkTrackerError
-        }
-        return nil
-    }
-
-    func runNow(ruleUID: String, payload: [String: any Sendable]) async throws {
-        if shouldFail {
-            throw networkTrackerError
-        }
     }
 
     func getRootVersion() async throws -> Int {
@@ -104,29 +46,6 @@ final actor MockOpenAPIService: OpenAPIServiceProtocol {
         }
         return returnedVersion
     }
-
-    @discardableResult
-    func getRoot() async throws -> OpenHABServerProperties {
-        if shouldFail {
-            throw networkTrackerError
-        }
-        return mockServerProperties
-    }
-
-    // swiftlint:disable async_without_await
-    func openHABcreateSubscription() async throws -> String? {
-        nil
-    }
-
-    func openHABSitemapWidgetEvents(subscriptionid: String, sitemap: String, pageId: String)
-        async throws -> any AsyncSequence<SitemapEventMessage, any Error> & Sendable {
-        AsyncThrowingStream<SitemapEventMessage, any Error> { $0.finish() }
-    }
-
-    func openHABEvents(topics: String?) async throws -> any AsyncSequence<OpenHABEvent, any Error> & Sendable {
-        AsyncThrowingStream<OpenHABEvent, any Error> { $0.finish() }
-    }
-    // swiftlint:enable async_without_await
 }
 
 actor PathMonitor {
@@ -424,41 +343,6 @@ final class NetworkTrackerTests: XCTestCase {
         await fulfillment(of: [fallbackBecameActive], timeout: 3.0)
         task.cancel()
         await tracker.stopTracking()
-    }
-
-    /// A transient ClientError must trigger revalidateConnection() and one retry; the overall call succeeds.
-    /// Covers the withClientErrorRetry/revalidateConnection resilience ported in develop commit 9de4e7f0.
-    func testClientErrorTriggersRevalidateAndRetry() async throws {
-        let connected = XCTestExpectation(description: "Status becomes .connected")
-
-        let service = MockOpenAPIService(returnedVersion: 8, clientErrorsBeforeSuccess: 1)
-        let mockMonitor = MockPathMonitor()
-        let tracker = NetworkTracker(
-            monitor: mockMonitor,
-            connectionPool: ConnectionPool { _ in service },
-            failureTracker: ConnectionFailureTracker()
-        )
-        let stateStream = await tracker.stateStream()
-
-        let task = Task {
-            for await state in stateStream where state.status == .connected {
-                connected.fulfill()
-                break
-            }
-        }
-
-        let monitoringTask = Task { await mockMonitor.waitForMonitoringToStart() }
-        await tracker.startTracking(connectionConfigurations: [mockConfig])
-        await monitoringTask.value
-        await mockMonitor.simulateConnection(isConnected: true)
-        await fulfillment(of: [connected], timeout: 2.0)
-        task.cancel()
-
-        // First sendItemCommand throws ClientError → revalidateConnection() → retry succeeds.
-        try await tracker.send(to: "TestItem", command: "ON", deviceId: nil)
-
-        let callCount = await service.sendCommandCallCount
-        XCTAssertEqual(callCount, 2, "Expected 1 failed attempt + 1 successful retry")
     }
 }
 

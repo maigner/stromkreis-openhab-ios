@@ -1,20 +1,26 @@
-# openHAB iOS Development Guide
+# Stromkreis iOS Development Guide
 
 ## Build/Test Commands
 - Build: `xcodebuild -workspace openHAB.xcworkspace -scheme openHAB`
 - Test all: `fastlane unittests` or `xcodebuild test -workspace openHAB.xcworkspace -scheme openHABTestsSwift -destination 'platform=iOS Simulator,name=iPhone 17 Pro'`
+- Core package tests: `xcodebuild test -workspace openHAB.xcworkspace -scheme openHABTestsSwift -testPlan openHABTests -only-testing:OpenHABCoreTests -destination 'platform=iOS Simulator,name=iPhone 17 Pro'`
 - Single test: `xcodebuild test -workspace openHAB.xcworkspace -scheme openHABTestsSwift -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -only-testing:openHABTestsSwift/TestClassName/testMethodName`
 - If the exact simulator is unavailable, switch to an available iPhone simulator
 - Beta build: `fastlane beta`
 - UI tests: `xcodebuild test -workspace openHAB.xcworkspace -scheme openHABUITests`
 
 ## Architecture
-- **Main app**: openHAB/ - SwiftUI iOS app targeting iOS 18+ (UIKit still present in some files, goal is full removal)
-- **Core library**: OpenHABCore/ - Swift Package with shared business logic, models, API clients
-- **Watch app**: openHABWatch/ - watchOS companion app (watchOS 11+)
-- **Extensions**: openHABWidget/ (widgets), OpenHABWatchComplications/ (watch complications). No push notifications, no notification service extension
-- **Tests**: openHABTestsSwift/ (Swift Testing), openHABUITests/ (UI automation). For targeted bug fixes,  run only focused tests by default.
-- **Dependencies**: Kingfisher (image loading), SwiftUI, OpenAPI runtime, SFSafeSymbols. Deliberately no Google/Firebase or other analytics/crash-reporting SDKs
+The app shows exactly one surface: the member's openHAB **Main UI** in a `WKWebView`. Everything else from the upstream openHAB client (sitemap renderer, settings, multiple homes, watch/widget/CarPlay/Siri targets, push notifications, REST client, Firebase) has been removed on purpose — do not reintroduce it.
+
+- **Main app**: openHAB/ — SwiftUI iOS app targeting iOS 18+
+  - `OpenHABApp.swift` / `AppDelegate.swift`: entry point; handles `stromkreis://` and universal setup links
+  - `UI/OpenHABRootView.swift`: web view host, native mirror of the Main UI navigation bar, connecting placeholder, certificate alerts
+  - `UI/OpenHABWebView*.swift`, `UI/WebViewURLHelper.swift`, `UI/Util/URL+WebViewPath.swift`: the Main UI web view
+  - `UI/Onboarding/`: QR-code / setup-link onboarding (see docs/stromkreis-onboarding.md)
+  - `UI/NetworkConnectionService.swift`: starts connection tracking, surfaces TLS certificate prompts
+- **Core library**: OpenHABCore/ — Swift package: connection tracking (`NetworkTracker`, `ServerProbe`), preferences and Keychain credentials, TLS/certificate handling, `HTTPClient`, ETag checks, `StromkreisSetup`
+- **Tests**: openHABTestsSwift/ (Swift Testing) and OpenHABCore/Tests; openHABUITests/ (UI automation of the web view layout)
+- **Dependencies**: SFSafeSymbols, swift-timeout. Deliberately no Google/Firebase, no analytics or crash-reporting SDKs, no image or OpenAPI libraries.
 
 ## Code Style
 - Swift 6
@@ -22,7 +28,7 @@
 - Naming: PascalCase classes, camelCase properties/methods, OpenHAB prefix for core types
 - Use SFSafeSymbols for SF Symbols
 - Avoid force unwrapping, prefer optionals
-- Error handling: Result types in OpenHABCore, UIKit error alerts in main app but transition to SwiftUI wherever possible
+- Error handling: Result types in OpenHABCore, SwiftUI alerts in the app
 - Avoid trailing closure syntax when passing multiple closures (use parentheses for all closures to prevent multiple_closures_with_trailing_closure warnings)
 - Respect "BuildTools/.swiftformat"  and "BuildTools/.swiftlint.yml"
 - Always use Swift Regex with Swift 6 syntax

@@ -1,40 +1,31 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "9A1B2C3D-4E5F-6789-ABCD-EF0123456789",
-      "name" : "Test",
-      "options" : {
-
-      }
+      "id": "9A1B2C3D-4E5F-6789-ABCD-EF0123456789",
+      "name": "Test",
+      "options": {}
     }
   ],
-  "defaultOptions" : {
-    "codeCoverage" : false
+  "defaultOptions": {
+    "codeCoverage": false
   },
-  "testTargets" : [
+  "testTargets": [
     {
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:OpenHABCore",
-        "identifier" : "OpenHABCoreTests",
-        "name" : "OpenHABCoreTests"
+      "parallelizable": true,
+      "target": {
+        "containerPath": "container:OpenHABCore",
+        "identifier": "OpenHABCoreTests",
+        "name": "OpenHABCoreTests"
       }
     },
     {
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:openHAB.xcodeproj",
-        "identifier" : "DA2DC22E21F2736C00830730",
-        "name" : "openHABTestsSwift"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:CommonUI",
-        "identifier" : "CommonUITests",
-        "name" : "CommonUITests"
+      "parallelizable": true,
+      "target": {
+        "containerPath": "container:openHAB.xcodeproj",
+        "identifier": "DA2DC22E21F2736C00830730",
+        "name": "openHABTestsSwift"
       }
     }
   ],
-  "version" : 1
+  "version": 1
 }

@@ -1,1 +1,0 @@
-../../OpenHABCore/Sources/OpenHABCore/Util/BonjourService.swift
