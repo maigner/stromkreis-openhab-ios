@@ -2,6 +2,7 @@
   "sourceLanguage" : "de",
   "strings" : {
     "Control player in ${applicationName}" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12,6 +13,7 @@
       }
     },
     "Get item state in ${applicationName}" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -22,6 +24,7 @@
       }
     },
     "Set a switch in ${applicationName}" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -43,6 +46,7 @@
       }
     },
     "Set color light in ${applicationName}" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -53,6 +57,7 @@
       }
     },
     "Set contact state in ${applicationName}" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -63,6 +68,7 @@
       }
     },
     "Set date and time in ${applicationName}" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -73,6 +79,7 @@
       }
     },
     "Set dimmer in ${applicationName}" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -83,6 +90,7 @@
       }
     },
     "Set number value in ${applicationName}" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -104,6 +112,7 @@
       }
     },
     "Set text value in ${applicationName}" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -114,6 +123,7 @@
       }
     },
     "Switch home in ${applicationName}" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

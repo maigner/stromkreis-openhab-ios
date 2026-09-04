@@ -319,6 +319,7 @@
 			);
 			mainGroup = DFB2621E18830A3600D3244D;
 			packageReferences = (
+				DA5C0RE12F63003B00A0490E /* XCLocalSwiftPackageReference "OpenHABCore" */,
 				DA3B75AC2C59729200E219AB /* XCRemoteSwiftPackageReference "SFSafeSymbols" */,
 			);
 			productRefGroup = DFB2622818830A3600D3244D /* Products */;
@@ -860,6 +861,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
+		DA5C0RE12F63003B00A0490E /* XCLocalSwiftPackageReference "OpenHABCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = OpenHABCore;
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -876,6 +881,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		937E4470270B36D000A98C26 /* OpenHABCore */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = DA5C0RE12F63003B00A0490E /* XCLocalSwiftPackageReference "OpenHABCore" */;
 			productName = OpenHABCore;
 		};
 		DA9A7EFE2D66915900824156 /* SFSafeSymbols */ = {
@@ -885,6 +891,7 @@
 		};
 		DAEFAA7E2F63536A00AC300B /* OpenHABCore */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = DA5C0RE12F63003B00A0490E /* XCLocalSwiftPackageReference "OpenHABCore" */;
 			productName = OpenHABCore;
 		};
 /* End XCSwiftPackageProductDependency section */
