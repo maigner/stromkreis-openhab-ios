@@ -21,9 +21,17 @@ struct StromkreisSetupTests {
         #expect(link == .token("t0k3n", origin: URL(string: "https://www.stromkreis.net")!))
     }
 
-    @Test func selfHostedPlatformKeepsOrigin() {
-        let link = StromkreisSetup.parse("https://platform.example.org:8443/app/setup/tok")
-        #expect(link == .token("tok", origin: URL(string: "https://platform.example.org:8443")!))
+    @Test(arguments: [
+        "https://platform.example.org/app/setup/tok",
+        "http://stromkreis.net/app/setup/tok",
+        "https://stromkreis.net.evil.example/app/setup/tok",
+        "https://evilstromkreis.net/app/setup/tok",
+        "stromkreis://setup?token=abc&origin=https://evil.example",
+        "stromkreis://setup?cloudUrl=https://evil.example&username=u&password=p",
+        #"{"username":"u","password":"p","cloudUrl":"http://hac.stromkreis.net"}"#
+    ])
+    func rejectsUntrustedHosts(_ payload: String) {
+        #expect(StromkreisSetup.parse(payload) == nil)
     }
 
     @Test func customSchemeToken() {
@@ -39,9 +47,9 @@ struct StromkreisSetupTests {
     }
 
     @Test func jsonInlineCredentials() {
-        let json = #"{"v":1,"cloudUrl":"https://hac.example.net","username":"u","password":"p"}"#
+        let json = #"{"v":1,"cloudUrl":"https://hac2.stromkreis.net","username":"u","password":"p"}"#
         let link = StromkreisSetup.parse(json)
-        #expect(link == .credentials(StromkreisCloudCredentials(cloudUrl: "https://hac.example.net", username: "u", password: "p")))
+        #expect(link == .credentials(StromkreisCloudCredentials(cloudUrl: "https://hac2.stromkreis.net", username: "u", password: "p")))
     }
 
     @Test func rejectsUnrelatedPayloads() {

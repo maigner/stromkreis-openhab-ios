@@ -40,17 +40,8 @@
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Stromkreis needs access to your camera.</string>
-	<key>NSLocalNetworkUsageDescription</key>
-	<string>Stromkreis needs access to your local network to connect with the server.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Stromkreis needs access to your microphone.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

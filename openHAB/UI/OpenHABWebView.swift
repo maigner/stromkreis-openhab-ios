@@ -358,7 +358,7 @@ struct OpenHABWebViewContainer: UIViewControllerRepresentable {
                      decideMediaCapturePermissionsFor origin: WKSecurityOrigin,
                      initiatedBy frame: WKFrameInfo,
                      type: WKMediaCaptureType) async -> WKPermissionDecision {
-            Preferences.shared.currentHomePreferences.alwaysAllowWebRTC ? .grant : .prompt
+            .deny
         }
 
         // MARK: - External URL confirmation

@@ -57,6 +57,17 @@ public enum StromkreisSetup {
     public static let urlScheme = "stromkreis"
     public static let setupPathPrefix = "/app/setup"
     public static let redeemPath = "/api/app/setup/v1"
+    public static let trustedDomain = "stromkreis.net"
+
+    /// True for `https` URLs on `stromkreis.net` or one of its subdomains. The app never talks to anything else.
+    public static func isTrusted(_ url: URL) -> Bool {
+        guard url.scheme?.lowercased() == "https", let host = url.host?.lowercased() else { return false }
+        return host == trustedDomain || host.hasSuffix(".\(trustedDomain)")
+    }
+
+    private static func isTrusted(_ urlString: String) -> Bool {
+        URL(string: urlString).map(isTrusted) ?? false
+    }
 
     // MARK: Parsing
 
@@ -84,18 +95,14 @@ public enum StromkreisSetup {
             if let creds = credentials(from: query) {
                 return .credentials(creds)
             }
-            if let token = query["token"] {
-                let origin = query["origin"].flatMap(URL.init(string:)).flatMap(originOnly) ?? platformOrigin
-                return .token(token, origin: origin)
-            }
-            return nil
+            guard let token = query["token"] else { return nil }
+            guard let originString = query["origin"] else { return .token(token, origin: platformOrigin) }
+            guard let origin = URL(string: originString).flatMap(originOnly), isTrusted(origin) else { return nil }
+            return .token(token, origin: origin)
         }
 
-        // https://<platform>/app/setup/<token>. Only stromkreis.net arrives as a universal link,
-        // but a scanned QR code may point at a self-hosted platform, so any host is accepted.
-        guard let scheme = components.scheme?.lowercased(), scheme == "https" || scheme == "http",
-              components.host != nil,
-              let origin = originOnly(url) else { return nil }
+        // https://<platform>/app/setup/<token>, only on stromkreis.net.
+        guard let origin = originOnly(url), isTrusted(origin) else { return nil }
         let path = components.path
         guard path.lowercased().hasPrefix(setupPathPrefix) else { return nil }
         if let token = query["token"] {
@@ -123,8 +130,10 @@ public enum StromkreisSetup {
 
     private static func credentials(from query: [String: String]) -> StromkreisCloudCredentials? {
         guard let username = query["username"], let password = query["password"] else { return nil }
+        let cloudUrl = query["cloudUrl"] ?? defaultCloudURL
+        guard isTrusted(cloudUrl) else { return nil }
         return StromkreisCloudCredentials(
-            cloudUrl: query["cloudUrl"] ?? defaultCloudURL,
+            cloudUrl: cloudUrl,
             username: username,
             password: password,
             siteName: query["siteName"]
@@ -135,8 +144,10 @@ public enum StromkreisSetup {
         guard let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
               let username = object["username"] as? String, !username.isEmpty,
               let password = object["password"] as? String, !password.isEmpty else { return nil }
+        let cloudUrl = (object["cloudUrl"] as? String).flatMap { $0.isEmpty ? nil : $0 } ?? defaultCloudURL
+        guard isTrusted(cloudUrl) else { return nil }
         return StromkreisCloudCredentials(
-            cloudUrl: (object["cloudUrl"] as? String).flatMap { $0.isEmpty ? nil : $0 } ?? defaultCloudURL,
+            cloudUrl: cloudUrl,
             username: username,
             password: password,
             siteName: object["siteName"] as? String
