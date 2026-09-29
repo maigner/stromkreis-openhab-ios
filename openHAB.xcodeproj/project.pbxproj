@@ -732,7 +732,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "$(inherited)";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "openHAB/Supporting Files/openHAB-CarPlay.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "openHAB/Supporting Files/Stromkreis.entitlements";
 				DEVELOPMENT_TEAM = 6U7435AK45;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_DEBUG_DYLIB = YES;
@@ -777,7 +777,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "$(inherited)";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "openHAB/Supporting Files/openHAB-CarPlay.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "openHAB/Supporting Files/Stromkreis.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6U7435AK45;
