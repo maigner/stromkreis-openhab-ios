@@ -184,10 +184,14 @@ public enum StromkreisSetup {
     // MARK: Applying
 
     /// Writes the credentials into the active home's remote (Stromkreis Cloud) connection.
+    /// Returns whether the connection actually changed, so callers can skip a disruptive
+    /// web view reload when re-redeeming a link for an already-active account.
     @MainActor
-    public static func apply(_ creds: StromkreisCloudCredentials) {
+    @discardableResult
+    public static func apply(_ creds: StromkreisCloudCredentials) -> Bool {
+        var connectionChanged = false
         Preferences.shared.modifyActiveHome { home in
-            home.remoteConnectionConfig = ConnectionConfiguration(
+            let newConfig = ConnectionConfiguration(
                 url: creds.cloudUrl,
                 username: creds.username,
                 password: creds.password,
@@ -196,6 +200,8 @@ public enum StromkreisSetup {
                 supportsNotifications: true,
                 priority: 1
             )
+            connectionChanged = newConfig != home.remoteConnectionConfig
+            home.remoteConnectionConfig = newConfig
             if let name = creds.siteName?.trimmingCharacters(in: .whitespacesAndNewlines), !name.isEmpty {
                 home.homeName = name
             } else if home.homeName == "Home#1" {
@@ -204,6 +210,7 @@ public enum StromkreisSetup {
             home.defaultView = "web"
         }
         Logger.preferences.info("Stromkreis setup: cloud connection configured for \(creds.username, privacy: .private)")
+        return connectionChanged
     }
 
     /// True when the given home has a usable Stromkreis Cloud login.

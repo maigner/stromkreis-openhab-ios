@@ -53,3 +53,37 @@ struct StromkreisSetupTests {
         #expect(StromkreisSetup.parse("hello world") == nil)
     }
 }
+
+/// .serialized prevents parallel test clones from racing on the shared group.net.stromkreis.app UserDefaults suite.
+/// Requires the openHAB app as the test host so the xctest process inherits the
+/// keychain-access-groups entitlement (see CredentialsStoreTests.swift) — apply()'s change
+/// detection compares against the password injected from Keychain, so without that
+/// entitlement SecItemAdd fails and the password never round-trips.
+@Suite(.serialized, .disabled("Requires openHAB.app test host for Keychain entitlement"))
+@MainActor
+struct StromkreisSetupApplyTests {
+    /// Re-redeeming a link that resolves to the same connection must report no change, so
+    /// callers (OnboardingCoordinator) can skip reloading the web view. A spurious reload
+    /// here previously wiped the page's DOM for no reason and could leave it blank — see
+    /// OnboardingCoordinator.run().
+    @Test func reapplyingSameCredentialsReportsNoChange() {
+        let data = UserDefaults(suiteName: "group.net.stromkreis.app")!
+        data.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+
+        let creds = StromkreisCloudCredentials(cloudUrl: "https://hac.stromkreis.net", username: "anlage-71@stromkreis.net", password: "secret", siteName: "Anlage")
+
+        #expect(StromkreisSetup.apply(creds) == true)
+        #expect(StromkreisSetup.apply(creds) == false)
+    }
+
+    @Test func changedCredentialsReportChange() {
+        let data = UserDefaults(suiteName: "group.net.stromkreis.app")!
+        data.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+
+        let original = StromkreisCloudCredentials(cloudUrl: "https://hac.stromkreis.net", username: "anlage-71@stromkreis.net", password: "secret", siteName: "Anlage")
+        let rotated = StromkreisCloudCredentials(cloudUrl: "https://hac.stromkreis.net", username: "anlage-71@stromkreis.net", password: "newSecret", siteName: "Anlage")
+
+        #expect(StromkreisSetup.apply(original) == true)
+        #expect(StromkreisSetup.apply(rotated) == true)
+    }
+}

@@ -91,8 +91,13 @@ final class OnboardingCoordinator: ObservableObject {
         phase = .working
         do {
             let creds = try await StromkreisSetup.resolve(link)
-            StromkreisSetup.apply(creds)
-            NotificationCenter.default.post(name: NSNotification.Name("net.stromkreis.preferences.saved"), object: nil)
+            // Re-redeeming a link for an already-active account leaves the connection
+            // unchanged — skip the reload so it doesn't wipe and reload the web view for
+            // nothing (risks a blank page if the reload races the onboarding sheet's
+            // dismissal animation).
+            if StromkreisSetup.apply(creds) {
+                NotificationCenter.default.post(name: NSNotification.Name("net.stromkreis.preferences.saved"), object: nil)
+            }
             let name = creds.siteName?.trimmingCharacters(in: .whitespacesAndNewlines)
             notice = nil
             phase = .succeeded(name?.isEmpty == false ? name! : creds.username)
