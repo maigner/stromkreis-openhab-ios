@@ -166,7 +166,25 @@ struct OpenHABWebViewContainer: UIViewControllerRepresentable {
                     return
                 }
                 #endif
+                // Dict body — navbar state
+                if let dict = message.body as? [String: Any],
+                   let type = dict["type"] as? String,
+                   type == "navbarState" {
+                    viewModel.updateNavbarState(
+                        hidden: dict["hidden"] as? String == "true",
+                        titleHidden: dict["titleHidden"] as? String == "true",
+                        height: (dict["height"] as? String).flatMap(Double.init)
+                    )
+                    return
+                }
                 // Dict body — navbar proxy elements
+                #if DEBUG
+                // UI tests pin their own navbar items; the page's real proxy must not clear them.
+                if ProcessInfo.processInfo.environment["UITestWebViewNavbarItems"] != nil,
+                   let dict = message.body as? [String: Any], dict["type"] as? String == "navbarElements" {
+                    return
+                }
+                #endif
                 if let dict = message.body as? [String: Any],
                    let type = dict["type"] as? String,
                    type == "navbarElements",

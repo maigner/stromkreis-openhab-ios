@@ -29,16 +29,26 @@ struct OpenHABRootView: View {
 
     var body: some View {
         ZStack(alignment: .top) {
+            // The Main UI lays itself out from the safe-area insets and reserves the
+            // navbar space the bar below sits on.
             OpenHABWebViewContainer(viewModel: webViewModel)
-                .padding(.top, 44)
                 .background(.clear)
+                .ignoresSafeArea()
             // Placeholder while a home is first loading. Sits above the (transparent)
             // web view but below the menu bar, so the bar stays reachable while connecting.
             if !webViewModel.hasLoadedContent {
                 ConnectingPlaceholder()
                     .transition(.opacity)
             }
+            // Same slide Framework7 uses for its navbar: up by the bar height, fading, 400ms.
             menuBar
+                .offset(y: webViewModel.isWebNavbarHidden ? -webViewModel.webNavbarHeight : 0)
+                .opacity(webViewModel.isWebNavbarHidden ? 0 : 1)
+                .allowsHitTesting(!webViewModel.isWebNavbarHidden)
+                .animation(
+                    .timingCurve(0.25, 0.1, 0.25, 1.0, duration: 0.4),
+                    value: webViewModel.isWebNavbarHidden
+                )
         }
         .animation(.easeInOut(duration: 0.25), value: webViewModel.hasLoadedContent)
         .onAppear {
@@ -81,7 +91,10 @@ struct OpenHABRootView: View {
             networkService.certificateAlert?.title ?? "",
             isPresented: Binding(
                 get: { networkService.certificateAlert != nil },
-                set: { if !$0 { networkService.certificateAlert = nil } }
+                // Defer to the next run loop tick: SwiftUI invokes this setter synchronously
+                // while dismissing the alert, and mutating the @Published property inline
+                // triggers "Publishing changes from within view updates is not allowed."
+                set: { if !$0 { DispatchQueue.main.async { networkService.certificateAlert = nil } } }
             )
         ) {
             Button("Always") { networkService.certificateAlertAction(.permitAlways) }
@@ -161,11 +174,11 @@ struct OpenHABRootView: View {
 
             Spacer().frame(width: 16)
         }
-        .frame(height: 44)
+        .frame(height: webViewModel.webNavbarHeight)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("MainMenuBar")
         .overlay {
-            if !webViewModel.navbarTitle.isEmpty {
+            if !webViewModel.navbarTitle.isEmpty, !webViewModel.isWebNavbarTitleHidden {
                 Text(webViewModel.navbarTitle)
                     .font(.headline)
                     .lineLimit(1)
@@ -173,7 +186,15 @@ struct OpenHABRootView: View {
                     .allowsHitTesting(false)
             }
         }
-        .background(.bar, ignoresSafeAreaEdges: .top)
+        // With a large title the small title is hidden and the bar is only a transparent
+        // strip above the content, like MainUI's own navbar — no opaque material then.
+        .background(alignment: .top) {
+            Rectangle()
+                .fill(.bar)
+                .ignoresSafeArea(edges: .top)
+                .opacity(webViewModel.isWebNavbarTitleHidden ? 0 : 1)
+                .animation(.easeInOut(duration: 0.2), value: webViewModel.isWebNavbarTitleHidden)
+        }
     }
 
     // MARK: - Navbar proxy helpers

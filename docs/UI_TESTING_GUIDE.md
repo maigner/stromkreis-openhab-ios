@@ -42,6 +42,10 @@ The app reads `ProcessInfo.processInfo.environment` at launch. Set keys on `app.
 | Key | Effect |
 |-----|--------|
 | `UITest` = `"1"` | Forces demo mode, skips onboarding. **Set this in every test.** |
+| `UITestWebViewMode` = `"1"` | Suppresses the onboarding sheet so injected web content is visible |
+| `UITestInjectHTML` | Base64 HTML loaded into the web view instead of the server page; dismisses the "Connecting…" placeholder and is protected from `clearView()` |
+| `UITestInjectJS` | Base64 JS evaluated after each page load; report results with `window.ohUITest.report(key, value)` and read them from the `UITestReport-<key>` static text |
+| `UITestWebViewNavbarItems` | JSON `[{"label","jsAction"}]` navbar proxy items, pinned so the page's real proxy cannot clear them |
 | `UITestToastTitle` | Toast title to show 0.5 s after launch |
 | `UITestToastMessage` | Toast message body |
 | `UITestToastActions` | JSON-encoded `[{"title":"…","action":"…"}]` for toast action buttons |

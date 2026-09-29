@@ -36,6 +36,13 @@ final class OnboardingCoordinator: ObservableObject {
 
     init() {
         isPresented = !StromkreisSetup.isActiveHomeConfigured
+        #if DEBUG
+        // UI tests inject their own web content and must not be covered by the sheet.
+        if ProcessInfo.processInfo.environment["UITestWebViewMode"] != nil {
+            isPresented = false
+            return
+        }
+        #endif
         Preferences.shared.currentHomePreferencesPublisher
             .map { StromkreisSetup.isConfigured($0) }
             .removeDuplicates()
