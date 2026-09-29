@@ -299,7 +299,6 @@ struct ETagCheckerTests {
             username: "",
             password: "",
             alwaysSendBasicAuth: false,
-            ignoreSSL: false,
             priority: 0
         )
 

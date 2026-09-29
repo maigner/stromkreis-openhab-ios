@@ -524,12 +524,10 @@ public extension Preferences {
         Preferences.shared.modifyActiveHome { currentHomePreferences in
             currentHomePreferences.localConnectionConfig.url = UserDefaults.standard.string(forKey: "localUrl") ?? currentHomePreferences.localConnectionConfig.url
             currentHomePreferences.localConnectionConfig.alwaysSendBasicAuth = UserDefaults.standard.object(forKey: "alwaysSendCreds") as? Bool ?? currentHomePreferences.localConnectionConfig.alwaysSendBasicAuth
-            currentHomePreferences.localConnectionConfig.ignoreSSL = UserDefaults.standard.object(forKey: "ignoreSSL") as? Bool ?? currentHomePreferences.localConnectionConfig.ignoreSSL
             currentHomePreferences.remoteConnectionConfig.url = UserDefaults.standard.string(forKey: "remoteUrl") ?? currentHomePreferences.remoteConnectionConfig.url
             currentHomePreferences.remoteConnectionConfig.username = UserDefaults.standard.string(forKey: "username") ?? currentHomePreferences.remoteConnectionConfig.username
             currentHomePreferences.remoteConnectionConfig.password = UserDefaults.standard.string(forKey: "password") ?? currentHomePreferences.remoteConnectionConfig.password
             currentHomePreferences.remoteConnectionConfig.alwaysSendBasicAuth = UserDefaults.standard.object(forKey: "alwaysSendCreds") as? Bool ?? currentHomePreferences.remoteConnectionConfig.alwaysSendBasicAuth
-            currentHomePreferences.remoteConnectionConfig.ignoreSSL = UserDefaults.standard.object(forKey: "ignoreSSL") as? Bool ?? currentHomePreferences.remoteConnectionConfig.ignoreSSL
             currentHomePreferences.realTimeSliders = UserDefaults.standard.object(forKey: "realTimeSliders") as? Bool ?? currentHomePreferences.realTimeSliders
             currentHomePreferences.iconType = UserDefaults.standard.object(forKey: "iconType") as? Int ?? currentHomePreferences.iconType
             currentHomePreferences.defaultSitemap = UserDefaults.standard.string(forKey: "defaultSitemap") ?? currentHomePreferences.defaultSitemap
@@ -552,20 +550,17 @@ public extension Preferences {
         let oldUsername = sharedDefaults.string(forKey: "username")
         let oldPassword = sharedDefaults.string(forKey: "password")
         let oldAlwaysSendCreds = sharedDefaults.object(forKey: "alwaysSendCreds") as? Bool
-        let oldIgnoreSSL = sharedDefaults.object(forKey: "ignoreSSL") as? Bool
 
         // Create new configuration
         var newLocalConfiguration = Preferences.shared.currentHomePreferences.localConnectionConfig
         newLocalConfiguration.url = oldLocalUrl ?? newLocalConfiguration.url
         newLocalConfiguration.alwaysSendBasicAuth = oldAlwaysSendCreds ?? newLocalConfiguration.alwaysSendBasicAuth
-        newLocalConfiguration.ignoreSSL = oldIgnoreSSL ?? newLocalConfiguration.ignoreSSL
 
         var newRemoteConfiguration = Preferences.shared.currentHomePreferences.remoteConnectionConfig
         newRemoteConfiguration.url = oldRemoteUrl ?? newRemoteConfiguration.url
         newRemoteConfiguration.username = oldUsername ?? newRemoteConfiguration.username
         newRemoteConfiguration.password = oldPassword ?? newRemoteConfiguration.password
         newRemoteConfiguration.alwaysSendBasicAuth = oldAlwaysSendCreds ?? newRemoteConfiguration.alwaysSendBasicAuth
-        newRemoteConfiguration.ignoreSSL = oldIgnoreSSL ?? newRemoteConfiguration.ignoreSSL
 
         // Save to Preferences
         Preferences.shared.modifyActiveHome { currentHomePreferences in
@@ -638,7 +633,6 @@ public extension ConnectionConfiguration {
         username: "",
         password: "",
         alwaysSendBasicAuth: false,
-        ignoreSSL: false,
         supportsNotifications: false,
         priority: 0
     )
@@ -648,7 +642,6 @@ public extension ConnectionConfiguration {
         username: "",
         password: "",
         alwaysSendBasicAuth: false,
-        ignoreSSL: false,
         supportsNotifications: true,
         priority: 1
     )

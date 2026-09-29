@@ -16,20 +16,9 @@ import SwiftUI
 
 @MainActor
 class NetworkConnectionService: ObservableObject {
-    // MARK: - Published state
-
-    @Published var certificateAlert: CertificateAlertState?
-
     // MARK: - Private state
 
     private var cancellables = Set<AnyCancellable>()
-
-    struct CertificateAlertState: Identifiable {
-        let id = UUID()
-        let title: String
-        let message: String
-        let delegate: HTTPClientDelegate
-    }
 
     init() {
         setupTracker()
@@ -38,56 +27,6 @@ class NetworkConnectionService: ObservableObject {
     // MARK: - Network Tracker
 
     private func setupTracker() {
-        NotificationCenter.default.addObserver(
-            forName: .evaluateServerTrust,
-            object: nil,
-            queue: nil
-        ) { [weak self] notification in
-            guard
-                let summary = notification.userInfo?["summary"] as? String,
-                let domain = notification.userInfo?["domain"] as? String,
-                let delegate = notification.object as? HTTPClientDelegate
-            else { return }
-            Task { @MainActor in
-                self?.handleCertificateTrust(
-                    summary: summary,
-                    domain: domain,
-                    delegate: delegate,
-                    messageTemplateKey: "ssl_certificate_invalid"
-                )
-            }
-        }
-
-        NotificationCenter.default.addObserver(
-            forName: .evaluateCertificateMismatch,
-            object: nil,
-            queue: nil
-        ) { [weak self] notification in
-            guard
-                let summary = notification.userInfo?["summary"] as? String,
-                let domain = notification.userInfo?["domain"] as? String,
-                let delegate = notification.object as? HTTPClientDelegate
-            else { return }
-            Task { @MainActor in
-                self?.handleCertificateTrust(
-                    summary: summary,
-                    domain: domain,
-                    delegate: delegate,
-                    messageTemplateKey: "ssl_certificate_no_match"
-                )
-            }
-        }
-
-        NotificationCenter.default.addObserver(
-            forName: .acceptedServerCertificatesChanged,
-            object: nil,
-            queue: nil
-        ) { _ in
-            Task { @MainActor in
-                await NetworkTracker.shared.restartTracking()
-            }
-        }
-
         // Every change of the active home's connection settings restarts connection tracking.
         Preferences.shared.currentHomePreferencesPublisher
             .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
@@ -98,23 +37,5 @@ class NetworkConnectionService: ObservableObject {
                 }
             }
             .store(in: &cancellables)
-    }
-
-    // MARK: - Certificate Trust
-
-    private func handleCertificateTrust(summary: String, domain: String, delegate: HTTPClientDelegate, messageTemplateKey: String) {
-        let title = NSLocalizedString("ssl_certificate_warning", comment: "")
-        let message = String(format: NSLocalizedString(messageTemplateKey, comment: ""), summary, domain)
-        certificateAlert = CertificateAlertState(title: title, message: message, delegate: delegate)
-    }
-
-    func certificateAlertAction(_ result: CertificateEvaluateResult) {
-        certificateAlert?.delegate.completeEvaluation(result)
-        // Deferred: this is called from an alert button action during SwiftUI's dismiss
-        // transaction, and mutating the @Published property inline triggers
-        // "Publishing changes from within view updates is not allowed."
-        DispatchQueue.main.async { [weak self] in
-            self?.certificateAlert = nil
-        }
     }
 }

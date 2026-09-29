@@ -13,7 +13,6 @@
 import os
 
 public enum HTTPClientError: Error {
-    case serverTrustEvaluationFailed(reason: String)
     case noDataforItem
     case noDataForProperties
     case baseURLIsNil
@@ -25,8 +24,6 @@ public enum HTTPClientError: Error {
         switch self {
         case .noDataforItem:
             "No data for item"
-        case let .serverTrustEvaluationFailed(reason):
-            "server trust evaluation failed: \(reason)"
         case .noDataForProperties:
             "No data for properties"
         case .baseURLIsNil:
@@ -38,197 +35,6 @@ public enum HTTPClientError: Error {
         case .noConfiguration:
             "No configuration"
         }
-    }
-}
-
-public enum CertificateEvaluateResult: Sendable {
-    case undecided
-    case deny
-    case permitOnce
-    case permitAlways
-}
-
-public struct CertificateEntry: Codable, Sendable {
-    public let data: Data
-    public let dateAccepted: Date
-
-    public init(data: Data, dateAccepted: Date = Date()) {
-        self.data = data
-        self.dateAccepted = dateAccepted
-    }
-}
-
-public actor CertificateStore {
-    public static let shared = CertificateStore()
-
-    private var trustedCertificates: [String: CertificateEntry] = [:]
-    private let persistencePath: URL?
-
-    /// Creates a CertificateStore with the default persistence path (app group or documents directory)
-    public init() {
-        // Calculate the default persistence path
-        let path: URL
-        #if os(watchOS)
-        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        path = URL(fileURLWithPath: documentsDirectory).appendingPathComponent("trustedCertificates")
-        #else
-        // Try app group container first, fall back to documents directory for testing
-        if let appGroupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.net.stromkreis.app") {
-            path = appGroupURL.appendingPathComponent("trustedCertificates")
-        } else {
-            // Fallback for test environment where app group may not be available
-            let documentsDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-            path = URL(fileURLWithPath: documentsDirectory).appendingPathComponent("trustedCertificates")
-        }
-        #endif
-
-        persistencePath = path
-        let (certificates, needsMigration) = Self.loadCertificates(from: path)
-        trustedCertificates = certificates
-
-        // If migration occurred, persist the new format
-        if needsMigration {
-            Task {
-                await self.saveTrustedCertificates()
-                Logger.httpClient.info("Migration completed, saved in new format")
-            }
-        }
-    }
-
-    /// Creates a CertificateStore for testing with an optional custom persistence path.
-    /// Pass `nil` for in-memory only operation (no file I/O).
-    public init(persistencePath: URL?) {
-        self.persistencePath = persistencePath
-        if let path = persistencePath {
-            let (certificates, needsMigration) = Self.loadCertificates(from: path)
-            trustedCertificates = certificates
-
-            // If migration occurred, persist the new format
-            if needsMigration {
-                Task {
-                    await self.saveTrustedCertificates()
-                    Logger.httpClient.info("Migration completed, saved in new format")
-                }
-            }
-        } else {
-            trustedCertificates = [:]
-        }
-    }
-
-    /// Loads certificates from a given path (static to be called from init)
-    /// Returns a tuple of (certificates, needsMigration) where needsMigration indicates if the data was in an old format
-    private static func loadCertificates(from path: URL) -> (certificates: [String: CertificateEntry], needsMigration: Bool) {
-        Logger.httpClient.info("Initializing cert store")
-        Logger.httpClient.debug("Attempting to load certificates from \(path)")
-
-        do {
-            let rawdata = try Data(contentsOf: path)
-            let decoder = PropertyListDecoder()
-
-            // Try to load new format first
-            do {
-                let certificates = try decoder.decode([String: CertificateEntry].self, from: rawdata)
-                let certCount = certificates.count
-                Logger.httpClient.info("Loaded existing cert store (new format) with \(certCount) certificates")
-                return (certificates, false)
-            } catch {
-                // Fall back to old format
-                let oldFormat = try decoder.decode([String: Data].self, from: rawdata)
-                Logger.httpClient.info("Migrating cert store from old format with \(oldFormat.count) certificates")
-
-                // Convert old format to new format with current date
-                let migrationDate = Date()
-                var certificates: [String: CertificateEntry] = [:]
-                for (domain, data) in oldFormat {
-                    certificates[domain] = CertificateEntry(data: data, dateAccepted: migrationDate)
-                }
-                return (certificates, true)
-            }
-        } catch {
-            // if Decodable fails, fall back to NSKeyedArchiver for very old format
-            do {
-                let rawdata = try Data(contentsOf: path)
-                if let unarchivedTrustedCertificates = try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSDictionary.self, NSString.self, NSData.self], from: rawdata) as? [String: Data] {
-                    Logger.httpClient.info("Migrating cert store from NSKeyedArchiver format")
-
-                    // Convert old format to new format with current date
-                    let migrationDate = Date()
-                    var certificates: [String: CertificateEntry] = [:]
-                    for (domain, data) in unarchivedTrustedCertificates {
-                        certificates[domain] = CertificateEntry(data: data, dateAccepted: migrationDate)
-                    }
-                    return (certificates, true)
-                }
-            } catch {
-                // File doesn't exist or can't be read
-            }
-            Logger.httpClient.info("No cert store, creating")
-            return ([:], false)
-        }
-    }
-
-    // swiftlint:disable:next async_without_await
-    private func saveTrustedCertificates() async {
-        guard let path = persistencePath else {
-            // In-memory mode, no persistence
-            return
-        }
-
-        do {
-            let data = try PropertyListEncoder().encode(trustedCertificates)
-
-            // Ensure parent directory exists
-            let parentDir = path.deletingLastPathComponent()
-            try FileManager.default.createDirectory(at: parentDir, withIntermediateDirectories: true, attributes: nil)
-
-            // Write data with explicit options to ensure it's flushed to disk
-            try data.write(to: path, options: [.atomic])
-
-            // Double-check the file was written and can be read back
-            let verifyData = try Data(contentsOf: path)
-            guard verifyData == data else {
-                Logger.httpClient.error("Data verification failed after write")
-                return
-            }
-
-            Logger.httpClient.debug("Successfully saved and verified trusted certificates to \(path)")
-
-        } catch {
-            Logger.httpClient.error("Could not save trusted certificates: \(error)")
-        }
-    }
-
-    public func storeCertificateData(_ certificate: Data?, forDomain domain: String) async {
-        if let certificate {
-            trustedCertificates[domain] = CertificateEntry(data: certificate, dateAccepted: Date())
-            Logger.httpClient.debug("Stored certificate for domain \(domain), size: \(certificate.count) bytes")
-        } else {
-            trustedCertificates[domain] = nil
-            Logger.httpClient.debug("Removed certificate for domain \(domain)")
-        }
-        await saveTrustedCertificates()
-    }
-
-    // swiftlint:disable:next async_without_await
-    public func certificateData(forDomain domain: String) async -> Data? {
-        let data = trustedCertificates[domain]?.data
-        Logger.httpClient.debug("Retrieved certificate for domain \(domain): \(data?.count ?? 0) bytes")
-        return data
-    }
-
-    // swiftlint:disable:next async_without_await
-    public func getAllCertificates() async -> [String: CertificateEntry] {
-        trustedCertificates
-    }
-
-    // swiftlint:disable:next async_without_await
-    public func getCertificateInfo(forDomain domain: String) async -> CertificateEntry? {
-        trustedCertificates[domain]
-    }
-
-    public func removeCertificate(forDomain domain: String) async {
-        trustedCertificates.removeValue(forKey: domain)
-        await saveTrustedCertificates()
     }
 }
 
@@ -392,10 +198,4 @@ public final class HTTPClient: NSObject, Sendable {
             return try await session.data(for: request) as! (T, URLResponse)
         }
     }
-}
-
-public extension Notification.Name {
-    static let evaluateServerTrust = Notification.Name("evaluateServerTrust")
-    static let evaluateCertificateMismatch = Notification.Name("evaluateCertificateMismatch")
-    static let acceptedServerCertificatesChanged = Notification.Name("acceptedServerCertificatesChanged")
 }

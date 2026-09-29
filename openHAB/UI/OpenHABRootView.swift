@@ -87,22 +87,6 @@ struct OpenHABRootView: View {
                 activeNetworkConnection = connection
             }
         }
-        .alert(
-            networkService.certificateAlert?.title ?? "",
-            isPresented: Binding(
-                get: { networkService.certificateAlert != nil },
-                // Defer to the next run loop tick: SwiftUI invokes this setter synchronously
-                // while dismissing the alert, and mutating the @Published property inline
-                // triggers "Publishing changes from within view updates is not allowed."
-                set: { if !$0 { DispatchQueue.main.async { networkService.certificateAlert = nil } } }
-            )
-        ) {
-            Button("Always") { networkService.certificateAlertAction(.permitAlways) }
-            Button("Once") { networkService.certificateAlertAction(.permitOnce) }
-            Button("Deny", role: .cancel) { networkService.certificateAlertAction(.deny) }
-        } message: {
-            Text(networkService.certificateAlert?.message ?? "")
-        }
         #if DEBUG
         .overlay {
             ForEach(Array(webViewModel.uiTestReports.keys.sorted()), id: \.self) { key in

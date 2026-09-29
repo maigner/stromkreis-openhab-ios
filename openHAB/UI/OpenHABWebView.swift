@@ -226,6 +226,12 @@ struct OpenHABWebViewContainer: UIViewControllerRepresentable {
         func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
             guard let url = navigationAction.request.url else { return .allow }
             Logger.viewController.info("decidePolicyFor - url: \(url.absoluteString)")
+            if let upgraded = StromkreisSetup.upgradedToHTTPS(url) {
+                // A redirect to the server's own http:// address; ATS would block it.
+                Logger.viewController.info("decidePolicyFor - upgrading to https: \(upgraded.absoluteString)")
+                webView.load(URLRequest(url: upgraded))
+                return .cancel
+            }
             if !url.isNativeWebURL {
                 // JS-triggered custom-scheme navigations (e.g. window.location = 'shortcuts://...')
                 // arrive here; anchor taps are caught by the injected JS handler first.
@@ -317,15 +323,6 @@ struct OpenHABWebViewContainer: UIViewControllerRepresentable {
                 return (.cancelAuthenticationChallenge, nil)
             }
 
-            if let url = viewModel.resolvedURL(), host == url.host {
-                if method == NSURLAuthenticationMethodServerTrust {
-                    guard let serverTrust = challenge.protectionSpace.serverTrust else {
-                        return (.performDefaultHandling, nil)
-                    }
-                    return (.useCredential, URLCredential(trust: serverTrust))
-                }
-                return await onReceiveSessionChallenge(with: challenge)
-            }
             return (.performDefaultHandling, nil)
         }
 

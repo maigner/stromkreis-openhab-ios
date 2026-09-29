@@ -20,7 +20,6 @@ public extension Logger {
     static let appDelegate = Logger(subsystem: subsystem, category: "AppDelegate")
 
 
-    static let clientCert = Logger(subsystem: subsystem, category: "ClientCert")
 
     static let connectionFailureTracker = Logger(subsystem: subsystem, category: "ConnectionFailureTracker")
 
@@ -57,7 +56,6 @@ public extension Logger {
     static let sessionChallenge = Logger(subsystem: subsystem, category: "SessionChallenge")
 
 
-    static let serverCert = Logger(subsystem: subsystem, category: "ServerCertificateManager")
 
 
 

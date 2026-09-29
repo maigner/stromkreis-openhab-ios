@@ -18,7 +18,7 @@ public struct ConnectionPayload: Codable {
 
 public struct ConnectionConfiguration: Hashable, Sendable, Codable, Equatable {
     private enum CodingKeys: String, CodingKey {
-        case url, alwaysSendBasicAuth, ignoreSSL, supportsNotifications, priority, cloudUserId
+        case url, alwaysSendBasicAuth, supportsNotifications, priority, cloudUserId
         /// Legacy keys — decoded for migration from old JSON, never written
         case username, password
     }
@@ -27,17 +27,15 @@ public struct ConnectionConfiguration: Hashable, Sendable, Codable, Equatable {
     public var username: String
     public var password: String
     public var alwaysSendBasicAuth: Bool
-    public var ignoreSSL: Bool
     public var priority: Int // Lower is higher priority, 0 is primary
     public var supportsNotifications = false
     public var cloudUserId: String?
 
-    public init(url: String, username: String, password: String, alwaysSendBasicAuth: Bool = false, ignoreSSL: Bool = false, supportsNotifications: Bool = false, priority: Int = 10) {
+    public init(url: String, username: String, password: String, alwaysSendBasicAuth: Bool = false, supportsNotifications: Bool = false, priority: Int = 10) {
         self.url = ConnectionConfiguration.normalizeURL(url)
         self.username = username
         self.password = password
         self.alwaysSendBasicAuth = alwaysSendBasicAuth
-        self.ignoreSSL = ignoreSSL
         self.priority = priority
         self.supportsNotifications = supportsNotifications
     }
@@ -52,7 +50,6 @@ public struct ConnectionConfiguration: Hashable, Sendable, Codable, Equatable {
         username = try container.decodeIfPresent(String.self, forKey: .username) ?? ""
         password = try container.decodeIfPresent(String.self, forKey: .password) ?? ""
         alwaysSendBasicAuth = try container.decodeIfPresent(Bool.self, forKey: .alwaysSendBasicAuth) ?? false
-        ignoreSSL = try container.decodeIfPresent(Bool.self, forKey: .ignoreSSL) ?? false
         supportsNotifications = try container.decodeIfPresent(Bool.self, forKey: .supportsNotifications) ?? false
         priority = try container.decodeIfPresent(Int.self, forKey: .priority) ?? 10
         cloudUserId = try container.decodeIfPresent(String.self, forKey: .cloudUserId)
@@ -80,7 +77,6 @@ public struct ConnectionConfiguration: Hashable, Sendable, Codable, Equatable {
         try container.encode(url, forKey: .url)
         // username and password intentionally omitted — persisted in Keychain via CredentialsStore
         try container.encode(alwaysSendBasicAuth, forKey: .alwaysSendBasicAuth)
-        try container.encode(ignoreSSL, forKey: .ignoreSSL)
         try container.encode(supportsNotifications, forKey: .supportsNotifications)
         try container.encode(priority, forKey: .priority)
         if let cloudUserId {
@@ -104,7 +100,6 @@ extension ConnectionConfiguration {
             username: nested.decodeIfPresent(String.self, forKey: .username) ?? "",
             password: nested.decodeIfPresent(String.self, forKey: .password) ?? "",
             alwaysSendBasicAuth: nested.decodeIfPresent(Bool.self, forKey: .alwaysSendBasicAuth) ?? false,
-            ignoreSSL: nested.decodeIfPresent(Bool.self, forKey: .ignoreSSL) ?? false,
             supportsNotifications: nested.decodeIfPresent(Bool.self, forKey: .supportsNotifications) ?? defaultNotifications,
             priority: nested.decodeIfPresent(Int.self, forKey: .priority) ?? 10
         )

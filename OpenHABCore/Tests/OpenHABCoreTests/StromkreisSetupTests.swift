@@ -34,6 +34,13 @@ struct StromkreisSetupTests {
         #expect(StromkreisSetup.parse(payload) == nil)
     }
 
+    @Test func upgradesHTTPRedirectsOnTrustedHostsOnly() {
+        #expect(StromkreisSetup.upgradedToHTTPS(URL(string: "http://hac.stromkreis.net/rest/")!) == URL(string: "https://hac.stromkreis.net/rest/")!)
+        #expect(StromkreisSetup.upgradedToHTTPS(URL(string: "http://hac.stromkreis.net:80/a?b=c")!) == URL(string: "https://hac.stromkreis.net/a?b=c")!)
+        #expect(StromkreisSetup.upgradedToHTTPS(URL(string: "http://example.org/rest/")!) == nil)
+        #expect(StromkreisSetup.upgradedToHTTPS(URL(string: "https://hac.stromkreis.net/rest/")!) == nil)
+    }
+
     @Test func customSchemeToken() {
         let link = StromkreisSetup.parse("stromkreis://setup?token=abc")
         #expect(link == .token("abc", origin: StromkreisSetup.platformOrigin))

@@ -65,6 +65,17 @@ public enum StromkreisSetup {
         return host == trustedDomain || host.hasSuffix(".\(trustedDomain)")
     }
 
+    /// For an `http` URL on the trusted domain, the same URL over `https`; `nil` for anything else.
+    /// Used to upgrade redirects that a proxied server emits with the wrong scheme.
+    public static func upgradedToHTTPS(_ url: URL) -> URL? {
+        guard url.scheme?.lowercased() == "http",
+              var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return nil }
+        components.scheme = "https"
+        if components.port == 80 { components.port = nil }
+        guard let upgraded = components.url, isTrusted(upgraded) else { return nil }
+        return upgraded
+    }
+
     private static func isTrusted(_ urlString: String) -> Bool {
         URL(string: urlString).map(isTrusted) ?? false
     }
@@ -207,7 +218,6 @@ public enum StromkreisSetup {
                 username: creds.username,
                 password: creds.password,
                 alwaysSendBasicAuth: false,
-                ignoreSSL: false,
                 supportsNotifications: true,
                 priority: 1
             )

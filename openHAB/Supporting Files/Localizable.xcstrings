@@ -285,6 +285,7 @@
     },
     "Always" : {
       "comment" : "Button title for allowing the app to use the invalid server certificate, even if it is self-signed.",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1429,6 +1430,7 @@
     },
     "Deny" : {
       "comment" : "A button label that denies access to a website.",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2929,6 +2931,7 @@
     },
     "Once" : {
       "comment" : "Button to allow the app to connect to the server only once, even if the certificate is invalid.",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4547,6 +4550,7 @@
     },
     "ssl_certificate_warning" : {
       "comment" : "Alert title for SSL certificate warnings shown in the Watch app.",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

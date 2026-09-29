@@ -36,9 +36,6 @@ let package = Package(
             dependencies: [
                 "OpenHABCore"
             ],
-            resources: [
-                .process("Resources")
-            ],
             swiftSettings: [
                 .enableExperimentalFeature("StrictConcurrency")
             ]

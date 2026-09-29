@@ -152,7 +152,7 @@ struct UserDefaultsTests {
         home.localConnectionConfig.url = "http://local\(random).test"
         home.remoteConnectionConfig.url = "http://remote\(random).test"
         home.remoteConnectionConfig.password = "secret\(random)"
-        home.remoteConnectionConfig.ignoreSSL = true
+        home.remoteConnectionConfig.alwaysSendBasicAuth = true
         home.iconType = 2
         home.defaultSitemap = "default\(random)"
         home.sitemapForWatch = "watchmap\(random)"
@@ -162,7 +162,7 @@ struct UserDefaultsTests {
             preferences.localConnectionConfig.url = "http://local\(random).test"
             preferences.remoteConnectionConfig.url = "http://remote\(random).test"
             preferences.remoteConnectionConfig.password = "secret\(random)"
-            preferences.remoteConnectionConfig.ignoreSSL = true
+            preferences.remoteConnectionConfig.alwaysSendBasicAuth = true
             preferences.iconType = 2
             preferences.defaultSitemap = "default\(random)"
             preferences.sitemapForWatch = "watchmap\(random)"
@@ -173,7 +173,7 @@ struct UserDefaultsTests {
         // Non-credential properties round-trip through UserDefaults
         #expect(Preferences.shared.currentHomePreferences.localConnectionConfig.url == home.localConnectionConfig.url)
         #expect(Preferences.shared.currentHomePreferences.remoteConnectionConfig.url == home.remoteConnectionConfig.url)
-        #expect(Preferences.shared.currentHomePreferences.remoteConnectionConfig.ignoreSSL == home.remoteConnectionConfig.ignoreSSL)
+        #expect(Preferences.shared.currentHomePreferences.remoteConnectionConfig.alwaysSendBasicAuth == home.remoteConnectionConfig.alwaysSendBasicAuth)
         #expect(Preferences.shared.idleOff == data.bool(forKey: "idleOff"))
         #expect(Preferences.shared.currentHomePreferences.iconType == home.iconType)
         #expect(Preferences.shared.currentHomePreferences.defaultSitemap == home.defaultSitemap)

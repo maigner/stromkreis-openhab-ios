@@ -14,11 +14,11 @@ The app shows exactly one surface: the member's openHAB **Main UI** in a `WKWebV
 
 - **Main app**: openHAB/ — SwiftUI iOS app targeting iOS 18+
   - `OpenHABApp.swift` / `AppDelegate.swift`: entry point; handles `stromkreis://` and universal setup links
-  - `UI/OpenHABRootView.swift`: web view host, native mirror of the Main UI navigation bar, connecting placeholder, certificate alerts
+  - `UI/OpenHABRootView.swift`: web view host, native mirror of the Main UI navigation bar, connecting placeholder
   - `UI/OpenHABWebView*.swift`, `UI/WebViewURLHelper.swift`, `UI/Util/URL+WebViewPath.swift`: the Main UI web view
   - `UI/Onboarding/`: QR-code / setup-link onboarding (see docs/stromkreis-onboarding.md)
-  - `UI/NetworkConnectionService.swift`: starts connection tracking, surfaces TLS certificate prompts
-- **Core library**: OpenHABCore/ — Swift package: connection tracking (`NetworkTracker`, `ServerProbe`), preferences and Keychain credentials, TLS/certificate handling, `HTTPClient`, ETag checks, `StromkreisSetup`
+  - `UI/NetworkConnectionService.swift`: starts connection tracking
+- **Core library**: OpenHABCore/ — Swift package: connection tracking (`NetworkTracker`, `ServerProbe`), preferences and Keychain credentials, `HTTPClient` (standard system TLS validation only — no client certificates, custom trust or ignore-SSL), ETag checks, `StromkreisSetup`
 - **Tests**: openHABTestsSwift/ (Swift Testing) and OpenHABCore/Tests; openHABUITests/ (UI automation of the web view layout)
 - **Dependencies**: SFSafeSymbols, swift-timeout. Deliberately no Google/Firebase, no analytics or crash-reporting SDKs, no image or OpenAPI libraries.
 
