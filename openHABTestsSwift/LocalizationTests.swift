@@ -93,7 +93,7 @@ struct LocalizationTests {
     // MARK: - Tests
 
     @Test func infoPlistLocalizations() {
-        let mandatoryKeys = ["NSLocalNetworkUsageDescription"]
+        let mandatoryKeys = ["NSCameraUsageDescription"]
 
         for language in LocalizationTests.localizations {
             print("Testing language: '\(language)'.")

@@ -1,4 +1,4 @@
-git_url("git@github.com:maigner/stromkreis-openhab-ios-build.git")
+git_url("git@github.com:maigner/stromkreis-ios-certificates.git")
 
 storage_mode("git")
 

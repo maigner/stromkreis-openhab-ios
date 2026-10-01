@@ -72,7 +72,7 @@ Errors carry `{"error": "<German text>"}` which the app shows verbatim:
 
 - **Universal links**: `/.well-known/apple-app-site-association` is served as JSON for
   `6U7435AK45.net.stromkreis.app` with `/app/setup/*` and `/app/setup?token=*`. The app declares
-  `applinks:stromkreis.net` / `applinks:www.stromkreis.net` and signs with team `6U7435AK45`, so links
+  `applinks:stromkreis.net` and signs with team `6U7435AK45`, so links
   open the app directly once the platform is deployed. `stromkreis://` links work without that.
 
 The app's redeem path is tested against these exact responses in
