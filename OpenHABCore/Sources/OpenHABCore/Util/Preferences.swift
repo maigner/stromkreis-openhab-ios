@@ -645,5 +645,4 @@ public extension ConnectionConfiguration {
         supportsNotifications: true,
         priority: 1
     )
-
 }

@@ -1,4 +1,7 @@
-// Copyright (c) 2026 Stromkreis contributors
+// Copyright (c) 2010-2026 Contributors to the openHAB project
+//
+// See the NOTICE file(s) distributed with this work for additional
+// information.
 //
 // This program and the accompanying materials are made available under the
 // terms of the Eclipse Public License 2.0 which is available at
@@ -11,14 +14,14 @@ import Foundation
 import Testing
 
 struct StromkreisSetupTests {
-    @Test func universalLinkWithPathToken() {
+    @Test func universalLinkWithPathToken() throws {
         let link = StromkreisSetup.parse("https://stromkreis.net/app/setup/AbC123-xyz")
-        #expect(link == .token("AbC123-xyz", origin: URL(string: "https://stromkreis.net")!))
+        #expect(try link == .token("AbC123-xyz", origin: #require(URL(string: "https://stromkreis.net"))))
     }
 
-    @Test func universalLinkWithQueryToken() {
-        let link = StromkreisSetup.parse(URL(string: "https://www.stromkreis.net/app/setup?token=t0k3n&x=1")!)
-        #expect(link == .token("t0k3n", origin: URL(string: "https://www.stromkreis.net")!))
+    @Test func universalLinkWithQueryToken() throws {
+        let link = try StromkreisSetup.parse(#require(URL(string: "https://www.stromkreis.net/app/setup?token=t0k3n&x=1")))
+        #expect(try link == .token("t0k3n", origin: #require(URL(string: "https://www.stromkreis.net"))))
     }
 
     @Test(arguments: [
@@ -34,18 +37,18 @@ struct StromkreisSetupTests {
         #expect(StromkreisSetup.parse(payload) == nil)
     }
 
-    @Test func upgradesHTTPRedirectsOnTrustedHostsOnly() {
-        #expect(StromkreisSetup.upgradedToHTTPS(URL(string: "http://hac.stromkreis.net/rest/")!) == URL(string: "https://hac.stromkreis.net/rest/")!)
-        #expect(StromkreisSetup.upgradedToHTTPS(URL(string: "http://hac.stromkreis.net:80/a?b=c")!) == URL(string: "https://hac.stromkreis.net/a?b=c")!)
-        #expect(StromkreisSetup.upgradedToHTTPS(URL(string: "http://example.org/rest/")!) == nil)
-        #expect(StromkreisSetup.upgradedToHTTPS(URL(string: "https://hac.stromkreis.net/rest/")!) == nil)
+    @Test func upgradesHTTPRedirectsOnTrustedHostsOnly() throws {
+        #expect(try StromkreisSetup.upgradedToHTTPS(#require(URL(string: "http://hac.stromkreis.net/rest/"))) == URL(string: "https://hac.stromkreis.net/rest/")!)
+        #expect(try StromkreisSetup.upgradedToHTTPS(#require(URL(string: "http://hac.stromkreis.net:80/a?b=c"))) == URL(string: "https://hac.stromkreis.net/a?b=c")!)
+        #expect(try StromkreisSetup.upgradedToHTTPS(#require(URL(string: "http://example.org/rest/"))) == nil)
+        #expect(try StromkreisSetup.upgradedToHTTPS(#require(URL(string: "https://hac.stromkreis.net/rest/"))) == nil)
     }
 
-    @Test func customSchemeToken() {
+    @Test func customSchemeToken() throws {
         let link = StromkreisSetup.parse("stromkreis://setup?token=abc")
         #expect(link == .token("abc", origin: StromkreisSetup.platformOrigin))
         let custom = StromkreisSetup.parse("stromkreis://setup?token=abc&origin=https://dev.stromkreis.net/foo")
-        #expect(custom == .token("abc", origin: URL(string: "https://dev.stromkreis.net")!))
+        #expect(try custom == .token("abc", origin: #require(URL(string: "https://dev.stromkreis.net"))))
     }
 
     @Test func customSchemeInlineCredentials() {
@@ -81,9 +84,9 @@ struct StromkreisSetupApplyTests {
     /// callers (OnboardingCoordinator) can skip reloading the web view. A spurious reload
     /// here previously wiped the page's DOM for no reason and could leave it blank — see
     /// OnboardingCoordinator.run().
-    @Test func reapplyingSameCredentialsReportsNoChange() {
-        let data = UserDefaults(suiteName: "group.net.stromkreis.app")!
-        data.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+    @Test func reapplyingSameCredentialsReportsNoChange() throws {
+        let data = try #require(UserDefaults(suiteName: "group.net.stromkreis.app"))
+        try data.removePersistentDomain(forName: #require(Bundle.main.bundleIdentifier))
 
         let creds = StromkreisCloudCredentials(cloudUrl: "https://hac.stromkreis.net", username: "anlage-71@stromkreis.net", password: "secret", siteName: "Anlage")
 
@@ -91,9 +94,9 @@ struct StromkreisSetupApplyTests {
         #expect(StromkreisSetup.apply(creds) == false)
     }
 
-    @Test func changedCredentialsReportChange() {
-        let data = UserDefaults(suiteName: "group.net.stromkreis.app")!
-        data.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+    @Test func changedCredentialsReportChange() throws {
+        let data = try #require(UserDefaults(suiteName: "group.net.stromkreis.app"))
+        try data.removePersistentDomain(forName: #require(Bundle.main.bundleIdentifier))
 
         let original = StromkreisCloudCredentials(cloudUrl: "https://hac.stromkreis.net", username: "anlage-71@stromkreis.net", password: "secret", siteName: "Anlage")
         let rotated = StromkreisCloudCredentials(cloudUrl: "https://hac.stromkreis.net", username: "anlage-71@stromkreis.net", password: "newSecret", siteName: "Anlage")

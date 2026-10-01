@@ -46,6 +46,7 @@ excluded:
   - ../DerivedData
   - ../OsLogRewriter/.build
   - ../build
+  - ../.claude
 
 nesting:
     type_level: 2

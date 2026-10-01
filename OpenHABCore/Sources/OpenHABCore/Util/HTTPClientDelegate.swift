@@ -70,5 +70,4 @@ public final class HTTPClientDelegate: NSObject, URLSessionDelegate, URLSessionT
         let credential = URLCredential(user: connectionConfiguration.username, password: connectionConfiguration.password, persistence: .forSession)
         return (.useCredential, credential)
     }
-
 }

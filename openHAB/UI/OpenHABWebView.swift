@@ -47,9 +47,9 @@ struct OpenHABWebViewContainer: UIViewControllerRepresentable {
         private var externalURLCooldownUntil: Date?
         private var cancellable: AnyCancellable?
 
-        // Capture-phase click interceptor matching develop commit 12b8608c.
-        // e.isTrusted filters programmatic .click() / dispatchEvent() calls so only
-        // real user gestures reach the message handler.
+        /// Capture-phase click interceptor matching develop commit 12b8608c.
+        /// e.isTrusted filters programmatic .click() / dispatchEvent() calls so only
+        /// real user gestures reach the message handler.
         private static let externalURLInterceptorScript = WKUserScript(
             source: """
             (function() {
@@ -360,9 +360,9 @@ struct OpenHABWebViewContainer: UIViewControllerRepresentable {
 
         // MARK: - External URL confirmation
 
-        // Shows a native confirmation alert before opening a custom URL scheme, matching
-        // develop commit 12b8608c. Guards against re-entrancy, missing window, and script
-        // spam (3-second cooldown after each resolution).
+        /// Shows a native confirmation alert before opening a custom URL scheme, matching
+        /// develop commit 12b8608c. Guards against re-entrancy, missing window, and script
+        /// spam (3-second cooldown after each resolution).
         private func confirmOpenURL(_ url: URL) async -> Bool {
             let now = Date()
             guard !isConfirmingExternalURL,

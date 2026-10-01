@@ -51,7 +51,7 @@ public final class HTTPServerProbe: ServerProbe {
         let data: Data
         do {
             (data, _) = try await httpClient.doRequest(baseURL: rootURL, timeout: 10.0, type: .data)
-        } catch HTTPClientError.httpError(let statusCode) {
+        } catch let HTTPClientError.httpError(statusCode) {
             throw statusCode == 401 ? ServerProbeError.unauthorized : ServerProbeError.httpStatus(statusCode)
         }
         guard let root = try? JSONDecoder().decode(RootDocument.self, from: data),

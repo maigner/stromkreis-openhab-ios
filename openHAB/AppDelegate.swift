@@ -40,10 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         false
     }
 
-    // Info.plist sets UIApplicationSupportsSecureRestorableState, which makes iOS consult these
-    // NSSecureCoding-based methods instead of the deprecated pair above. Both pairs are kept in
-    // sync (both false) since which one iOS actually calls depends on that flag; the deprecated
-    // pair stays as a defensive fallback.
+    /// Info.plist sets UIApplicationSupportsSecureRestorableState, which makes iOS consult these
+    /// NSSecureCoding-based methods instead of the deprecated pair above. Both pairs are kept in
+    /// sync (both false) since which one iOS actually calls depends on that flag; the deprecated
+    /// pair stays as a defensive fallback.
     func application(_ application: UIApplication, shouldSaveSecureApplicationState coder: NSCoder) -> Bool {
         false
     }

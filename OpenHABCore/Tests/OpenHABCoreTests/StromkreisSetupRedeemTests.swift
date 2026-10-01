@@ -1,4 +1,7 @@
-// Copyright (c) 2026 Stromkreis contributors
+// Copyright (c) 2010-2026 Contributors to the openHAB project
+//
+// See the NOTICE file(s) distributed with this work for additional
+// information.
 //
 // This program and the accompanying materials are made available under the
 // terms of the Eclipse Public License 2.0 which is available at
@@ -16,8 +19,13 @@ import Testing
 final class StubURLProtocol: URLProtocol {
     nonisolated(unsafe) static var handler: ((URLRequest) -> (Int, Data))?
 
-    override class func canInit(with request: URLRequest) -> Bool { true }
-    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+    override class func canInit(with request: URLRequest) -> Bool {
+        true
+    }
+
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest {
+        request
+    }
 
     override func startLoading() {
         guard let handler = Self.handler else { return }
@@ -79,7 +87,7 @@ struct StromkreisSetupRedeemTests {
             return (200, Data(#"{"username":"u","password":"p","siteName":"S"}"#.utf8))
         }
         let link = try #require(StromkreisSetup.parse("stromkreis://setup?token=abc%2Ddef&origin=https%3A%2F%2Fstromkreis.net"))
-        #expect(link == .token("abc-def", origin: URL(string: "https://stromkreis.net")!))
+        #expect(try link == .token("abc-def", origin: #require(URL(string: "https://stromkreis.net"))))
         let creds = try await StromkreisSetup.resolve(link, session: Self.session())
         #expect(creds.cloudUrl == StromkreisSetup.defaultCloudURL)
         #expect(creds.siteName == "S")

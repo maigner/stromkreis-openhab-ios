@@ -1,4 +1,7 @@
-// Copyright (c) 2026 Stromkreis contributors
+// Copyright (c) 2010-2026 Contributors to the openHAB project
+//
+// See the NOTICE file(s) distributed with this work for additional
+// information.
 //
 // This program and the accompanying materials are made available under the
 // terms of the Eclipse Public License 2.0 which is available at
@@ -19,14 +22,18 @@ struct OnboardingView: View {
     @State private var scannerID = UUID()
     @FocusState private var linkFieldFocused: Bool
 
-    private var canDismiss: Bool { StromkreisSetup.isActiveHomeConfigured }
+    private var canDismiss: Bool {
+        StromkreisSetup.isActiveHomeConfigured
+    }
 
     var body: some View {
         ZStack {
             LinearGradient(
-                colors: [Color(red: 0x1d / 255, green: 0x47 / 255, blue: 0x16 / 255),
-                         Color(red: 0x3f / 255, green: 0x8a / 255, blue: 0x26 / 255),
-                         Color(red: 0x63 / 255, green: 0xb5 / 255, blue: 0x3b / 255)],
+                colors: [
+                    Color(red: 0x1D / 255, green: 0x47 / 255, blue: 0x16 / 255),
+                    Color(red: 0x3F / 255, green: 0x8A / 255, blue: 0x26 / 255),
+                    Color(red: 0x63 / 255, green: 0xB5 / 255, blue: 0x3B / 255)
+                ],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
@@ -50,7 +57,7 @@ struct OnboardingView: View {
                             Button("Continue") { coordinator.dismiss() }
                                 .buttonStyle(.borderedProminent)
                                 .tint(.white)
-                                .foregroundStyle(Color(red: 0x1d / 255, green: 0x47 / 255, blue: 0x16 / 255))
+                                .foregroundStyle(Color(red: 0x1D / 255, green: 0x47 / 255, blue: 0x16 / 255))
                         }
                     case let .failed(message):
                         statusCard {
@@ -62,7 +69,7 @@ struct OnboardingView: View {
                             }
                             .buttonStyle(.borderedProminent)
                             .tint(.white)
-                            .foregroundStyle(Color(red: 0x1d / 255, green: 0x47 / 255, blue: 0x16 / 255))
+                            .foregroundStyle(Color(red: 0x1D / 255, green: 0x47 / 255, blue: 0x16 / 255))
                         }
                     case .idle:
                         if let notice = coordinator.notice {
@@ -104,7 +111,7 @@ struct OnboardingView: View {
             Image("openHABIcon")
                 .resizable()
                 .renderingMode(.template)
-                .foregroundStyle(Color(red: 0xf5 / 255, green: 0x9e / 255, blue: 0x0b / 255))
+                .foregroundStyle(Color(red: 0xF5 / 255, green: 0x9E / 255, blue: 0x0B / 255))
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 96, height: 96)
                 .padding(.top, 24)
@@ -135,7 +142,7 @@ struct OnboardingView: View {
                         .padding()
                 }
                 RoundedRectangle(cornerRadius: 16)
-                    .strokeBorder(Color(red: 0xf5 / 255, green: 0x9e / 255, blue: 0x0b / 255), lineWidth: 3)
+                    .strokeBorder(Color(red: 0xF5 / 255, green: 0x9E / 255, blue: 0x0B / 255), lineWidth: 3)
                     .padding(28)
                     .allowsHitTesting(false)
             }
@@ -181,7 +188,7 @@ struct OnboardingView: View {
         .background(.white.opacity(0.12), in: RoundedRectangle(cornerRadius: 24))
     }
 
-    private func statusCard<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+    private func statusCard(@ViewBuilder content: () -> some View) -> some View {
         VStack(spacing: 16) { content() }
             .frame(maxWidth: .infinity)
             .padding(24)

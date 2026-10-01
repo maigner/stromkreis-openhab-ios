@@ -89,25 +89,24 @@ struct OpenHABRootView: View {
         }
         #if DEBUG
         .overlay {
-            ForEach(Array(webViewModel.uiTestReports.keys.sorted()), id: \.self) { key in
-                Text(webViewModel.uiTestReports[key] ?? "")
-                    .accessibilityIdentifier("UITestReport-\(key)")
+                ForEach(Array(webViewModel.uiTestReports.keys.sorted()), id: \.self) { key in
+                    Text(webViewModel.uiTestReports[key] ?? "")
+                        .accessibilityIdentifier("UITestReport-\(key)")
+                        .frame(width: 0, height: 0)
+                        .opacity(0)
+                        .allowsHitTesting(false)
+                }
+                Text(String(webViewModel.navbarItems.count))
+                    .accessibilityIdentifier("UITestReport-navbarItemCount")
                     .frame(width: 0, height: 0)
                     .opacity(0)
                     .allowsHitTesting(false)
             }
-            Text(String(webViewModel.navbarItems.count))
-                .accessibilityIdentifier("UITestReport-navbarItemCount")
-                .frame(width: 0, height: 0)
-                .opacity(0)
-                .allowsHitTesting(false)
-        }
         #endif
     }
 
     // MARK: - Menu bar
 
-    @ViewBuilder
     private var menuBar: some View {
         HStack {
             // Left side: proxied navbar items when available, otherwise the connection state.
@@ -183,7 +182,6 @@ struct OpenHABRootView: View {
 
     // MARK: - Navbar proxy helpers
 
-    @ViewBuilder
     private func navbarProxyButton(_ item: WebNavbarItem) -> some View {
         Button {
             webViewModel.evaluateJS(item.jsAction)
@@ -202,7 +200,6 @@ struct OpenHABRootView: View {
         .accessibilityIdentifier("NavbarProxyButton-\(item.label)")
     }
 
-    @ViewBuilder
     private func navbarActionsButton(_ items: [WebNavbarItem]) -> some View {
         Button {
             navbarActionsPresented = true

@@ -44,7 +44,9 @@ private enum LayoutJS {
     }, 600);
     """#
 
-    static func base64(_ js: String) -> String { Data(js.utf8).base64EncodedString() }
+    static func base64(_ js: String) -> String {
+        Data(js.utf8).base64EncodedString()
+    }
 }
 
 // MARK: - HTML fixtures
@@ -92,7 +94,9 @@ private enum LayoutHTML {
     </body></html>
     """
 
-    static func base64(_ html: String) -> String { Data(html.utf8).base64EncodedString() }
+    static func base64(_ html: String) -> String {
+        Data(html.utf8).base64EncodedString()
+    }
 }
 
 // MARK: - Test class
@@ -114,7 +118,9 @@ final class MainUILayoutUITests: XCTestCase {
         app.launchEnvironment["UITest"] = "1"
     }
 
-    override func tearDown() { app = nil; super.tearDown() }
+    override func tearDown() {
+        app = nil; super.tearDown()
+    }
 
     // MARK: - Launch helpers
 
@@ -135,23 +141,29 @@ final class MainUILayoutUITests: XCTestCase {
 
     // MARK: - Helpers
 
-    private var menuBar: XCUIElement { app.otherElements.matching(identifier: "MainMenuBar").firstMatch }
+    private var menuBar: XCUIElement {
+        app.otherElements.matching(identifier: "MainMenuBar").firstMatch
+    }
 
     /// Finds a web element inside the webView by its accessibility label (aria-label).
     @discardableResult
     private func waitForWebLabel(_ label: String, timeout: TimeInterval = 8) -> XCUIElement {
         let pred = NSPredicate(format: "label == %@", label)
         let el = app.webViews.firstMatch.descendants(matching: .any).matching(pred).firstMatch
-        XCTAssertTrue(el.waitForExistence(timeout: timeout),
-                      "Expected web element with label '\(label)' within \(timeout)s")
+        XCTAssertTrue(
+            el.waitForExistence(timeout: timeout),
+            "Expected web element with label '\(label)' within \(timeout)s"
+        )
         return el
     }
 
     @discardableResult
     private func waitForReport(_ key: String, timeout: TimeInterval = 8) -> String {
         let el = app.staticTexts.matching(identifier: "UITestReport-\(key)").firstMatch
-        XCTAssertTrue(el.waitForExistence(timeout: timeout),
-                      "Expected JS report '\(key)' within \(timeout)s — check ohUITest bridge is active")
+        XCTAssertTrue(
+            el.waitForExistence(timeout: timeout),
+            "Expected JS report '\(key)' within \(timeout)s — check ohUITest bridge is active"
+        )
         return el.label
     }
 
@@ -166,14 +178,25 @@ final class MainUILayoutUITests: XCTestCase {
         XCTAssertTrue(webView.waitForExistence(timeout: 8))
         let screen = app.windows.firstMatch.frame
 
-        XCTAssertEqual(webView.frame.minY, screen.minY, accuracy: 1,
-                       "Web view must start at the top of the screen, under the status bar")
-        XCTAssertEqual(webView.frame.maxY, screen.maxY, accuracy: 1,
-                       "Web view must reach the bottom of the screen")
+        XCTAssertEqual(
+            webView.frame.minY,
+            screen.minY,
+            accuracy: 1,
+            "Web view must start at the top of the screen, under the status bar"
+        )
+        XCTAssertEqual(
+            webView.frame.maxY,
+            screen.maxY,
+            accuracy: 1,
+            "Web view must reach the bottom of the screen"
+        )
 
         let safeTop = Double(waitForReport("safeAreaTop")) ?? 0
-        XCTAssertGreaterThan(safeTop, 0,
-                             "The page must see a non-zero top safe-area inset so Main UI can lay itself out")
+        XCTAssertGreaterThan(
+            safeTop,
+            0,
+            "The page must see a non-zero top safe-area inset so Main UI can lay itself out"
+        )
     }
 
     // MARK: - Native bar covers exactly the navbar space Main UI reserves
@@ -241,8 +264,11 @@ final class MainUILayoutUITests: XCTestCase {
 
         let menuBtn = app.buttons.matching(identifier: "NavbarProxyButton-Menu").firstMatch
         if menuBtn.waitForExistence(timeout: 3) {
-            XCTAssertLessThan(menuBtn.frame.maxY, 120,
-                              "Proxy button must be in the native menuBar area (top 120pt of screen)")
+            XCTAssertLessThan(
+                menuBtn.frame.maxY,
+                120,
+                "Proxy button must be in the native menuBar area (top 120pt of screen)"
+            )
         }
     }
 
@@ -256,8 +282,10 @@ final class MainUILayoutUITests: XCTestCase {
 
         let menuBtn = app.buttons.matching(identifier: "NavbarProxyButton-Menu").firstMatch
         if menuBtn.waitForExistence(timeout: 3) {
-            XCTAssertTrue(menuBtn.isHittable,
-                          "Navbar proxy 'Menu' button must be hittable inside the native menuBar")
+            XCTAssertTrue(
+                menuBtn.isHittable,
+                "Navbar proxy 'Menu' button must be hittable inside the native menuBar"
+            )
         }
     }
 }

@@ -36,7 +36,7 @@ struct WebNavbarItem: Identifiable {
 }
 
 @MainActor
-class OpenHABWebViewModel: ObservableObject {
+class OpenHABWebViewModel: ObservableObject { // swiftlint:disable:this type_body_length
     // MARK: - Published state
 
     @Published var isLoading = false
@@ -93,7 +93,10 @@ class OpenHABWebViewModel: ObservableObject {
     private var currentTarget = ""
     private var openHABTrackedRootUrl = ""
     private var activeConnectionInfo: ConnectionInfo?
-    private var activeConfig: ConnectionConfiguration? { activeConnectionInfo?.configuration }
+    private var activeConfig: ConnectionConfiguration? {
+        activeConnectionInfo?.configuration
+    }
+
     private var sseTimer: Timer?
     private var views: [UUID: WKWebView] = [:]
     private var viewAccessOrder: [UUID] = []
@@ -713,8 +716,7 @@ class OpenHABWebViewModel: ObservableObject {
             webView.navigationDelegate = nil
             webView.uiDelegate = nil
             webView = newWebview
-        } else {
-        }
+        } else {}
 
         Logger.viewController.info("Loading URL: \(modifiedUrl)")
         isLoading = true
@@ -795,7 +797,7 @@ class OpenHABWebViewModel: ObservableObject {
 
     /// Loading again would only discard live SPA state.
     private func canKeepLoadedPage(target: URL) async -> Bool {
-        let currentHomeWebViewShown = views[(await Preferences.shared.currentHomePreferences).id] === webView
+        let currentHomeWebViewShown = await views[(Preferences.shared.currentHomePreferences).id] === webView
         guard hasLoadedContent, currentHomeWebViewShown,
               lastLoadedConfiguration == activeConfig else { return false }
         let normalizedTarget = WebViewURLHelper.normalizeForComparison(target.absoluteString, includeBasePath: false)
@@ -872,7 +874,9 @@ class OpenHABWebViewModel: ObservableObject {
     /// True once the MainUI SPA is live in the current web view and can accept
     /// client-side navigation via `window.MainUI.handleCommand`. Mirrors the state
     /// that gates command execution vs. queuing.
-    var isMainUIReady: Bool { acceptsCommands }
+    var isMainUIReady: Bool {
+        acceptsCommands
+    }
 
     func navigateCommand(_ command: String) {
         if acceptsCommands {
@@ -1020,6 +1024,7 @@ class OpenHABWebViewModel: ObservableObject {
         if let webviewURL = webView.url {
             let url = URL(string: webviewURL.path, relativeTo: URL(string: openHABTrackedRootUrl))
             if let path = url?.path {
+                // swiftformat:disable:next redundantSelf
                 Logger.viewController.info("navigation change base: \(self.openHABTrackedRootUrl) path: \(path)")
                 Preferences.shared.currentWebViewPath = path.hasSuffix("/") ? path : path + "/"
             }

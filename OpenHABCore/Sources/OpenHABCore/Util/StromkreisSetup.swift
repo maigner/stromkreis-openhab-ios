@@ -1,4 +1,7 @@
-// Copyright (c) 2026 Stromkreis contributors
+// Copyright (c) 2010-2026 Contributors to the openHAB project
+//
+// See the NOTICE file(s) distributed with this work for additional
+// information.
 //
 // This program and the accompanying materials are made available under the
 // terms of the Eclipse Public License 2.0 which is available at
@@ -171,9 +174,9 @@ public enum StromkreisSetup {
     public static func resolve(_ link: StromkreisSetupLink, session: URLSession = .shared) async throws -> StromkreisCloudCredentials {
         switch link {
         case let .credentials(creds):
-            return creds
+            creds
         case let .token(token, origin):
-            return try await redeem(token: token, origin: origin, session: session)
+            try await redeem(token: token, origin: origin, session: session)
         }
     }
 

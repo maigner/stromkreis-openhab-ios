@@ -19,13 +19,9 @@ public extension Logger {
 
     static let appDelegate = Logger(subsystem: subsystem, category: "AppDelegate")
 
-
-
     static let connectionFailureTracker = Logger(subsystem: subsystem, category: "ConnectionFailureTracker")
 
     static let defaultLoggingMiddleware = Logger(subsystem: subsystem, category: "loggingMiddleware")
-
-
 
     static let etagCache = Logger(subsystem: subsystem, category: "ETagCache")
 
@@ -35,37 +31,15 @@ public extension Logger {
 
     static let httpClientDelegate = Logger(subsystem: subsystem, category: "HTTPClientDelegate")
 
-
-
     static let networkTracker = Logger(subsystem: subsystem, category: "NetworkTracker")
-
-
 
     static let nwPathMonitoring = Logger(subsystem: subsystem, category: "NWPathMonitoring")
 
-
-
-
-
     static let preferences = Logger(subsystem: subsystem, category: "Preferences")
-
-
-
-
 
     static let sessionChallenge = Logger(subsystem: subsystem, category: "SessionChallenge")
 
-
-
-
-
-
-
     static let viewController = Logger(subsystem: subsystem, category: "viewController")
-
-
-
-
 
     #if DEBUG
     private static let testSubsystem = subsystem + "." + "test"

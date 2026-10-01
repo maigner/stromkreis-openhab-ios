@@ -13,7 +13,7 @@ import Foundation
 
 public extension Sequence {
     /// Sorts the elements ascending by the `Comparable` value at `keyPath`.
-    func sorted<T: Comparable>(by keyPath: KeyPath<Element, T>) -> [Element] {
+    func sorted(by keyPath: KeyPath<Element, some Comparable>) -> [Element] {
         sorted { $0[keyPath: keyPath] < $1[keyPath: keyPath] }
     }
 }
