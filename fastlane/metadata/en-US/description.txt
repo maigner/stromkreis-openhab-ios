@@ -1,11 +1,11 @@
-Stromkreis is the open platform by energy communities for energy communities. This app connects members of an Austrian energy community (EEG) to their Stromkreis gateway at home and to the Stromkreis Cloud.
+Stromkreis is the open platform by energy communities for energy communities. This app connects members of an Austrian energy community (EEG) to their Stromkreis gateway at home through the Stromkreis Cloud.
 
 Features:
 
 * Live view of your PV system, home battery and grid feed-in
 * Forecast-driven battery management: charge your storage when it benefits the community
 * Remote access to your gateway from anywhere via the Stromkreis Cloud (https://hac.stromkreis.net)
-* Apple Watch companion app, widgets and Siri shortcuts
+* Simple setup by QR code or setup link
 * Natively supports iPhone and iPad
 
 Stromkreis is non-profit and open source. Learn more at https://stromkreis.net

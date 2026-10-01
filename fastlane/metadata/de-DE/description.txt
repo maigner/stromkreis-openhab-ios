@@ -1,11 +1,11 @@
-Stromkreis ist die offene Plattform von Energiegemeinschaften für Energiegemeinschaften. Diese App verbindet Mitglieder einer österreichischen Energiegemeinschaft (EEG) mit ihrem Stromkreis-Gateway zu Hause und mit der Stromkreis-Cloud.
+Stromkreis ist die offene Plattform von Energiegemeinschaften für Energiegemeinschaften. Diese App verbindet Mitglieder einer österreichischen Energiegemeinschaft (EEG) über die Stromkreis-Cloud mit ihrem Stromkreis-Gateway zu Hause.
 
 Funktionen:
 
 * Live-Ansicht von PV-Anlage, Heimspeicher und Netzeinspeisung
 * Prognosegesteuertes Batteriemanagement: Speicher laden, wenn es der Gemeinschaft nützt
 * Fernzugriff auf das Gateway von unterwegs über die Stromkreis-Cloud (https://hac.stromkreis.net)
-* Apple-Watch-App, Widgets und Siri-Kurzbefehle
+* Einfache Einrichtung per QR-Code oder Einrichtungslink
 * Native Unterstützung für iPhone und iPad
 
 Stromkreis ist gemeinnützig und quelloffen. Mehr unter https://stromkreis.net

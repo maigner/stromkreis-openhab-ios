@@ -101,6 +101,10 @@ platform :ios do
       "vendor/"
     ]
 
+    # Builds from this branch are releases (external TestFlight, tag, GitHub release);
+    # every other branch produces an internal feature build.
+    RELEASE_BRANCH = "stromkreis"
+
     desc 'Build beta'
     lane :beta do |options|
     
@@ -113,7 +117,7 @@ platform :ios do
         options[:bump] = type
 
         current_branch = resolve_current_branch
-        options[:isfeaturebuild] = current_branch != "develop"
+        options[:isfeaturebuild] = current_branch != RELEASE_BRANCH
 
         # ensure branch is clean
         ensure_git_status_clean
@@ -156,7 +160,7 @@ platform :ios do
                 "MARKETING_VERSION = #{parts.join('.')}"
             ))
         elsif type != 'none'
-            # develop: bump MARKETING_VERSION in xcconfig
+            # release branch: bump MARKETING_VERSION in xcconfig
             xcconfig = File.read(xcconfig_path)
             parts = xcconfig.match(/MARKETING_VERSION\s*=\s*([\d.]+)/)[1].split('.').map(&:to_i)
             case type
@@ -269,7 +273,7 @@ platform :ios do
                   name: "#{type.capitalize} version #{version}",
                   tag_name: version.to_s,
                   description: changelog,
-                  commitish: 'develop'
+                  commitish: RELEASE_BRANCH
                   # upload_assets: no assets supported
                 )
             else
@@ -279,13 +283,39 @@ platform :ios do
                   name: "#{type.capitalize} version #{version}",
                   tag_name: version.to_s,
                   description: changelog,
-                  commitish: 'develop'
+                  commitish: RELEASE_BRANCH
                   # upload_assets: no assets supported
                 )
             end
 
         end
 
+    end
+
+    desc 'Upload App Store metadata and screenshots; submit:true also submits the current build for review'
+    lane :release do |options|
+        submit = options[:submit].to_s == 'true'
+
+        xcconfig = File.read(File.expand_path('../Version.xcconfig', __dir__))
+        version = xcconfig.match(/MARKETING_VERSION\s*=\s*([\d.]+)/)[1]
+        build_number = xcconfig.match(/CURRENT_PROJECT_VERSION\s*=\s*(\d+)/)[1]
+
+        # Without local screenshots, overwrite_screenshots would wipe the ones in App Store Connect
+        has_screenshots = !Dir.glob(File.expand_path('screenshots/**/*.png', __dir__)).empty?
+        UI.important("No screenshots in fastlane/screenshots, leaving App Store Connect screenshots untouched.") unless has_screenshots
+
+        # The binary comes from the beta lane: the build already on TestFlight is submitted
+        upload_to_app_store(
+            app_version: version,
+            build_number: submit ? build_number : nil,
+            skip_binary_upload: true,
+            skip_screenshots: !has_screenshots,
+            submit_for_review: submit,
+            automatic_release: false,
+            force: is_ci?,
+            precheck_include_in_app_purchases: false,
+            submission_information: { add_id_info_uses_idfa: false }
+        )
     end
 
     desc 'Setup keychain for CI environment'

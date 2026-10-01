@@ -6,7 +6,8 @@
 - Core package tests: `xcodebuild test -workspace openHAB.xcworkspace -scheme openHABTestsSwift -testPlan openHABTests -only-testing:OpenHABCoreTests -destination 'platform=iOS Simulator,name=iPhone 17 Pro'`
 - Single test: `xcodebuild test -workspace openHAB.xcworkspace -scheme openHABTestsSwift -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -only-testing:openHABTestsSwift/TestClassName/testMethodName`
 - If the exact simulator is unavailable, switch to an available iPhone simulator
-- Beta build: `fastlane beta`
+- Beta build: `fastlane beta` (release build on branch `stromkreis`, internal feature build elsewhere; `bump:none|patch|minor|major`)
+- App Store metadata: `fastlane release` (add `submit:true` to submit the current TestFlight build for review)
 - UI tests: `xcodebuild test -workspace openHAB.xcworkspace -scheme openHABUITests`
 
 ## Architecture
