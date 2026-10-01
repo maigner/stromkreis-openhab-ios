@@ -281,6 +281,8 @@ platform :ios do
                   commitish: RELEASE_BRANCH
                   # upload_assets: no assets supported
                 )
+            elsif ENV['GITHUB_API_TOKEN'].to_s.empty?
+                UI.important("GITHUB_API_TOKEN is not set, skipping the GitHub release for #{version}.")
             else
                 set_github_release(
                   api_token: ENV['GITHUB_API_TOKEN'],
