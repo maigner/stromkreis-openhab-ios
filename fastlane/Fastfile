@@ -105,6 +105,19 @@ platform :ios do
     # every other branch produces an internal feature build.
     RELEASE_BRANCH = "stromkreis"
 
+    # Mirror of upstream openHAB; its commits do not belong in a Stromkreis changelog.
+    UPSTREAM_BRANCH = "origin/develop"
+
+    # Commits on this branch since the last tag reachable from HEAD, without upstream openHAB commits.
+    # last_git_tag is no help here: it returns the newest tag in the whole repo, which is an upstream one.
+    def stromkreis_changelog
+      last_tag = sh("git describe --tags --abbrev=0 2>/dev/null || true", log: false).strip
+      excluded = [last_tag, UPSTREAM_BRANCH].select do |ref|
+        !ref.empty? && system("git rev-parse --verify --quiet '#{ref}^{commit}' > /dev/null")
+      end
+      sh("git log HEAD #{excluded.map { |ref| "'^#{ref}'" }.join(' ')} --no-merges --pretty='- %s'", log: false).strip
+    end
+
     desc 'Build beta'
     lane :beta do |options|
     
@@ -182,15 +195,7 @@ platform :ios do
 
         # get the last commit comments from Git history
         # and creates our changelog
-        comments = changelog_from_git_commits(
-            between: last_git_tag == nil ? nil : [last_git_tag, 'HEAD'],
-            pretty: '- %s',
-            date_format: 'short',
-            match_lightweight_tag: false,
-            merge_commit_filtering: 'exclude_merges'
-        )
-        # Clear FL_CHANGELOG so it doesn't bloat the Fastlane summary table
-        Actions.lane_context[Fastlane::Actions::SharedValues::FL_CHANGELOG] = nil
+        comments = stromkreis_changelog
 
         # Write git commits to CHANGELOG.md
         File.write('../CHANGELOG.md', "# Change Log\n\n## [Unreleased]\n\n#{comments}\n\n#{File.read('../CHANGELOG.md').gsub(/^# Change Log\s*\n\n## \[Unreleased\].*?\n\n/m, '') rescue ''}")
