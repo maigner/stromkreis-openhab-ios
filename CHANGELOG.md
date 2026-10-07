@@ -2,6 +2,34 @@
 
 ## [Unreleased]
 
+## [Version 1.0.0, Build 2] - 2026-10-01Z
+
+- fastlane: skip GitHub release locally without GITHUB_API_TOKEN
+- fastlane: limit beta changelog to Stromkreis commits
+- Apply SwiftFormat and make the SwiftLint build phase pass
+- Set up fastlane for App Store releases from the stromkreis branch
+- Prepare TestFlight signing and app links
+- limit to https on stromkreis.net only
+- reduce connectivity to stromkreis.net only
+- fastlane prep
+- ui fixes and fixes from upstreamm
+- app links for onboarding
+- fixed build error on iphone
+- server probe
+- remove unused code
+- removed google dependency
+- redirect to init page when cloud password changes
+- redirect to start page after cloud password reset
+- removed menus
+- german default
+- Align app with platform app-enrollment (stromkreis 5523f69)
+- Make the app German-only
+- Stromkreis onboarding: QR/link setup, remove demo mode
+- Rebrand app from openHAB to Stromkreis
+- more group name changes
+- change group name
+- change group name
+
 ## [Version 3.4.25, Build 321] - 2026-08-25Z
 
 - fix(watch): restore OpenHABWatchComplicationsExtension Xcode target (#1318)
