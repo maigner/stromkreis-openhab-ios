@@ -325,6 +325,28 @@ platform :ios do
         )
     end
 
+    desc 'Release an already processed TestFlight build to the Beta Testers group: distribute changelog:"…" [build:<number>]'
+    lane :distribute do |options|
+        changelog = options[:changelog].to_s.strip
+        UI.user_error!("Pass changelog:\"…\" — it becomes the build's What to Test text.") if changelog.empty?
+
+        xcconfig = File.read(File.expand_path('../Version.xcconfig', __dir__))
+        version = xcconfig.match(/MARKETING_VERSION\s*=\s*([\d.]+)/)[1]
+        build_number = (options[:build] || xcconfig.match(/CURRENT_PROJECT_VERSION\s*=\s*(\d+)/)[1]).to_s
+
+        # For when the beta lane uploaded a build but could not distribute it, e.g. because
+        # Test Information was still missing in App Store Connect.
+        upload_to_testflight(
+            distribute_only: true,
+            app_version: version,
+            build_number: build_number,
+            distribute_external: true,
+            notify_external_testers: true,
+            changelog: changelog,
+            groups: ['Beta Testers']
+        )
+    end
+
     desc 'Setup keychain for CI environment'
     private_lane :setup_keychain do
         if is_ci?
